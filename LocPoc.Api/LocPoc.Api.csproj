@@ -20,8 +20,4 @@
     <ProjectReference Include="..\LocPoc.Repository.InMemory\LocPoc.Repository.InMemory.csproj" />
     <ProjectReference Include="..\LocPoc.Repository.Sqlite\LocPoc.Repository.Sqlite.csproj" />
   </ItemGroup>
-  <ItemGroup>
-    <Compile Remove="Controllers\WeatherForecastController.cs" />
-    <Compile Remove="WeatherForecast.cs" />
-  </ItemGroup>
 </Project>
