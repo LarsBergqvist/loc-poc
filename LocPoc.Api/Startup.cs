@@ -27,8 +27,9 @@ namespace LocPoc.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddScoped<IPlacesRepository, PlacesRepositoryFake>();
-            services.AddControllers();
-        }
+            services.AddControllers()
+               .AddJsonOptions(opts => opts.JsonSerializerOptions.PropertyNamingPolicy = null);
+      }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

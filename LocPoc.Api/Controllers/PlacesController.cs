@@ -23,7 +23,8 @@ namespace LocPoc.Api.Controllers
         [HttpGet]
         public IEnumerable<Place> Get()
         {
-            return _placesRepository.GetAllPlaces();
+var test = _placesRepository.GetAllPlaces();
+         return _placesRepository.GetAllPlaces();
         }
 
         // GET: api/Places/5
