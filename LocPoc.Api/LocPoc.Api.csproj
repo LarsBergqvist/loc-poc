@@ -17,9 +17,8 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LocPoc.Contracts\LocPoc.Contracts.csproj" />
-    <ProjectReference Include="..\LocPoc.Repositories\LocPoc.Repositories.csproj">
-      <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
-    </ProjectReference>
+    <ProjectReference Include="..\LocPoc.Repository.InMemory\LocPoc.Repository.InMemory.csproj" />
+    <ProjectReference Include="..\LocPoc.Repository.Sqlite\LocPoc.Repository.Sqlite.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="Controllers\WeatherForecastController.cs" />

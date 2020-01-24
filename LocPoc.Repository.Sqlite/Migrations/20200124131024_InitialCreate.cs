@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace LocPoc.Repositories.Migrations
+namespace LocPoc.Repository.Sqlite.Migrations
 {
     public partial class InitialCreate : Migration
     {

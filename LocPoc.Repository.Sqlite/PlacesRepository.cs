@@ -3,13 +3,13 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace LocPoc.Repositories.Sqlite
+namespace LocPoc.Repository.Sqlite
 {
-    public class PlacesRepositorySqlite : IPlacesRepository
+    public class PlacesRepository : IPlacesRepository
     {
         private readonly SqliteContext _context;
 
-        public PlacesRepositorySqlite(SqliteContext context)
+        public PlacesRepository(SqliteContext context)
         {
             _context = context;
         }

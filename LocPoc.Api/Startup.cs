@@ -4,7 +4,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using LocPoc.Contracts;
-using LocPoc.Repositories.Sqlite;
 using Microsoft.EntityFrameworkCore;
 
 namespace LocPoc.Api
@@ -21,14 +20,14 @@ namespace LocPoc.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<LocPoc.Repositories.Sqlite.SqliteContext>(options =>
+            // Sqlite database
+            services.AddDbContext<LocPoc.Repository.Sqlite.SqliteContext>(options =>
                 options.UseSqlite("Data Source=locpoc.db"));
+            services.AddScoped<IPlacesRepository, LocPoc.Repository.Sqlite.PlacesRepository>();
 
             // Fake in-memory collection
-            //            services.AddScoped<IPlacesRepository, PlacesRepositoryFake>();
+//            services.AddScoped<IPlacesRepository, LocPoc.Repository.InMemory.PlacesRepository>();
 
-            // Sqlite database
-            services.AddScoped<IPlacesRepository, PlacesRepositorySqlite>();
 
             services.AddControllers()
                .AddJsonOptions(opts => opts.JsonSerializerOptions.PropertyNamingPolicy = null);

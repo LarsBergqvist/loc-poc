@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
-using LocPoc.Repositories;
 using LocPoc.Contracts;
 
 namespace LocPoc.Api.Controllers

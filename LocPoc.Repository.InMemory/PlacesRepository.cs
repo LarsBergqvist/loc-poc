@@ -3,16 +3,16 @@ using System.Collections.Generic;
 using LocPoc.Contracts;
 using Newtonsoft.Json;
 
-namespace LocPoc.Repositories
+namespace LocPoc.Repository.InMemory
 {
-    public class PlacesRepositoryFake : IPlacesRepository
+    public class PlacesRepository : IPlacesRepository
     {
         IList<Place> _places;
 
-        public PlacesRepositoryFake()
+        public PlacesRepository()
         {
             _places = new List<Place>();
-            var parsedPlaces = JsonConvert.DeserializeObject<Place[]>(Fake.Resource1.initial_data);
+            var parsedPlaces = JsonConvert.DeserializeObject<Place[]>(Resource1.initial_data);
             foreach (var place in parsedPlaces)
             {
                 _places.Add(place);

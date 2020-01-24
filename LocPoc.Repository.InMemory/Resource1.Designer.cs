@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace LocPoc.Repositories.Fake {
+namespace LocPoc.Repository.InMemory {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace LocPoc.Repositories.Fake {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("LocPoc.Repositories.Fake.Resource1", typeof(Resource1).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("LocPoc.Repository.InMemory.Resource1", typeof(Resource1).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -63,15 +63,24 @@ namespace LocPoc.Repositories.Fake {
         /// <summary>
         ///   Looks up a localized string similar to [
         ///  {
-        ///    &quot;Id&quot;: 1,
+        ///    &quot;Id&quot;: &quot;485DCD53-90F2-441A-A8BE-8CCBF5B736AE&quot;,
         ///    &quot;Name&quot;: &quot;Eiffel Tower&quot;,
         ///    &quot;Description&quot;: &quot;Viva La France&quot;,
         ///    &quot;Latitude&quot;: 48.858372,
         ///    &quot;Longitude&quot;: 2.294481
-        ///  }
-        ///
-        ///]
-        ///.
+        ///  },
+        ///  {
+        ///    &quot;Id&quot;: &quot;92B0912C-5417-454E-98BC-75D0A02E8B19&quot;,
+        ///    &quot;Name&quot;: &quot;Stockholms Stadshus&quot;,
+        ///    &quot;Description&quot;: &quot;Hello Stockholm&quot;,
+        ///    &quot;Latitude&quot;: 59.327422,
+        ///    &quot;Longitude&quot;: 18.054265
+        ///  },
+        ///  {
+        ///    &quot;Id&quot;: &quot;87640EA1-ECE1-4260-A708-26ABC4F849B6&quot;,
+        ///    &quot;Name&quot;: &quot;Cheops pyramid&quot;,
+        ///    &quot;Description&quot;: &quot;Hello Egypt&quot;,
+        ///    &quot;Latit [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string initial_data {
             get {

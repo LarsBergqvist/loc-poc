@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using LocPoc.Contracts;
 
-namespace LocPoc.Repositories.Sqlite
+namespace LocPoc.Repository.Sqlite
 {
     public class SqliteContext: DbContext   
     {
