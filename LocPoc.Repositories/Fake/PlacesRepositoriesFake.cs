@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using LocPoc.Models;
 using Newtonsoft.Json;
 
@@ -12,10 +13,17 @@ namespace LocPoc.Repositories
         {
             _places = new List<Place>();
             var parsedPlaces = JsonConvert.DeserializeObject<Place[]>(Fake.Resource1.initial_data);
-            foreach(var place in parsedPlaces)
+            foreach (var place in parsedPlaces)
             {
-               _places.Add(place);
+                _places.Add(place);
             }
+        }
+
+        public Place AddPlace(Place place)
+        {
+            place.Id = Guid.NewGuid().ToString();
+            _places.Add(place);
+            return new Place();
         }
 
         public IEnumerable<Place> GetAllPlaces()

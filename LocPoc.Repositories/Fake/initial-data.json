@@ -1,20 +1,20 @@
 [
   {
-    "Id": 1,
+    "Id": "485DCD53-90F2-441A-A8BE-8CCBF5B736AE",
     "Name": "Eiffel Tower",
     "Description": "Viva La France",
     "Latitude": 48.858372,
     "Longitude": 2.294481
   },
   {
-    "Id": 2,
+    "Id": "92B0912C-5417-454E-98BC-75D0A02E8B19",
     "Name": "Stockholms Stadshus",
     "Description": "Hello Stockholm",
     "Latitude": 59.327422,
     "Longitude": 18.054265
   },
   {
-    "Id": 3,
+    "Id": "87640EA1-ECE1-4260-A708-26ABC4F849B6",
     "Name": "Cheops pyramid",
     "Description": "Hello Egypt",
     "Latitude": 29.978842,

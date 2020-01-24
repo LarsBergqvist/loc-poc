@@ -1,8 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using LocPoc.Repositories;
 using LocPoc.Models;
@@ -23,8 +20,8 @@ namespace LocPoc.Api.Controllers
         [HttpGet]
         public IEnumerable<Place> Get()
         {
-var test = _placesRepository.GetAllPlaces();
-         return _placesRepository.GetAllPlaces();
+            var test = _placesRepository.GetAllPlaces();
+            return _placesRepository.GetAllPlaces();
         }
 
         // GET: api/Places/5
@@ -36,8 +33,22 @@ var test = _placesRepository.GetAllPlaces();
 
         // POST: api/Places
         [HttpPost]
-        public void Post([FromBody] string value)
+        public IActionResult Post([FromBody] Place place)
         {
+            if (place == null)
+                return BadRequest();
+
+            if (String.IsNullOrWhiteSpace(place.Name))
+            {
+                ModelState.AddModelError("Name", "Name must be specified");
+            }
+
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var createdPlace = _placesRepository.AddPlace(place);
+
+            return Created("place", createdPlace);
         }
 
         // PUT: api/Places/5
