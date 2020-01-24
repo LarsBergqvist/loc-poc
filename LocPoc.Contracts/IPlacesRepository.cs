@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
-using LocPoc.Models;
 
-namespace LocPoc.Repositories
+namespace LocPoc.Contracts
 {
     public interface IPlacesRepository
     {

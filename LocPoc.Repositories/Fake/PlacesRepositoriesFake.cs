@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using LocPoc.Models;
+using LocPoc.Contracts;
 using Newtonsoft.Json;
 
 namespace LocPoc.Repositories

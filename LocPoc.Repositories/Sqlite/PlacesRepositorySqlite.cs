@@ -1,4 +1,4 @@
-﻿using LocPoc.Models;
+﻿using LocPoc.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Text;

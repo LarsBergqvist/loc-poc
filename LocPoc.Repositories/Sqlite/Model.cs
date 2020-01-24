@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using LocPoc.Models;
+using LocPoc.Contracts;
 
 namespace LocPoc.Repositories.Sqlite
 {

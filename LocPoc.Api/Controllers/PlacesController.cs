@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using LocPoc.Repositories;
-using LocPoc.Models;
+using LocPoc.Contracts;
 
 namespace LocPoc.Api.Controllers
 {
@@ -20,7 +20,6 @@ namespace LocPoc.Api.Controllers
         [HttpGet]
         public IEnumerable<Place> Get()
         {
-            var test = _placesRepository.GetAllPlaces();
             return _placesRepository.GetAllPlaces();
         }
 

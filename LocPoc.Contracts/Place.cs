@@ -1,4 +1,4 @@
-﻿namespace LocPoc.Models
+﻿namespace LocPoc.Contracts
 {
     public class Place
     {

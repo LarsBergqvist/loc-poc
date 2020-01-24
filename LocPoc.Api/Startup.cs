@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using LocPoc.Repositories;
+using LocPoc.Contracts;
 using LocPoc.Repositories.Sqlite;
 using Microsoft.EntityFrameworkCore;
 
