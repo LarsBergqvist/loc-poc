@@ -26,8 +26,12 @@ namespace LocPoc.Api
             services.AddScoped<IPlacesRepository, LocPoc.Repository.Sqlite.PlacesRepository>();
 
             // Fake in-memory collection
-//            services.AddScoped<IPlacesRepository, LocPoc.Repository.InMemory.PlacesRepository>();
+            //            services.AddScoped<IPlacesRepository, LocPoc.Repository.InMemory.PlacesRepository>();
 
+            services.AddCors(options =>
+            {
+                options.AddPolicy("Open", builder => builder.AllowAnyOrigin().AllowAnyHeader());
+            });
 
             services.AddControllers()
                .AddJsonOptions(opts => opts.JsonSerializerOptions.PropertyNamingPolicy = null);
@@ -46,6 +50,8 @@ namespace LocPoc.Api
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseCors("Open");
 
             app.UseEndpoints(endpoints =>
             {

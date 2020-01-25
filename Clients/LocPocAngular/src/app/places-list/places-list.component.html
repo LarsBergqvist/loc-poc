@@ -1,0 +1,18 @@
+<p-table *ngIf="places" [value]="places">
+  <ng-template pTemplate="header">
+      <tr>
+          <th>Name</th>
+          <th>Description</th>
+          <th>Longitude</th>
+          <th>Latitude</th>
+      </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-place>
+      <tr>
+          <td>{{place.Name}}</td>
+          <td>{{place.Description}}</td>
+          <td>{{place.Longitude}}</td>
+          <td>{{place.Latitude}}</td>
+      </tr>
+  </ng-template>
+</p-table>
