@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AppBarComponent } from './app-bar.component';
+import { ToolbarModule } from 'primeng/toolbar';
 
 describe('AppBarComponent', () => {
   let component: AppBarComponent;
@@ -8,6 +9,9 @@ describe('AppBarComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports: [
+        ToolbarModule
+      ],
       declarations: [ AppBarComponent ]
     })
     .compileComponents();

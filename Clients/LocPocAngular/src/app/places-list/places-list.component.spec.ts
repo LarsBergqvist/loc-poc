@@ -1,13 +1,24 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { PlacesListComponent } from './places-list.component';
+import { TableModule } from 'primeng/table';
+import { PlacesService } from '../services/places.service';
 
 describe('PlacesListComponent', () => {
   let component: PlacesListComponent;
   let fixture: ComponentFixture<PlacesListComponent>;
+  let placesService: any;
 
   beforeEach(async(() => {
+    placesService = {
+    };
     TestBed.configureTestingModule({
+      imports: [
+        TableModule
+      ],
+      providers: [
+        { provide: PlacesService, useValue: placesService }
+      ],
       declarations: [ PlacesListComponent ]
     })
     .compileComponents();

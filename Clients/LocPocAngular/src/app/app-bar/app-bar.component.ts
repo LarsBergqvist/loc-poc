@@ -3,7 +3,7 @@ import { MessageService } from '../services/message.service';
 import { OpenPlaceDetailsMessage } from '../messages/open-place-details.message';
 
 @Component({
-  selector: 'app-app-bar',
+  selector: 'app-bar',
   templateUrl: './app-bar.component.html',
   styleUrls: ['./app-bar.component.scss']
 })

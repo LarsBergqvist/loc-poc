@@ -6,7 +6,8 @@
     "start": "ng serve",
     "startSSL": "ng serve --ssl --ssl-key '.\\certificates\\localhost.key'  --ssl-cert '.\\certificates\\localhost.crt'",
     "build": "ng build",
-    "test": "ng test",
+    "test": "ng test --watch false",
+    "test_watch": "ng test --watch true",
     "lint": "ng lint",
     "e2e": "ng e2e"
   },
