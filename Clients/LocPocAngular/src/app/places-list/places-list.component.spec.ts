@@ -11,6 +11,8 @@ describe('PlacesListComponent', () => {
 
   beforeEach(async(() => {
     placesService = {
+      getPlaces: jasmine.createSpy('getPlaces'),
+      saveNewPlace: jasmine.createSpy('saveNewPlace')
     };
     TestBed.configureTestingModule({
       imports: [
@@ -19,6 +21,7 @@ describe('PlacesListComponent', () => {
       providers: [
         { provide: PlacesService, useValue: placesService }
       ],
+
       declarations: [ PlacesListComponent ]
     })
     .compileComponents();
