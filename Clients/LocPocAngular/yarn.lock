@@ -5665,10 +5665,10 @@ primeicons@^2.0.0:
   resolved "https://registry.yarnpkg.com/primeicons/-/primeicons-2.0.0.tgz#ec3e5a8d4d04a09309225a5a57deb911e08dc0d3"
   integrity sha512-GJTCeMSQU8UU1GqbsaDrg/IH+b/vSinJQl52NVpdJ7sShYLZA8Eq6jLF48Ye3N/dQloGrE07i7XsZvxQ9pNbqg==
 
-primeng@^9.0.0-rc.3:
-  version "9.0.0-rc.3"
-  resolved "https://registry.yarnpkg.com/primeng/-/primeng-9.0.0-rc.3.tgz#4c45b72d1ffbade46e2aea9fd824e8929ae19fea"
-  integrity sha512-u1/jTURWrr3+jnIcMY79aooagGWSWg9YnLstAhhx3L0cPtcp8pcToFFXvrWgWWp6paL5dupw24dG9ES+f3wqTg==
+primeng@^8.1.1:
+  version "8.1.1"
+  resolved "https://registry.yarnpkg.com/primeng/-/primeng-8.1.1.tgz#3b1f95f503f1bd70834caea775dbfd2e4e322b5c"
+  integrity sha512-8dP8A3qkmOvDTe97kCeFvoCk6oPNDdgMTdT4UBzhC4ua5wM7i7pjYXuKzAXm3oEFf+iSEB6WqzzfSqyZdbEA+w==
 
 private@^0.1.6:
   version "0.1.8"

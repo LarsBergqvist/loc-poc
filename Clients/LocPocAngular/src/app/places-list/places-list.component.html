@@ -1,4 +1,4 @@
-<p-table *ngIf="places" [value]="places">
+<p-table *ngIf="places" [value]="places" [responsive]="true">
   <ng-template pTemplate="header">
       <tr>
           <th>Name</th>
@@ -9,10 +9,13 @@
   </ng-template>
   <ng-template pTemplate="body" let-place>
       <tr>
-          <td>{{place.Name}}</td>
-          <td>{{place.Description}}</td>
-          <td>{{place.Longitude}}</td>
-          <td>{{place.Latitude}}</td>
+          <td class="ui-column-title">{{place.Name}}</td>
+          <td class="ui-column-title">{{place.Description}}</td>
+          <td class="ui-column-title">{{place.Longitude}}</td>
+          <td class="ui-column-title">{{place.Latitude}}</td>
       </tr>
   </ng-template>
 </p-table>
+<!-- div *ngIf="options">
+  <p-gmap [options]="options" [overlays]="overlays" [style]="{'width':'100%','height':'320px'}" ></p-gmap>
+</div -->
