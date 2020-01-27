@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { MessageService } from '../services/message.service';
 import { filter } from 'rxjs/operators';
-import { AddNewPlaceMessage } from '../messages/add-new-place.message';
+import { OpenPlaceDetailsMessage } from '../messages/open-place-details.message';
 import { Place } from '../models/place';
+import { SavePlaceMessage } from '../messages/save-place.message';
 
 enum PlaceEditMode {
   AddNew = 0,
@@ -23,33 +24,46 @@ export class PlaceDetailsComponent implements OnInit {
     this.createEmptyPlace();
   }
 
+  async ngOnInit() {
+    const messages = this.messageService.getMessage();
+    messages.pipe(filter(message => message instanceof OpenPlaceDetailsMessage))
+    .subscribe(async (message: OpenPlaceDetailsMessage)  => {
+      if (message.addNew) {
+        this.createEmptyPlace();
+        await this.setCurrentPosition();
+        this.editMode = PlaceEditMode.AddNew;
+        this.isVisible = true;
+      }
+    });
+  }
+
+  get canSavePlace(): boolean {
+    if (!this.place || !this.place.Name) {
+      return false;
+    }
+
+    return this.place.Name.replace(/^[ \t\r\n]+/i, '').length > 0;
+  }
+
+  savePlace() {
+    this.messageService.sendMessage(new SavePlaceMessage(this.place, true));
+    this.isVisible = false;
+  }
+
   private createEmptyPlace() {
     this.place = {
       Id: '',
       Name: '',
       Description: '',
       Latitude: 0.0,
-      Longitude: 0.0
+      Longitude: 51.482578
     };
   }
 
   private async setCurrentPosition() {
     navigator.geolocation.getCurrentPosition(async position => {
-      console.log('got pos');
-      console.log(position, null, 2);
       this.place.Latitude = position.coords.latitude;
       this.place.Longitude = position.coords.longitude;
-    });
-  }
-
-  async ngOnInit() {
-    const messages = this.messageService.getMessage();
-    messages.pipe(filter(message => message instanceof AddNewPlaceMessage))
-    .subscribe(async message  => {
-      this.createEmptyPlace();
-//      await this.setCurrentPosition();
-      this.editMode = PlaceEditMode.AddNew;
-      this.isVisible = true;
     });
   }
 

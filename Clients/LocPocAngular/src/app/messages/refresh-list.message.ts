@@ -1,11 +1,11 @@
 import { Message } from './message';
 
-export class AddNewPlaceMessage extends Message {
+export class RefreshListMessage extends Message {
   constructor() {
     super();
   }
 
   get Type(): string {
-    return 'AddNewPlaceMessage';
+    return 'RefreshListMessage';
   }
 }

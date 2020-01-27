@@ -1,5 +1,9 @@
 <p-sidebar [(visible)]="isVisible" position="right" styleClass="ui-sidebar-lg" blockScroll="true">
   Add a new place
+  <button pButton type="button" label="Save" icon="pi pi-save" (click)="savePlace($event)"
+  [disabled]="!canSavePlace"
+  ></button>
+
   <div *ngIf="place">
     <div class="ui-g-12">
       <div class="ui-g-6">
@@ -19,7 +23,7 @@
       <div class="ui-g-6">
         <span class="ui-fluid">
           <label>Longitude</label>
-        <input type="number" pInputText placeholder="Longitude" [(ngModel)]="place.Longitude">
+        <input type="number" pInputText placeholder="Longitude" [(ngModel)]="place.Longitude" step="any">
         </span>
       </div>
       <div class="ui-g-6">

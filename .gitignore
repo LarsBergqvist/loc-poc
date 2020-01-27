@@ -5,6 +5,8 @@
 
 # locpoc
 locpoc.db
+localhost.crt
+localhost.key
 
 # User-specific files
 *.rsuser
