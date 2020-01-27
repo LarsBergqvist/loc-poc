@@ -4,6 +4,7 @@ import { Place } from '../models/place';
 import { MessageService } from '../services/message.service';
 import { RefreshListMessage } from '../messages/refresh-list.message';
 import { filter } from 'rxjs/operators';
+import { OpenPlaceDetailsMessage } from '../messages/open-place-details.message';
 
 @Component({
   selector: 'app-places-list',
@@ -24,6 +25,10 @@ export class PlacesListComponent implements OnInit {
     });
 
     await this.refreshList();
+  }
+
+  onRowSelect(place) {
+    this.messageService.sendMessage(new OpenPlaceDetailsMessage(place));
   }
 
   private async refreshList() {

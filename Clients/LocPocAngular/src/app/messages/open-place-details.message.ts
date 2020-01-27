@@ -1,10 +1,11 @@
 import { Message } from './message';
+import { Place } from '../models/place';
 
 export class OpenPlaceDetailsMessage extends Message {
-  addNew:  boolean;
-  constructor(addNew: boolean) {
+  place: Place;
+  constructor(place: Place) {
     super();
-    this.addNew = addNew;
+    this.place = place;
   }
 
   get Type(): string {

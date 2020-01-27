@@ -4,6 +4,8 @@ import { filter } from 'rxjs/operators';
 import { OpenPlaceDetailsMessage } from '../messages/open-place-details.message';
 import { Place } from '../models/place';
 import { SavePlaceMessage } from '../messages/save-place.message';
+import { AddNewPlaceMessage } from '../messages/add-new-place.message';
+import * as clone from 'clone';
 
 enum PlaceEditMode {
   AddNew = 0,
@@ -18,7 +20,7 @@ enum PlaceEditMode {
 export class PlaceDetailsComponent implements OnInit {
   isVisible = false;
   place: Place;
-  editMode: PlaceEditMode.AddNew;
+  editMode: PlaceEditMode;
 
   constructor(private readonly messageService: MessageService) {
     this.createEmptyPlace();
@@ -28,7 +30,15 @@ export class PlaceDetailsComponent implements OnInit {
     const messages = this.messageService.getMessage();
     messages.pipe(filter(message => message instanceof OpenPlaceDetailsMessage))
     .subscribe(async (message: OpenPlaceDetailsMessage)  => {
-      if (message.addNew) {
+      if (message) {
+        this.place = clone(message.place);
+        this.editMode = PlaceEditMode.Edit;
+        this.isVisible = true;
+      }
+    });
+    messages.pipe(filter(message => message instanceof AddNewPlaceMessage))
+    .subscribe(async (message: AddNewPlaceMessage)  => {
+      if (message) {
         this.createEmptyPlace();
         await this.setCurrentPosition();
         this.editMode = PlaceEditMode.AddNew;
@@ -43,6 +53,10 @@ export class PlaceDetailsComponent implements OnInit {
     }
 
     return this.place.Name.replace(/^[ \t\r\n]+/i, '').length > 0;
+  }
+
+  get isAddNewMode(): boolean {
+    return this.editMode === PlaceEditMode.AddNew;
   }
 
   savePlace() {

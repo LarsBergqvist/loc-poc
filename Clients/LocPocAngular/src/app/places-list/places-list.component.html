@@ -1,4 +1,5 @@
-<p-table *ngIf="places" [value]="places" [responsive]="true">
+<p-table *ngIf="places" [value]="places" [responsive]="true"
+>
   <ng-template pTemplate="header">
       <tr>
           <th>Name</th>
@@ -8,7 +9,7 @@
       </tr>
   </ng-template>
   <ng-template pTemplate="body" let-place>
-      <tr>
+      <tr (click)="onRowSelect(place)">
           <td class="ui-column-title">{{place.Name}}</td>
           <td class="ui-column-title">{{place.Description}}</td>
           <td class="ui-column-title">{{place.Longitude}}</td>
