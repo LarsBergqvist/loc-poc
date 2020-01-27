@@ -6,6 +6,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { PlacesListComponent } from './places-list/places-list.component';
+import { AppConfigService } from './services/app-config.service';
 
 import {TableModule} from 'primeng/table';
 import {GMapModule} from 'primeng/gmap';
@@ -26,6 +27,9 @@ import { FormsModule } from '@angular/forms';
     AppBarComponent,
     PlaceDetailsComponent
   ],
+  providers: [
+    AppConfigService,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -40,7 +44,6 @@ import { FormsModule } from '@angular/forms';
     InputTextModule,
     FormsModule
   ],
-  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
