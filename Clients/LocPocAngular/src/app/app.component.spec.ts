@@ -2,15 +2,15 @@ import { TestBed, async } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { PlacesService } from './services/places.service';
+import { LocationsService } from './services/locations.service';
 
 describe('AppComponent', () => {
-  let placesService: any;
+  let locationsService: any;
 
   beforeEach(async(() => {
-    placesService = {
-      getPlaces: jasmine.createSpy('getPlaces'),
-      saveNewPlace: jasmine.createSpy('saveNewPlace')
+    locationsService = {
+      getLocations: jasmine.createSpy('getLocations'),
+      saveNewLocation: jasmine.createSpy('saveNewLocation')
     };
     TestBed.configureTestingModule({
       imports: [
@@ -20,7 +20,7 @@ describe('AppComponent', () => {
         AppComponent
       ],
       providers: [
-        { provide: PlacesService, useValue: placesService }
+        { provide: LocationsService, useValue: locationsService }
       ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA]
     }).compileComponents();

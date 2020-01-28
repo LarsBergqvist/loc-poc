@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MessageService } from '../services/message.service';
-import { AddNewPlaceMessage } from '../messages/add-new-place.message';
+import { AddNewLocationMessage } from '../messages/add-new-location.message';
 
 @Component({
   selector: 'app-bar',
@@ -14,8 +14,8 @@ export class AppBarComponent implements OnInit {
   ngOnInit() {
   }
 
-  addNewPlace() {
-    this.messageService.sendMessage(new AddNewPlaceMessage());
+  addNewLocation() {
+    this.messageService.sendMessage(new AddNewLocationMessage());
   }
 
 

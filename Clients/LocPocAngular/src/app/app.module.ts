@@ -5,7 +5,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { PlacesListComponent } from './places-list/places-list.component';
+import { LocationsListComponent } from './locations-list/locations-list.component';
 import { AppConfigService } from './services/app-config.service';
 
 import {TableModule} from 'primeng/table';
@@ -17,15 +17,15 @@ import {SidebarModule} from 'primeng/sidebar';
 import {InputTextModule} from 'primeng/inputtext';
 
 import { AppBarComponent } from './app-bar/app-bar.component';
-import { PlaceDetailsComponent } from './place-details/place-details.component';
+import { LocationDetailsComponent } from './location-details/location-details.component';
 import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
     AppComponent,
-    PlacesListComponent,
+    LocationsListComponent,
     AppBarComponent,
-    PlaceDetailsComponent
+    LocationDetailsComponent
   ],
   providers: [
     AppConfigService,

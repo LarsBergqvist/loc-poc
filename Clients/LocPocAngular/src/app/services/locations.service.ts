@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Place } from '../models/place';
+import { Location } from '../models/location';
 import { AppConfigService } from './app-config.service';
 import { v4 as guidgenerator } from 'uuid';
 
 @Injectable({
   providedIn: 'root'
 })
-export class PlacesService {
+export class LocationsService {
   fakeData = [
     {
       Id: '485DCD53-90F2-441A-A8BE-8CCBF5B736AE',
@@ -34,24 +34,24 @@ export class PlacesService {
   constructor(private readonly http: HttpClient, private readonly configService: AppConfigService) {
   }
 
-  async getPlaces(): Promise<Place[]> {
+  async getLocations(): Promise<Location[]> {
     if (await this.useFakeData()) {
       return this.fakeData;
     }
 
     const baseUrl = await this.getBaseUrl();
-    return this.http.get<Place[]>(`${baseUrl}api/places`).toPromise();
+    return this.http.get<Location[]>(`${baseUrl}api/locations`).toPromise();
   }
 
-  async saveNewPlace(place: Place): Promise<Place> {
+  async saveNewLocation(location: Location): Promise<Location> {
     if (await this.useFakeData()) {
-      place.Id = guidgenerator;
-      this.fakeData.push(place);
-      return place;
+      location.Id = guidgenerator;
+      this.fakeData.push(location);
+      return location;
     }
 
     const baseUrl = await this.getBaseUrl();
-    return this.http.post<Place>(`${baseUrl}api/places`, place).toPromise();
+    return this.http.post<Location>(`${baseUrl}api/locations`, location).toPromise();
   }
 
   private async useFakeData(): Promise<boolean> {

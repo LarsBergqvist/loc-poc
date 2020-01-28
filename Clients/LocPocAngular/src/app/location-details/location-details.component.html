@@ -1,23 +1,25 @@
 <p-sidebar [(visible)]="isVisible" position="right" styleClass="ui-sidebar-lg" blockScroll="true">
-  <div *ngIf="isAddNewMode">
-    Add a new place
-    <button pButton type="button" label="Save" icon="pi pi-save" (click)="savePlace($event)"
-    [disabled]="!canSavePlace"
-    ></button>
+  <div class="ui-g-12">
+    <div *ngIf="isAddNewMode">
+      Add a new Location
+      <button pButton type="button" label="Save" icon="pi pi-save" (click)="saveLocation($event)"
+      [disabled]="!canSaveLocation"
+      ></button>
+    </div>
   </div>
 
-  <div *ngIf="place">
+  <div *ngIf="location">
     <div class="ui-fluid">
       <div class="ui-g-12 ui-md-6">
         <span class="ui-fluid">
           <label>Name</label>
-          <input type="text" pInputText placeholder="Name of place" [(ngModel)]="place.Name">
+          <input type="text" pInputText placeholder="Name of location" [(ngModel)]="location.Name">
         </span>
       </div>
       <div class="ui-g-12 ui-md-6">
         <span class="ui-fluid">
           <label>Description</label>
-          <input type="text" pInputText placeholder="Description of place" [(ngModel)]="place.Description">
+          <input type="text" pInputText placeholder="Description of location" [(ngModel)]="location.Description">
         </span>
       </div>
     </div>
@@ -25,13 +27,13 @@
       <div class="ui-g-12 ui-md-6">
         <span class="ui-fluid">
           <label>Longitude</label>
-        <input type="number" pInputText placeholder="Longitude" [(ngModel)]="place.Longitude" step="any">
+        <input type="number" pInputText placeholder="Longitude" [(ngModel)]="location.Longitude" step="any">
         </span>
       </div>
       <div class="ui-g-12 ui-md-6">
         <span class="ui-fluid">
           <label>Latitude</label>
-        <input type="text" pInputText placeholder="Latitude" [(ngModel)]="place.Latitude">
+        <input type="text" pInputText placeholder="Latitude" [(ngModel)]="location.Latitude">
         </span>
       </div>
     </div>
