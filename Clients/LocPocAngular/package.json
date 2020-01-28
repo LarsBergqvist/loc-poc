@@ -7,7 +7,9 @@
     "startSSL": "ng serve --ssl --ssl-key '.\\certificates\\localhost.key'  --ssl-cert '.\\certificates\\localhost.crt'",
     "build": "ng build",
     "test": "ng test --watch false",
+    "test_full_chrome": "ng test --watch false --code-coverage --browsers=Chrome",
     "test_watch": "ng test --watch true",
+    "test_watch_full_chrome": "ng test --watch true --browsers=Chrome",
     "lint": "ng lint",
     "e2e": "ng e2e"
   },
