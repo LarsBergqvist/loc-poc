@@ -4,6 +4,7 @@ import { filter } from 'rxjs/operators';
 import { SaveLocationMessage } from './messages/save-location.message';
 import { LocationsService } from './services/locations.service';
 import { RefreshListMessage } from './messages/refresh-list.message';
+import { DeleteLocationMessage } from './messages/delete-location.message';
 
 @Component({
   selector: 'app-root',
@@ -18,13 +19,26 @@ export class AppComponent implements OnInit {
     const messages = this.messageService.getMessage();
 
     messages.pipe(filter(message => message instanceof SaveLocationMessage))
-    .subscribe( (message: SaveLocationMessage)  => {
-      if (message.addNew) {
-        console.log('got save new');
-        this.locationsService.saveNewLocation(message.location).then(value => {
-          this.messageService.sendMessage(new RefreshListMessage());
-        });
-      }
+      .subscribe( (message: SaveLocationMessage)  => {
+        if (message.addNew) {
+          console.log('got save new');
+          this.locationsService.saveNewLocation(message.location).then(value => {
+            this.messageService.sendMessage(new RefreshListMessage());
+          });
+        } else {
+          console.log('got save update');
+          this.locationsService.updateLocation(message.location).then(value => {
+            this.messageService.sendMessage(new RefreshListMessage());
+          });
+        }
+    });
+
+    messages.pipe(filter(message => message instanceof DeleteLocationMessage))
+      .subscribe( (message: DeleteLocationMessage)  => {
+          console.log('got delete');
+          this.locationsService.deleteLocation(message.id).then(value => {
+            this.messageService.sendMessage(new RefreshListMessage());
+          });
     });
 
   }

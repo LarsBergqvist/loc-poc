@@ -7,7 +7,7 @@ namespace LocPoc.Repository.InMemory
 {
     public class LocationsRepository : ILocationsRepository
     {
-        IList<Location> _locations;
+        List<Location> _locations;
 
         public LocationsRepository()
         {
@@ -26,9 +26,29 @@ namespace LocPoc.Repository.InMemory
             return new Location();
         }
 
+        public void Delete(string id)
+        {
+            _locations.RemoveAll(loc => loc.Id == id);
+        }
+
+        public Location Get(string id)
+        {
+            return _locations.Find(loc => loc.Id == id);
+        }
+
         public IEnumerable<Location> GetAll()
         {
             return _locations;
+        }
+
+        public Location Update(Location location)
+        {
+            var currentIdx = _locations.FindIndex(loc => loc.Id == location.Id);
+            if (currentIdx > -1)
+            {
+                _locations[currentIdx] = location;
+            }
+            return location;
         }
     }
 }

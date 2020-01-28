@@ -51,14 +51,16 @@ namespace LocPoc.Api.Controllers
 
         // PUT: api/Locations/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public void Put(string id, [FromBody] Location location)
         {
+            _locationsRepository.Update(location);
         }
 
         // DELETE: api/Locations/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public void Delete(string id)
         {
+            _locationsRepository.Delete(id);
         }
     }
 }

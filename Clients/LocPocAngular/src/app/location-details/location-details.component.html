@@ -6,6 +6,15 @@
       [disabled]="!canSaveLocation"
       ></button>
     </div>
+    <div *ngIf="!isAddNewMode">
+      Update a Location
+      <button pButton type="button" label="Save" icon="pi pi-save" (click)="updateLocation($event)"
+      [disabled]="!canSaveLocation"
+      ></button>
+      <button pButton type="button" label="Delete" icon="pi pi-times" (click)="deleteLocation($event)"
+      [disabled]="!canSaveLocation"
+      ></button>
+    </div>
   </div>
 
   <div *ngIf="location">

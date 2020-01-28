@@ -1,6 +1,6 @@
 {
   "apiUrl": "https://localhost",
-  "apiPort": "5001",
-  "useFakeData": true,
+  "apiPort": "44389",
+  "useFakeData": false,
   "useMap": false
 }

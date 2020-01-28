@@ -6,6 +6,7 @@ import { Location } from '../models/location';
 import { SaveLocationMessage } from '../messages/save-location.message';
 import { AddNewLocationMessage } from '../messages/add-new-location.message';
 import * as clone from 'clone';
+import { DeleteLocationMessage } from '../messages/delete-location.message';
 
 enum LocationEditMode {
   AddNew = 0,
@@ -60,6 +61,16 @@ export class LocationDetailsComponent implements OnInit {
 
   saveLocation() {
     this.messageService.sendMessage(new SaveLocationMessage(this.location, true));
+    this.isVisible = false;
+  }
+
+  updateLocation() {
+    this.messageService.sendMessage(new SaveLocationMessage(this.location, false));
+    this.isVisible = false;
+  }
+
+  deleteLocation() {
+    this.messageService.sendMessage(new DeleteLocationMessage(this.location.Id));
     this.isVisible = false;
   }
 

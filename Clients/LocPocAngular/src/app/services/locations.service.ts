@@ -54,6 +54,30 @@ export class LocationsService {
     return this.http.post<Location>(`${baseUrl}api/locations`, location).toPromise();
   }
 
+  async updateLocation(location: Location): Promise<Location> {
+    if (await this.useFakeData()) {
+      const current = this.fakeData.find(l => l.Id === location.Id);
+      current.Name = location.Name;
+      current.Description = location.Description;
+      current.Latitude = location.Latitude;
+      current.Longitude = location.Longitude;
+      return current;
+    }
+
+    const baseUrl = await this.getBaseUrl();
+    return this.http.put<Location>(`${baseUrl}api/locations/${location.Id}`, location).toPromise();
+  }
+
+  async deleteLocation(id: string): Promise<Location> {
+    if (await this.useFakeData()) {
+      this.fakeData = this.fakeData.filter(l => l.Id !== id);
+      return;
+    }
+
+    const baseUrl = await this.getBaseUrl();
+    return this.http.delete<Location>(`${baseUrl}api/locations/${id}`).toPromise();
+  }
+
   private async useFakeData(): Promise<boolean> {
     const config = await this.configService.getConfig();
     return config.useFakeData;

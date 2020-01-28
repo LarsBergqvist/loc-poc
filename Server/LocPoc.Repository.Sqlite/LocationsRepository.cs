@@ -21,9 +21,39 @@ namespace LocPoc.Repository.Sqlite
             return location;
         }
 
+        public void Delete(string id)
+        {
+            var loc = _context.Locations.Find(id);
+            if (loc != null)
+            {
+                _context.Locations.Remove(loc);
+            }
+            _context.SaveChanges();
+        }
+
+        public Location Get(string id)
+        {
+            var loc = _context.Locations.Find(id);
+            return loc;
+        }
+
         public IEnumerable<Location> GetAll()
         {
             return _context.Locations;
+        }
+
+        public Location Update(Location location)
+        {
+            var loc = _context.Locations.Find(location.Id);
+            if (loc != null)
+            {
+                loc.Name = location.Name;
+                loc.Description = location.Description;
+                loc.Latitude = location.Latitude;
+                loc.Longitude = location.Longitude;
+            }
+            _context.SaveChanges();
+            return loc;
         }
     }
 }
