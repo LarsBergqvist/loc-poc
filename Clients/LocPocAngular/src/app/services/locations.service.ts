@@ -1,5 +1,4 @@
 import { Location } from '../models/location';
-import { Injectable } from '@angular/core';
 
 export interface LocationsService {
   getLocations(): Promise<Location[]>;

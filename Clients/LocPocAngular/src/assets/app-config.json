@@ -2,5 +2,6 @@
   "apiUrl": "https://localhost",
   "apiPort": "44389",
   "useFakeData": true,
-  "useMap": false
+  "useMap": false,
+  "googleAPIKey": ""
 }

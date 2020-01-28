@@ -22,12 +22,14 @@ import { FormsModule } from '@angular/forms';
 import { LocationsService } from './services/locations.service';
 import { LocationsServiceImpl } from './services/locations.service.impl';
 import { LocationsServiceMock } from './services/locations.service.mock';
+import { MapComponent } from './location-details/map.component';
 @NgModule({
   declarations: [
     AppComponent,
     LocationsListComponent,
     AppBarComponent,
-    LocationDetailsComponent
+    LocationDetailsComponent,
+    MapComponent
   ],
   providers: [
     AppConfigService,

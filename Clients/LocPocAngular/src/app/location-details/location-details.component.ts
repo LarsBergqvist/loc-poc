@@ -7,6 +7,7 @@ import { SaveLocationMessage } from '../messages/save-location.message';
 import { AddNewLocationMessage } from '../messages/add-new-location.message';
 import * as clone from 'clone';
 import { DeleteLocationMessage } from '../messages/delete-location.message';
+import { AppConfigService } from '../services/app-config.service';
 
 enum LocationEditMode {
   AddNew = 0,
@@ -22,7 +23,8 @@ export class LocationDetailsComponent implements OnInit {
   location: Location;
   editMode: LocationEditMode;
 
-  constructor(private readonly messageService: MessageService) {
+  constructor(private readonly messageService: MessageService,
+              private readonly appConfigService: AppConfigService) {
     this.createDefaultLocation();
   }
 
@@ -57,6 +59,10 @@ export class LocationDetailsComponent implements OnInit {
 
   get isAddNewMode(): boolean {
     return this.editMode === LocationEditMode.AddNew;
+  }
+
+  get useMap(): boolean {
+    return this.appConfigService.useMap;
   }
 
   saveLocation() {

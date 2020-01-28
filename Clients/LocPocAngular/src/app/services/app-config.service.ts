@@ -18,4 +18,7 @@ export class AppConfigService {
   get useMap(): boolean {
     return config.useMap;
   }
+  get googleAPIKey(): string {
+    return config.googleAPIKey;
+  }
 }
