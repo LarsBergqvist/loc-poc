@@ -12,7 +12,7 @@
     "IIS Express": {
       "commandName": "IISExpress",
       "launchBrowser": true,
-      "launchUrl": "api/places",
+      "launchUrl": "api/locations",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
@@ -20,7 +20,7 @@
     "LocPoc.Api": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "api/places",
+      "launchUrl": "api/locations",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },

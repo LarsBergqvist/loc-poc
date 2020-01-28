@@ -9,7 +9,7 @@ namespace LocPoc.Repository.Sqlite
         {
 
         }
-        public DbSet<Place> Places { get; set; }
+        public DbSet<Location> Locations { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)
             => options.UseSqlite("Data Source=locpoc.db");

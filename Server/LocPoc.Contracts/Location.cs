@@ -1,6 +1,6 @@
 ﻿namespace LocPoc.Contracts
 {
-    public class Place
+    public class Location
     {
         public string Id { get; set; }
         public string Name { get; set; }

@@ -7,36 +7,36 @@ namespace LocPoc.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class PlacesController : ControllerBase
+    public class LocationsController : ControllerBase
     {
-        IPlacesRepository _placesRepository;
-        public PlacesController(IPlacesRepository placesRepository)
+        ILocationsRepository _locationsRepository;
+        public LocationsController(ILocationsRepository locationsRepository)
         {
-            _placesRepository = placesRepository;
+            _locationsRepository = locationsRepository;
         }
 
-        // GET: api/Places
+        // GET: api/Locations
         [HttpGet]
-        public IEnumerable<Place> Get()
+        public IEnumerable<Location> Get()
         {
-            return _placesRepository.GetAllPlaces();
+            return _locationsRepository.GetAll();
         }
 
-        // GET: api/Places/5
+        // GET: api/Locations/5
         [HttpGet("{id}", Name = "Get")]
         public string Get(int id)
         {
             return "value";
         }
 
-        // POST: api/Places
+        // POST: api/Locations
         [HttpPost]
-        public IActionResult Post([FromBody] Place place)
+        public IActionResult Post([FromBody] Location location)
         {
-            if (place == null)
+            if (location == null)
                 return BadRequest();
 
-            if (String.IsNullOrWhiteSpace(place.Name))
+            if (String.IsNullOrWhiteSpace(location.Name))
             {
                 ModelState.AddModelError("Name", "Name must be specified");
             }
@@ -44,18 +44,18 @@ namespace LocPoc.Api.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var createdPlace = _placesRepository.AddPlace(place);
+            var createdLoc = _locationsRepository.Add(location);
 
-            return Created("place", createdPlace);
+            return Created("location", createdLoc);
         }
 
-        // PUT: api/Places/5
+        // PUT: api/Locations/5
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] string value)
         {
         }
 
-        // DELETE: api/ApiWithActions/5
+        // DELETE: api/Locations/5
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
