@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { LocationsServiceImpl } from '../services/locations.service.impl';
+import { Component, OnInit, Inject } from '@angular/core';
+import { LocationsService } from '../services/locations.service';
 import { Location } from '../models/location';
 import { MessageService } from '../services/message.service';
 import { RefreshListMessage } from '../messages/refresh-list.message';
@@ -14,7 +14,8 @@ export class LocationsListComponent implements OnInit {
   options: any;
   overlays: any;
   locations: Location[];
-  constructor(private readonly locationsService: LocationsServiceImpl, private readonly messageService: MessageService) { }
+  constructor(private readonly messageService: MessageService,
+              @Inject('LocationsService') private readonly locationsService: LocationsService) { }
 
   async ngOnInit() {
     const messages = this.messageService.getMessage();

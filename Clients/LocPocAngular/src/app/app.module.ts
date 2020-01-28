@@ -31,7 +31,9 @@ import { LocationsServiceMock } from './services/locations.service.mock';
   ],
   providers: [
     AppConfigService,
-    { provide: LocationsServiceImpl,    useFactory:  locationsServiceFactory(), deps: [HttpClient, AppConfigService] }
+    { provide: 'LocationsService', useFactory:  locationsServiceFactory(),
+      deps: [HttpClient, AppConfigService]
+    }
   ],
   imports: [
     BrowserModule,
