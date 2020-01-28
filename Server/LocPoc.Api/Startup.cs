@@ -26,7 +26,7 @@ namespace LocPoc.Api
             services.AddScoped<ILocationsRepository, LocPoc.Repository.Sqlite.LocationsRepository>();
 
             // Fake in-memory collection
-            //            services.AddScoped<ILocationsRepository, LocPoc.Repository.InMemory.LocationsRepository>();
+            //              services.AddScoped<ILocationsRepository, LocPoc.Repository.InMemory.LocationsRepository>();
 
             services.AddCors(options =>
             {
