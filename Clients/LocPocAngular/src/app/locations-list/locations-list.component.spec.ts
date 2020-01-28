@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { LocationsListComponent } from './locations-list.component';
 import { TableModule } from 'primeng/table';
-import { LocationsService } from '../services/locations.service';
+import { LocationsServiceImpl } from '../services/locations.service.impl';
 
 describe('LocationsListComponent', () => {
   let component: LocationsListComponent;
@@ -19,7 +19,7 @@ describe('LocationsListComponent', () => {
         TableModule
       ],
       providers: [
-        { provide: LocationsService, useValue: locationsService }
+        { provide: LocationsServiceImpl, useValue: locationsService }
       ],
 
       declarations: [ LocationsListComponent ]

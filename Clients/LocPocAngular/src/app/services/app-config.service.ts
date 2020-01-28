@@ -1,29 +1,21 @@
-import { HttpClient } from '@angular/common/http';
-import { AppConfig } from '../models/app-config';
 import { Injectable } from '@angular/core';
+import * as config from '../../assets/app-config.json';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AppConfigService {
-  private config: AppConfig;
-  private configPath = 'assets/app-config.json';
 
-  constructor(private readonly http: HttpClient) {
+  get apiUrl(): string {
+    return config.apiUrl;
   }
-
-  async getConfig(): Promise<AppConfig> {
-    if (!this.config) {
-      await this.load();
-    }
-    return this.config;
+  get apiPort(): string {
+    return config.apiPort;
   }
-
-  load(): Promise<void | AppConfig> {
-    return this.http.get<AppConfig>(this.configPath)
-      .toPromise()
-      .then(res => {
-        this.config = res;
-    });
+  get useFakeData(): boolean {
+    return config.useFakeData;
+  }
+  get useMap(): boolean {
+    return config.useMap;
   }
 }

@@ -1,8 +1,8 @@
 import { TestBed } from '@angular/core/testing';
 import { HttpClient } from '@angular/common/http';
-import { LocationsService } from './locations.service';
+import { LocationsServiceImpl } from './locations.service.impl';
 
-describe('LocationsService', () => {
+describe('LocationsServiceImpl', () => {
   let httpClient: any;
 
   beforeEach(() => {
@@ -21,7 +21,7 @@ describe('LocationsService', () => {
   });
 
   it('should be created', () => {
-    const service: LocationsService = TestBed.get(LocationsService);
+    const service: LocationsServiceImpl = TestBed.get(LocationsServiceImpl);
     expect(service).toBeTruthy();
   });
 });

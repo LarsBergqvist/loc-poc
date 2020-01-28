@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MessageService } from './services/message.service';
 import { filter } from 'rxjs/operators';
 import { SaveLocationMessage } from './messages/save-location.message';
-import { LocationsService } from './services/locations.service';
+import { LocationsServiceImpl } from './services/locations.service.impl';
 import { RefreshListMessage } from './messages/refresh-list.message';
 import { DeleteLocationMessage } from './messages/delete-location.message';
 
@@ -12,7 +12,7 @@ import { DeleteLocationMessage } from './messages/delete-location.message';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  constructor(private readonly messageService: MessageService, private readonly locationsService: LocationsService) {
+  constructor(private readonly messageService: MessageService, private readonly locationsService: LocationsServiceImpl) {
   }
 
   ngOnInit(): void {

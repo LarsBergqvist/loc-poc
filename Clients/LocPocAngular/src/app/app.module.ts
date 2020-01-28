@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -19,7 +19,9 @@ import {InputTextModule} from 'primeng/inputtext';
 import { AppBarComponent } from './app-bar/app-bar.component';
 import { LocationDetailsComponent } from './location-details/location-details.component';
 import { FormsModule } from '@angular/forms';
-
+import { LocationsService } from './services/locations.service';
+import { LocationsServiceImpl } from './services/locations.service.impl';
+import { LocationsServiceMock } from './services/locations.service.mock';
 @NgModule({
   declarations: [
     AppComponent,
@@ -29,6 +31,7 @@ import { FormsModule } from '@angular/forms';
   ],
   providers: [
     AppConfigService,
+    { provide: LocationsServiceImpl,    useFactory:  locationsServiceFactory(), deps: [HttpClient, AppConfigService] }
   ],
   imports: [
     BrowserModule,
@@ -47,3 +50,12 @@ import { FormsModule } from '@angular/forms';
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+export function locationsServiceFactory() {
+  return (http: HttpClient, configService: AppConfigService): LocationsService => {
+    if (configService.useFakeData) {
+      return new LocationsServiceMock();
+    } else {
+      return new LocationsServiceImpl(http, configService);
+    }
+  };
+}
