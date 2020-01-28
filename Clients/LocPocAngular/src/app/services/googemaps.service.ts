@@ -3,9 +3,7 @@ import { Injectable } from '@angular/core';
 import * as loadGoogleMapsApi from 'load-google-maps-api';
 import { AppConfigService } from './app-config.service';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 class GoogleMapsService {
   constructor(private readonly appConfigService: AppConfigService) {}
   loadGoogleMapsApi() {

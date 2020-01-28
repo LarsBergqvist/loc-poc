@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -23,6 +23,27 @@ import { LocationsService } from './services/locations.service';
 import { LocationsServiceImpl } from './services/locations.service.impl';
 import { LocationsServiceMock } from './services/locations.service.mock';
 import { MapComponent } from './location-details/map.component';
+import { GoogleMapsService } from './services/googemaps.service';
+
+export function locationsServiceFactory() {
+  return (http: HttpClient, configService: AppConfigService): LocationsService => {
+    if (configService.useFakeData) {
+      return new LocationsServiceMock();
+    } else {
+      return new LocationsServiceImpl(http, configService);
+    }
+  };
+}
+
+export function googleMapInit(config: AppConfigService, service: GoogleMapsService, ) {
+  if (config.useMap) {
+    return () =>  service.loadGoogleMapsApi();
+  } else {
+    return () => {};
+  }
+}
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -35,6 +56,13 @@ import { MapComponent } from './location-details/map.component';
     AppConfigService,
     { provide: 'LocationsService', useFactory:  locationsServiceFactory(),
       deps: [HttpClient, AppConfigService]
+    },
+    GoogleMapsService,
+    {
+      provide: APP_INITIALIZER,
+      useFactory: googleMapInit,
+      multi: true,
+      deps: [AppConfigService, GoogleMapsService]
     }
   ],
   imports: [
@@ -54,12 +82,3 @@ import { MapComponent } from './location-details/map.component';
   bootstrap: [AppComponent]
 })
 export class AppModule { }
-export function locationsServiceFactory() {
-  return (http: HttpClient, configService: AppConfigService): LocationsService => {
-    if (configService.useFakeData) {
-      return new LocationsServiceMock();
-    } else {
-      return new LocationsServiceImpl(http, configService);
-    }
-  };
-}
