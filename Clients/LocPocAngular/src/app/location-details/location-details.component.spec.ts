@@ -11,11 +11,20 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 describe('LocationDetailsComponent', () => {
   let component: LocationDetailsComponent;
   let fixture: ComponentFixture<LocationDetailsComponent>;
+  let locationsService: any;
 
   beforeEach(async(() => {
+    locationsService = {
+      getLocations: jasmine.createSpy('getLocations'),
+      saveNewLocation: jasmine.createSpy('saveNewLocation')
+    };
+
     TestBed.configureTestingModule({
       imports: [
         InputTextModule, ButtonModule, SidebarModule, FormsModule, BrowserAnimationsModule
+      ],
+      providers: [
+        { provide: 'LocationsService', useValue: locationsService }
       ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
       declarations: [ LocationDetailsComponent ]

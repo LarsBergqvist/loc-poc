@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { LocationsService } from '../services/locations.service';
 import { Location } from '../models/location';
-import { MessageService } from '../services/message.service';
+import { MessageBrokerService } from '../services/message-broker.service';
 import { RefreshListMessage } from '../messages/refresh-list.message';
 import { filter } from 'rxjs/operators';
 import { OpenLocationDetailsMessage } from '../messages/open-location-details.message';
@@ -14,7 +14,7 @@ export class LocationsListComponent implements OnInit {
   options: any;
   overlays: any;
   locations: Location[];
-  constructor(private readonly messageService: MessageService,
+  constructor(private readonly messageService: MessageBrokerService,
               @Inject('LocationsService') private readonly locationsService: LocationsService) { }
 
   async ngOnInit() {

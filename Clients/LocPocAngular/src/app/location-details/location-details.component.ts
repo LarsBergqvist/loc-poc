@@ -1,13 +1,13 @@
-import { Component, OnInit } from '@angular/core';
-import { MessageService } from '../services/message.service';
+import { Component, OnInit, Inject } from '@angular/core';
+import { MessageBrokerService } from '../services/message-broker.service';
 import { filter } from 'rxjs/operators';
 import { OpenLocationDetailsMessage } from '../messages/open-location-details.message';
 import { Location } from '../models/location';
-import { SaveLocationMessage } from '../messages/save-location.message';
 import { AddNewLocationMessage } from '../messages/add-new-location.message';
 import * as clone from 'clone';
-import { DeleteLocationMessage } from '../messages/delete-location.message';
 import { AppConfigService } from '../services/app-config.service';
+import { LocationsService } from '../services/locations.service';
+import { RefreshListMessage } from '../messages/refresh-list.message';
 
 enum LocationEditMode {
   AddNew = 0,
@@ -23,8 +23,9 @@ export class LocationDetailsComponent implements OnInit {
   location: Location;
   editMode: LocationEditMode;
 
-  constructor(private readonly messageService: MessageService,
-              private readonly appConfigService: AppConfigService) {
+  constructor(private readonly messageService: MessageBrokerService,
+              private readonly appConfigService: AppConfigService,
+              @Inject('LocationsService') private readonly locationsService: LocationsService) {
     this.createDefaultLocation();
   }
 
@@ -66,18 +67,30 @@ export class LocationDetailsComponent implements OnInit {
   }
 
   saveLocation() {
-    this.messageService.sendMessage(new SaveLocationMessage(this.location, true));
-    this.isVisible = false;
+    this.locationsService.saveNewLocation(this.location).then(() => {
+      this.isVisible = false;
+      this.messageService.sendMessage(new RefreshListMessage());
+    }).catch((error) => {
+      console.log(error);
+    });
   }
 
   updateLocation() {
-    this.messageService.sendMessage(new SaveLocationMessage(this.location, false));
-    this.isVisible = false;
+    this.locationsService.updateLocation(this.location).then(() => {
+      this.isVisible = false;
+      this.messageService.sendMessage(new RefreshListMessage());
+    }).catch((error) => {
+      console.log(error);
+    });
   }
 
   deleteLocation() {
-    this.messageService.sendMessage(new DeleteLocationMessage(this.location.Id));
-    this.isVisible = false;
+    this.locationsService.deleteLocation(this.location.Id).then(() => {
+      this.isVisible = false;
+      this.messageService.sendMessage(new RefreshListMessage());
+    }).catch((error) => {
+      console.log(error);
+    });
   }
 
   private createDefaultLocation() {

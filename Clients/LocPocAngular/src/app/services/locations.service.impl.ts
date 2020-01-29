@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Location } from '../models/location';
 import { AppConfigService } from './app-config.service';
 import { LocationsService } from './locations.service';
+import { catchError } from 'rxjs/operators';
 
 @Injectable()
 export class LocationsServiceImpl implements LocationsService {

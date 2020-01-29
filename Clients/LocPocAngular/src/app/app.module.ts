@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, APP_INITIALIZER } from '@angular/core';
-import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { HttpClientModule, HttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -15,6 +15,9 @@ import {ButtonModule} from 'primeng/button';
 import {SplitButtonModule} from 'primeng/splitbutton';
 import {SidebarModule} from 'primeng/sidebar';
 import {InputTextModule} from 'primeng/inputtext';
+import {MessagesModule} from 'primeng/messages';
+import {MessageModule} from 'primeng/message';
+import {ToastModule} from 'primeng/toast';
 
 import { AppBarComponent } from './app-bar/app-bar.component';
 import { LocationDetailsComponent } from './location-details/location-details.component';
@@ -24,12 +27,17 @@ import { LocationsServiceImpl } from './services/locations.service.impl';
 import { LocationsServiceMock } from './services/locations.service.mock';
 import { MapComponent } from './location-details/map.component';
 import { GoogleMapsService } from './services/googemaps.service';
+import { HttpInterceptorService } from './services/http-interceptor.service';
+import { MessageBrokerService } from './services/message-broker.service';
+import { MessageService } from 'primeng/components/common/messageservice';
 
 export function locationsServiceFactory() {
   return (http: HttpClient, configService: AppConfigService): LocationsService => {
     if (configService.useFakeData) {
+      console.log('use mock service');
       return new LocationsServiceMock();
     } else {
+      console.log('use real service');
       return new LocationsServiceImpl(http, configService);
     }
   };
@@ -63,7 +71,14 @@ export function googleMapInit(config: AppConfigService, service: GoogleMapsServi
       useFactory: googleMapInit,
       multi: true,
       deps: [AppConfigService, GoogleMapsService]
-    }
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpInterceptorService,
+      multi: true,
+      deps: [MessageBrokerService]
+    },
+    MessageService
   ],
   imports: [
     BrowserModule,
@@ -77,7 +92,10 @@ export function googleMapInit(config: AppConfigService, service: GoogleMapsServi
     SplitButtonModule,
     SidebarModule,
     InputTextModule,
-    FormsModule
+    FormsModule,
+    MessagesModule,
+    MessageModule,
+    ToastModule,
   ],
   bootstrap: [AppComponent]
 })

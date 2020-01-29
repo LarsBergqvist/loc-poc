@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MessageService } from '../services/message.service';
+import { MessageBrokerService } from '../services/message-broker.service';
 import { AddNewLocationMessage } from '../messages/add-new-location.message';
 
 @Component({
@@ -9,7 +9,7 @@ import { AddNewLocationMessage } from '../messages/add-new-location.message';
 })
 export class AppBarComponent implements OnInit {
 
-  constructor(private readonly messageService: MessageService ) { }
+  constructor(private readonly messageService: MessageBrokerService ) { }
 
   ngOnInit() {
   }
