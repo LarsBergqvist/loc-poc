@@ -33,16 +33,9 @@ namespace LocPoc.Api.Controllers
         [HttpPost]
         public IActionResult Post([FromBody] Location location)
         {
-            if (location == null)
-                return BadRequest();
-
-            if (String.IsNullOrWhiteSpace(location.Name))
-            {
-                ModelState.AddModelError("Name", "Name must be specified");
-            }
-
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
+            var errorMessage = GetValidationErrorMessage(location);
+            if (errorMessage.Length > 0)
+                return BadRequest(errorMessage);
 
             var createdLoc = _locationsRepository.Add(location);
 
@@ -51,9 +44,15 @@ namespace LocPoc.Api.Controllers
 
         // PUT: api/Locations/5
         [HttpPut("{id}")]
-        public void Put(string id, [FromBody] Location location)
+        public IActionResult Put(string id, [FromBody] Location location)
         {
+            var errorMessage = GetValidationErrorMessage(location);
+            if (errorMessage.Length > 0)
+                return BadRequest(errorMessage);
+
             _locationsRepository.Update(location);
+
+            return NoContent();
         }
 
         // DELETE: api/Locations/5
@@ -61,6 +60,43 @@ namespace LocPoc.Api.Controllers
         public void Delete(string id)
         {
             _locationsRepository.Delete(id);
+        }
+
+        private string GetValidationErrorMessage(Location location)
+        {
+            var errors = new List<string>();
+
+            if (location == null)
+            {
+                errors.Add("Location can not be null");
+                return errors.ToString();
+            }
+
+            if (String.IsNullOrWhiteSpace(location.Name))
+            {
+                errors.Add("Name must be specified");
+            }
+
+            if (location.Latitude > 90 || location.Latitude < -90)
+            {
+                errors.Add("Latitude must be a degree in the range from -90 to 90");
+            }
+
+            if (location.Longitude > 180 || location.Longitude < -180)
+            {
+                errors.Add("Longitude must be a degree in the range from -180 to 180");
+            }
+
+            var errorMessage = new System.Text.StringBuilder();
+            for (int i=0; i < errors.Count; i++)
+            {
+                if (i == 0)
+                    errorMessage.Append(errors[i]);
+                else
+                    errorMessage.AppendFormat($", {errors[i]}");
+            }
+
+            return errorMessage.ToString();
         }
     }
 }

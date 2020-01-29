@@ -42,7 +42,12 @@ namespace LocPoc.Api
         {
             if (env.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();
+//                app.UseExceptionHandler("/api/Locations");
+                                app.UseDeveloperExceptionPage();
+            }
+            else
+            {
+                app.UseExceptionHandler("/api/Locations");
             }
 
             app.UseHttpsRedirection();
