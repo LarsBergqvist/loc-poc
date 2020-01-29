@@ -21,7 +21,7 @@ export class LocationsServiceMock implements LocationsService {
     },
     {
       Id: '87640EA1-ECE1-4260-A708-26ABC4F849B6',
-      Name: 'Cheops pyramid',
+      Name: 'Cheop\'s pyramid',
       Description: 'Hello Egypt',
       Latitude: 29.978842,
       Longitude: 31.134358

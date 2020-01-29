@@ -92,8 +92,13 @@ export class LocationDetailsComponent implements OnInit {
 
   private async setCurrentPosition() {
     navigator.geolocation.getCurrentPosition(async position => {
-      this.location.Latitude = position.coords.latitude;
-      this.location.Longitude = position.coords.longitude;
+      this.location = {
+        Id: this.location.Id,
+        Name: this.location.Name,
+        Description: this.location.Description,
+        Latitude: position.coords.latitude,
+        Longitude: position.coords.longitude
+      };
     });
   }
 

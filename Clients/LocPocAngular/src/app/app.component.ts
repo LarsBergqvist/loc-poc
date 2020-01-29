@@ -22,12 +22,10 @@ export class AppComponent implements OnInit {
     messages.pipe(filter(message => message instanceof SaveLocationMessage))
       .subscribe( (message: SaveLocationMessage)  => {
         if (message.addNew) {
-          console.log('got save new');
           this.locationsService.saveNewLocation(message.location).then(value => {
             this.messageService.sendMessage(new RefreshListMessage());
           });
         } else {
-          console.log('got save update');
           this.locationsService.updateLocation(message.location).then(value => {
             this.messageService.sendMessage(new RefreshListMessage());
           });
@@ -36,7 +34,6 @@ export class AppComponent implements OnInit {
 
     messages.pipe(filter(message => message instanceof DeleteLocationMessage))
       .subscribe( (message: DeleteLocationMessage)  => {
-          console.log('got delete');
           this.locationsService.deleteLocation(message.id).then(value => {
             this.messageService.sendMessage(new RefreshListMessage());
           });

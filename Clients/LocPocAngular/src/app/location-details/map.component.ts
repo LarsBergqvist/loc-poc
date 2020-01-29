@@ -1,5 +1,4 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { GoogleMapsService } from '../services/googemaps.service';
 import { Location } from '../models/location';
 import { AppConfigService } from '../services/app-config.service';
 
@@ -10,30 +9,33 @@ import { AppConfigService } from '../services/app-config.service';
 })
 export class MapComponent implements OnInit {
   options: any;
+  map: any;
 
   @Input('location')
   set value(location: Location) {
     if (location) {
-      this.googleMapsService.loadGoogleMapsApi();
-
-      this.options = {
-        center: {lat: location.Latitude, lng: location.Longitude},
-        zoom: 12
-      };
+      if (this.map) {
+        // Work with the google map object directly as modifying gmap's options
+        // will not update the map
+        this.map.setCenter({lat: location.Latitude, lng: location.Longitude});
+        this.map.setZoom(15);
+      }
     }
   }
 
-  constructor(private readonly googleMapsService: GoogleMapsService,
-              private readonly appConfigService: AppConfigService) {
-    if (appConfigService.useMap) {
-      googleMapsService.loadGoogleMapsApi();
+  constructor(private readonly appConfigService: AppConfigService) {
+  }
+
+  onMapReady(event: any) {
+    if (event.map) {
+      this.map = event.map;
     }
   }
 
   ngOnInit() {
       this.options = {
-          center: {lat: 36.890257, lng: 30.707417},
-          zoom: 12
+          center: {lat: 51.477847, lng: 0.0},
+          zoom: 15
       };
   }
 

@@ -1,13 +1,17 @@
 <p-sidebar [(visible)]="isVisible" position="right" styleClass="ui-sidebar-lg" blockScroll="true">
   <div class="ui-g-12">
     <div *ngIf="isAddNewMode">
-      Add a new Location
+      <div class="ui-g-12">
+        Add a new Location
+      </div>
       <button pButton type="button" label="Save" icon="pi pi-save" (click)="saveLocation($event)"
       [disabled]="!canSaveLocation"
       ></button>
     </div>
     <div *ngIf="!isAddNewMode">
-      Update a Location
+      <div class="ui-g-12">
+        Update a Location
+      </div>
       <button pButton type="button" label="Save" icon="pi pi-save" (click)="updateLocation($event)"
       [disabled]="!canSaveLocation"
       ></button>
