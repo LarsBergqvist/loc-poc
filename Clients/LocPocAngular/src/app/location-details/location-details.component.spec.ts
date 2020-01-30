@@ -7,16 +7,21 @@ import { SidebarModule } from 'primeng/sidebar';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AppConfigService } from '../services/app-config.service';
 
 describe('LocationDetailsComponent', () => {
   let component: LocationDetailsComponent;
   let fixture: ComponentFixture<LocationDetailsComponent>;
   let locationsService: any;
+  let appConfigService: any;
 
   beforeEach(async(() => {
     locationsService = {
       getLocations: jasmine.createSpy('getLocations'),
       saveNewLocation: jasmine.createSpy('saveNewLocation')
+    };
+    appConfigService = {
+      useMap: jasmine.createSpy('useMap')
     };
 
     TestBed.configureTestingModule({
@@ -24,7 +29,8 @@ describe('LocationDetailsComponent', () => {
         InputTextModule, ButtonModule, SidebarModule, FormsModule, BrowserAnimationsModule
       ],
       providers: [
-        { provide: 'LocationsService', useValue: locationsService }
+        { provide: 'LocationsService', useValue: locationsService },
+        { provide: AppConfigService, useValue: appConfigService }
       ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
       declarations: [ LocationDetailsComponent ]

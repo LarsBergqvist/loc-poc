@@ -43,14 +43,24 @@ export function locationsServiceFactory() {
   };
 }
 
-export function googleMapInit(config: AppConfigService, service: GoogleMapsService, ) {
-  if (config.useMap) {
-    return () =>  service.loadGoogleMapsApi();
-  } else {
-    return () => {};
-  }
+export function appConfigInit(configService: AppConfigService, googleMapService: GoogleMapsService) {
+  // Load the configuration and init google api if maps should be used
+  return (): Promise<any> => {
+      return new Promise((resolve) => {
+        configService.load().then(() => {
+          if (configService.useMap) {
+            console.log('Use map');
+            googleMapService.loadGoogleMapsApi(configService.googleAPIKey).then(() => {
+              resolve();
+            });
+          } else {
+            console.log('no map');
+            resolve();
+          }
+        });
+      });
+  };
 }
-
 
 @NgModule({
   declarations: [
@@ -62,13 +72,10 @@ export function googleMapInit(config: AppConfigService, service: GoogleMapsServi
   ],
   providers: [
     AppConfigService,
-    { provide: 'LocationsService', useFactory:  locationsServiceFactory(),
-      deps: [HttpClient, AppConfigService]
-    },
     GoogleMapsService,
     {
       provide: APP_INITIALIZER,
-      useFactory: googleMapInit,
+      useFactory: appConfigInit,
       multi: true,
       deps: [AppConfigService, GoogleMapsService]
     },
@@ -77,6 +84,9 @@ export function googleMapInit(config: AppConfigService, service: GoogleMapsServi
       useClass: HttpInterceptorService,
       multi: true,
       deps: [MessageBrokerService]
+    },
+    { provide: 'LocationsService', useFactory:  locationsServiceFactory(),
+      deps: [HttpClient, AppConfigService, GoogleMapsService]
     },
     MessageService
   ],

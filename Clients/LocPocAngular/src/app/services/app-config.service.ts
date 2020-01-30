@@ -1,24 +1,41 @@
 import { Injectable } from '@angular/core';
-import * as config from '../../assets/app-config.json';
+import { HttpClient } from '@angular/common/http';
+import { AppConfig } from './app-config.js';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class AppConfigService {
+  readonly configFile = 'assets/app-config.json';
+  config: AppConfig;
+
+  constructor(  private readonly http: HttpClient) {
+  }
+
+  async load(): Promise<any> {
+    const configPath = this.configFile;
+    return new Promise<any>( (resolve) => {
+      this.http.get<AppConfig>(configPath)
+      .toPromise()
+      .then(res => {
+          console.log('loaded app-config.json');
+          this.config = res;
+          resolve();
+      });
+    });
+  }
 
   get apiUrl(): string {
-    return config.apiUrl;
+    return this.config.apiUrl;
   }
   get apiPort(): string {
-    return config.apiPort;
+    return this.config.apiPort;
   }
   get useFakeData(): boolean {
-    return config.useFakeData;
+    return this.config.useFakeData;
   }
   get useMap(): boolean {
-    return config.useMap;
+    return this.config.useMap;
   }
   get googleAPIKey(): string {
-    return config.googleAPIKey;
+    return this.config.googleAPIKey;
   }
 }
