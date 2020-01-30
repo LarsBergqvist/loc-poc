@@ -8,6 +8,7 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppConfigService } from '../services/app-config.service';
+import { NumberRangeValidator } from '../validators/number-range.validator';
 
 describe('LocationDetailsComponent', () => {
   let component: LocationDetailsComponent;
@@ -26,14 +27,14 @@ describe('LocationDetailsComponent', () => {
 
     TestBed.configureTestingModule({
       imports: [
-        InputTextModule, ButtonModule, SidebarModule, FormsModule, BrowserAnimationsModule
+        InputTextModule, ButtonModule, SidebarModule, FormsModule, BrowserAnimationsModule,
       ],
       providers: [
         { provide: 'LocationsService', useValue: locationsService },
         { provide: AppConfigService, useValue: appConfigService }
       ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
-      declarations: [ LocationDetailsComponent ]
+      declarations: [ LocationDetailsComponent, NumberRangeValidator ]
     })
     .compileComponents();
   }));
