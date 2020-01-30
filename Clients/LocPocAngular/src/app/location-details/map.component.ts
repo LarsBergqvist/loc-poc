@@ -1,7 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Location } from '../models/location';
 import { AppConfigService } from '../services/app-config.service';
+import { MessageBrokerService } from '../services/message-broker.service';
+import { NewMarkerFromMapMessage } from '../messages/new-marker-from-map.message';
 
+declare var google: any;
 
 @Component({
   selector: 'app-map',
@@ -9,27 +12,37 @@ import { AppConfigService } from '../services/app-config.service';
 })
 export class MapComponent implements OnInit {
   options: any;
+  overlays: any;
   map: any;
 
   @Input('location')
-  set value(location: Location) {
-    if (location) {
+  set value(loc: Location) {
+    if (loc) {
       if (this.map) {
         // Work with the google map object directly as modifying gmap's options
         // will not update the map
-        this.map.setCenter({lat: location.Latitude, lng: location.Longitude});
+        this.map.setCenter({lat: loc.Latitude, lng: loc.Longitude});
         this.map.setZoom(15);
+        this.overlays = [
+          new google.maps.Marker({position: {lat: loc.Latitude, lng: loc.Longitude}, title: loc.Name})
+        ];
+
       }
     }
   }
 
-  constructor(private readonly appConfigService: AppConfigService) {
+  constructor(private readonly appConfigService: AppConfigService,
+              private readonly messageBroker: MessageBrokerService) {
   }
 
   onMapReady(event: any) {
     if (event.map) {
       this.map = event.map;
     }
+  }
+
+  handleMapClick(event) {
+    this.messageBroker.sendMessage(new NewMarkerFromMapMessage(event.latLng.lat(), event.latLng.lng()));
   }
 
   ngOnInit() {

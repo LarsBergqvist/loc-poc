@@ -1,20 +1,43 @@
-<p-sidebar [(visible)]="isVisible" position="right" styleClass="ui-sidebar-lg" blockScroll="true">
+<p-sidebar
+  [(visible)]="isVisible"
+  position="right"
+  styleClass="ui-sidebar-lg"
+  blockScroll="true"
+>
   <div class="ui-g-12">
     <div *ngIf="isAddNewMode">
       <div class="ui-g-12">
         Add a new Location
       </div>
-      <button pButton type="button" label="Save" icon="pi pi-save" (click)="saveLocation($event)"
-        [disabled]="!canSaveLocation"></button>
+      <button
+        pButton
+        type="button"
+        label="Save"
+        icon="pi pi-save"
+        (click)="saveLocation($event)"
+        [disabled]="!canSaveLocation"
+      ></button>
     </div>
     <div *ngIf="!isAddNewMode">
       <div class="ui-g-12">
         Update a Location
       </div>
-      <button pButton type="button" label="Save" icon="pi pi-save" (click)="updateLocation($event)"
-        [disabled]="!canSaveLocation"></button>
-      <button pButton type="button" label="Delete" icon="pi pi-times" (click)="deleteLocation($event)"
-        [disabled]="false"></button>
+      <button
+        pButton
+        type="button"
+        label="Save"
+        icon="pi pi-save"
+        (click)="updateLocation($event)"
+        [disabled]="!canSaveLocation"
+      ></button>
+      <button
+        pButton
+        type="button"
+        label="Delete"
+        icon="pi pi-times"
+        (click)="deleteLocation($event)"
+        [disabled]="false"
+      ></button>
     </div>
   </div>
 
@@ -23,13 +46,24 @@
       <div class="ui-g-12 ui-md-6">
         <span class="ui-fluid">
           <label>Name</label>
-          <input type="text" pInputText placeholder="Name of location" [(ngModel)]="location.Name">
+          <input
+            type="text"
+            pInputText
+            placeholder="Name of location"
+            [(ngModel)]="location.Name"
+            (change)="onInputChanged($event)"
+          />
         </span>
       </div>
       <div class="ui-g-12 ui-md-6">
         <span class="ui-fluid">
           <label>Description</label>
-          <input type="text" pInputText placeholder="Description of location" [(ngModel)]="location.Description">
+          <input
+            type="text"
+            pInputText
+            placeholder="Description of location"
+            [(ngModel)]="location.Description"
+          />
         </span>
       </div>
     </div>
@@ -37,8 +71,16 @@
       <div class="ui-g-12 ui-md-6">
         <span class="ui-fluid">
           <label>Longitude</label>
-          <input type="text" pInputText placeholder="Longitude" [(ngModel)]="location.Longitude"
-            [number-range-validator]="longitudeRange" #longitude="ngModel">
+          <input
+            type="number"
+            step="0.000000000000001"
+            pInputText
+            placeholder="Longitude"
+            [(ngModel)]="location.Longitude"
+            [number-range-validator]="longitudeRange"
+            #longitude="ngModel"
+            (change)="onInputChanged($event)"
+          />
           <div *ngIf="longitude.dirty && longitude.errors" class="alert-error">
             Longitude is not within the valid range (-180, 180)
           </div>
@@ -47,15 +89,22 @@
       <div class="ui-g-12 ui-md-6">
         <span class="ui-fluid">
           <label>Latitude</label>
-          <input type="text" pInputText placeholder="Latitude" [(ngModel)]="location.Latitude"
-            [number-range-validator]="latitudeRange" #latitude="ngModel">
+          <input
+            type="number"
+            step="0.000000000000001"
+            pInputText
+            placeholder="Latitude"
+            [(ngModel)]="location.Latitude"
+            [number-range-validator]="latitudeRange"
+            #latitude="ngModel"
+            (change)="onInputChanged($event)"
+          />
           <div *ngIf="latitude.dirty && latitude.errors" class="alert-error">
             Latitude is not within the valid range (-90, 90)
           </div>
         </span>
       </div>
     </div>
-
   </div>
   <app-map [location]="location"></app-map>
 </p-sidebar>

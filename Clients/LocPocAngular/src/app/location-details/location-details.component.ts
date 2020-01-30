@@ -9,6 +9,7 @@ import { AppConfigService } from '../services/app-config.service';
 import { LocationsService } from '../services/locations.service';
 import { RefreshListMessage } from '../messages/refresh-list.message';
 import { NgModel } from '@angular/forms';
+import { NewMarkerFromMapMessage } from '../messages/new-marker-from-map.message';
 
 enum LocationEditMode {
   AddNew = 0,
@@ -35,14 +36,14 @@ export class LocationDetailsComponent implements OnInit {
   @ViewChild('longitude', { static: false }) longitudeModel: NgModel;
   @ViewChild('latitude', { static: false }) latitudeModel: NgModel;
 
-  constructor(private readonly messageService: MessageBrokerService,
+  constructor(private readonly messageBroker: MessageBrokerService,
               private readonly appConfigService: AppConfigService,
               @Inject('LocationsService') private readonly locationsService: LocationsService) {
     this.createDefaultLocation();
   }
 
   async ngOnInit() {
-    const messages = this.messageService.getMessage();
+    const messages = this.messageBroker.getMessage();
     messages.pipe(filter(message => message instanceof OpenLocationDetailsMessage))
     .subscribe(async (message: OpenLocationDetailsMessage)  => {
       if (message) {
@@ -60,6 +61,21 @@ export class LocationDetailsComponent implements OnInit {
         this.isVisible = true;
       }
     });
+    messages.pipe(filter(message => message instanceof NewMarkerFromMapMessage))
+    .subscribe(async (message: NewMarkerFromMapMessage)  => {
+      // Update the location with the position from the new marker
+        this.location = {
+          Id: this.location.Id,
+          Name: this.location.Name,
+          Description: this.location.Description,
+          Latitude: message.latitude,
+          Longitude: message.longitude
+        };
+    });
+  }
+
+  onInputChanged($event) {
+    this.location =  clone(this.location);
   }
 
   get canSaveLocation(): boolean {
@@ -93,7 +109,7 @@ export class LocationDetailsComponent implements OnInit {
   saveLocation() {
     this.locationsService.saveNewLocation(this.location).then(() => {
       this.isVisible = false;
-      this.messageService.sendMessage(new RefreshListMessage());
+      this.messageBroker.sendMessage(new RefreshListMessage());
     }).catch((error) => {
       console.log(error);
     });
@@ -102,7 +118,7 @@ export class LocationDetailsComponent implements OnInit {
   updateLocation() {
     this.locationsService.updateLocation(this.location).then(() => {
       this.isVisible = false;
-      this.messageService.sendMessage(new RefreshListMessage());
+      this.messageBroker.sendMessage(new RefreshListMessage());
     }).catch((error) => {
       console.log(error);
     });
@@ -111,7 +127,7 @@ export class LocationDetailsComponent implements OnInit {
   deleteLocation() {
     this.locationsService.deleteLocation(this.location.Id).then(() => {
       this.isVisible = false;
-      this.messageService.sendMessage(new RefreshListMessage());
+      this.messageBroker.sendMessage(new RefreshListMessage());
     }).catch((error) => {
       console.log(error);
     });
