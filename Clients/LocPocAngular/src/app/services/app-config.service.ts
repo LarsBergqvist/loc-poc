@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { AppConfig } from './app-config.js';
+import { LoggingService } from './logging-service';
 
 @Injectable()
 export class AppConfigService {
   readonly configFile = 'assets/app-config.json';
   config: AppConfig;
 
-  constructor(  private readonly http: HttpClient) {
+  constructor(private readonly http: HttpClient, private readonly logging: LoggingService) {
   }
 
   async load(): Promise<any> {
@@ -16,7 +17,7 @@ export class AppConfigService {
       this.http.get<AppConfig>(configPath)
       .toPromise()
       .then(res => {
-          console.log('loaded app-config.json');
+          this.logging.logInfo('loaded app-config.json');
           this.config = res;
           resolve();
       });

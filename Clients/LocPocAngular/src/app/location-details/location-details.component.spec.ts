@@ -9,6 +9,7 @@ import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppConfigService } from '../services/app-config.service';
 import { NumberRangeValidator } from '../validators/number-range.validator';
+import { LoggingService } from '../services/logging-service';
 
 describe('LocationDetailsComponent', () => {
   let component: LocationDetailsComponent;
@@ -31,7 +32,8 @@ describe('LocationDetailsComponent', () => {
       ],
       providers: [
         { provide: 'LocationsService', useValue: locationsService },
-        { provide: AppConfigService, useValue: appConfigService }
+        { provide: AppConfigService, useValue: appConfigService },
+        { provide: LoggingService, useClass: LoggingService }
       ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
       declarations: [ LocationDetailsComponent, NumberRangeValidator ]

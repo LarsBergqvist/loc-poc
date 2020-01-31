@@ -31,31 +31,33 @@ import { HttpInterceptorService } from './services/http-interceptor.service';
 import { MessageBrokerService } from './services/message-broker.service';
 import { MessageService } from 'primeng/components/common/messageservice';
 import { NumberRangeValidator } from './validators/number-range.validator';
+import { LoggingService } from './services/logging-service';
 
 export function locationsServiceFactory() {
-  return (http: HttpClient, configService: AppConfigService): LocationsService => {
+  return (http: HttpClient, configService: AppConfigService, logging: LoggingService): LocationsService => {
     if (configService.useFakeData) {
-      console.log('use mock service');
+      logging.logInfo('use mock service');
       return new LocationsServiceMock();
     } else {
-      console.log('use real service');
+      logging.logInfo('use real service');
       return new LocationsServiceImpl(http, configService);
     }
   };
 }
 
-export function appConfigInit(configService: AppConfigService, googleMapService: GoogleMapsService) {
+export function appConfigInit(configService: AppConfigService,
+                              googleMapService: GoogleMapsService, logging: LoggingService) {
   // Load the configuration and init google api if maps should be used
   return (): Promise<any> => {
       return new Promise((resolve) => {
         configService.load().then(() => {
           if (configService.useMap) {
-            console.log('Use map');
+            logging.logInfo('Use map');
             googleMapService.loadGoogleMapsApi(configService.googleAPIKey).then(() => {
               resolve();
             });
           } else {
-            console.log('no map');
+            logging.logInfo('no map');
             resolve();
           }
         });
@@ -75,11 +77,12 @@ export function appConfigInit(configService: AppConfigService, googleMapService:
   providers: [
     AppConfigService,
     GoogleMapsService,
+    LoggingService,
     {
       provide: APP_INITIALIZER,
       useFactory: appConfigInit,
       multi: true,
-      deps: [AppConfigService, GoogleMapsService]
+      deps: [AppConfigService, GoogleMapsService, LoggingService]
     },
     {
       provide: HTTP_INTERCEPTORS,
@@ -88,7 +91,7 @@ export function appConfigInit(configService: AppConfigService, googleMapService:
       deps: [MessageBrokerService]
     },
     { provide: 'LocationsService', useFactory:  locationsServiceFactory(),
-      deps: [HttpClient, AppConfigService, GoogleMapsService]
+      deps: [HttpClient, AppConfigService, LoggingService]
     },
     MessageService
   ],

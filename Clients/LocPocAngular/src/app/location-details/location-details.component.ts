@@ -10,6 +10,7 @@ import { LocationsService } from '../services/locations.service';
 import { RefreshListMessage } from '../messages/refresh-list.message';
 import { NgModel } from '@angular/forms';
 import { NewMarkerFromMapMessage } from '../messages/new-marker-from-map.message';
+import { LoggingService } from '../services/logging-service';
 
 enum LocationEditMode {
   AddNew = 0,
@@ -38,7 +39,8 @@ export class LocationDetailsComponent implements OnInit {
 
   constructor(private readonly messageBroker: MessageBrokerService,
               private readonly appConfigService: AppConfigService,
-              @Inject('LocationsService') private readonly locationsService: LocationsService) {
+              @Inject('LocationsService') private readonly locationsService: LocationsService,
+              private readonly logging: LoggingService) {
     this.createDefaultLocation();
   }
 
@@ -111,7 +113,7 @@ export class LocationDetailsComponent implements OnInit {
       this.isVisible = false;
       this.messageBroker.sendMessage(new RefreshListMessage());
     }).catch((error) => {
-      console.log(error);
+      this.logging.logError(error);
     });
   }
 
@@ -120,7 +122,7 @@ export class LocationDetailsComponent implements OnInit {
       this.isVisible = false;
       this.messageBroker.sendMessage(new RefreshListMessage());
     }).catch((error) => {
-      console.log(error);
+      this.logging.logError(error);
     });
   }
 
@@ -129,7 +131,7 @@ export class LocationDetailsComponent implements OnInit {
       this.isVisible = false;
       this.messageBroker.sendMessage(new RefreshListMessage());
     }).catch((error) => {
-      console.log(error);
+      this.logging.logError(error);
     });
   }
 
