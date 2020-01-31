@@ -30,7 +30,6 @@ import { GoogleMapsService } from './services/googemaps.service';
 import { HttpInterceptorService } from './services/http-interceptor.service';
 import { MessageBrokerService } from './services/message-broker.service';
 import { MessageService } from 'primeng/components/common/messageservice';
-import { NumberRangeValidator } from './validators/number-range.validator';
 
 export function locationsServiceFactory() {
   return (http: HttpClient, configService: AppConfigService): LocationsService => {
@@ -69,8 +68,7 @@ export function appConfigInit(configService: AppConfigService, googleMapService:
     LocationsListComponent,
     AppBarComponent,
     LocationDetailsComponent,
-    MapComponent,
-    NumberRangeValidator
+    MapComponent
   ],
   providers: [
     AppConfigService,

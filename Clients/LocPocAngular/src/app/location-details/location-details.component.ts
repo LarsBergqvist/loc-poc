@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject, ViewChild } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { MessageBrokerService } from '../services/message-broker.service';
 import { filter } from 'rxjs/operators';
 import { OpenLocationDetailsMessage } from '../messages/open-location-details.message';
@@ -8,12 +8,16 @@ import * as clone from 'clone';
 import { AppConfigService } from '../services/app-config.service';
 import { LocationsService } from '../services/locations.service';
 import { RefreshListMessage } from '../messages/refresh-list.message';
-import { NgModel } from '@angular/forms';
 import { NewMarkerFromMapMessage } from '../messages/new-marker-from-map.message';
 
 enum LocationEditMode {
   AddNew = 0,
   Edit =  1
+}
+
+export interface LatLongRange {
+  min: number;
+  max: number;
 }
 
 @Component({
@@ -24,17 +28,14 @@ export class LocationDetailsComponent implements OnInit {
   isVisible = false;
   location: Location;
   editMode: LocationEditMode;
-  longitudeRange = {
+  longitudeRange: LatLongRange = {
     min: -180.0,
     max: 180.0
   };
-  latitudeRange = {
+  latitudeRange: LatLongRange = {
     min: -90.0,
     max: 90.0
   };
-
-  @ViewChild('longitude', { static: false }) longitudeModel: NgModel;
-  @ViewChild('latitude', { static: false }) latitudeModel: NgModel;
 
   constructor(private readonly messageBroker: MessageBrokerService,
               private readonly appConfigService: AppConfigService,
@@ -87,13 +88,15 @@ export class LocationDetailsComponent implements OnInit {
       return false;
     }
 
-    if (this.longitudeModel && this.longitudeModel.errors) {
-      return false;
+    if (!this.location.Longitude ||
+        (this.location.Longitude < this.longitudeRange.min || this.location.Longitude > this.longitudeRange.max)) {
+        return false;
     }
 
-    if (this.latitudeModel && this.latitudeModel.errors) {
+    if (!this.location.Latitude ||
+      (this.location.Latitude < this.latitudeRange.min || this.location.Latitude > this.latitudeRange.max)) {
       return false;
-    }
+  }
 
     return true;
   }

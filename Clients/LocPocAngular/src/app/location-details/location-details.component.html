@@ -49,6 +49,7 @@
           <label>Name</label>
           <input
             type="text"
+            required
             pInputText
             placeholder="Name of location"
             [(ngModel)]="location.Name"
@@ -71,20 +72,19 @@
     <div class="ui-fluid">
       <div class="ui-g-12 ui-md-6">
         <span class="ui-fluid">
+          {{longitudeRange.max}}
           <label>Longitude</label>
           <input
             type="number"
             step="0.000000000000001"
+            required
+            min="{{longitudeRange.min}}"
+            max="{{longitudeRange.max}}"
             pInputText
             placeholder="Longitude"
             [(ngModel)]="location.Longitude"
-            [number-range-validator]="longitudeRange"
-            #longitude="ngModel"
             (change)="onInputChanged($event)"
           />
-          <div *ngIf="longitude.dirty && longitude.errors" class="alert-error">
-            Longitude is not within the valid range (-180, 180)
-          </div>
         </span>
       </div>
       <div class="ui-g-12 ui-md-6">
@@ -93,16 +93,14 @@
           <input
             type="number"
             step="0.000000000000001"
+            required
+            min="{{latitudeRange.min}}"
+            max="{{latitudeRange.max}}"
             pInputText
             placeholder="Latitude"
             [(ngModel)]="location.Latitude"
-            [number-range-validator]="latitudeRange"
-            #latitude="ngModel"
             (change)="onInputChanged($event)"
           />
-          <div *ngIf="latitude.dirty && latitude.errors" class="alert-error">
-            Latitude is not within the valid range (-90, 90)
-          </div>
         </span>
       </div>
     </div>
