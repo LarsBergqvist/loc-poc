@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "startSSL": "ng serve --ssl --ssl-key '.\\certificates\\localhost.key'  --ssl-cert '.\\certificates\\localhost.crt'",
+    "startSSL": "ng serve --host=0.0.0.0 --ssl --ssl-key '.\\certificates\\localhost.key'  --ssl-cert '.\\certificates\\localhost.crt'",
     "build": "ng build",
     "test": "ng test --watch false",
     "test_full_chrome": "ng test --watch false --code-coverage --browsers=Chrome",
