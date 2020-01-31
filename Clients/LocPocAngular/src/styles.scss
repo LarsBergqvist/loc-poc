@@ -3,6 +3,9 @@
 @import '../node_modules/primeng/resources/primeng.min.css';
 
 
+* {
+  font-family: "Open Sans", "Helvetica Neue", sans-serif
+}
 
 /* Remove spinner for input control with numbers */
 input::-webkit-outer-spin-button,
