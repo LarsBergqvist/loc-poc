@@ -22,7 +22,6 @@ export class MapComponent implements OnInit {
         // Work with the google map object directly as modifying gmap's options
         // will not update the map
         this.map.setCenter({lat: loc.Latitude, lng: loc.Longitude});
-        this.map.setZoom(15);
         this.overlays = [
           new google.maps.Marker({position: {lat: loc.Latitude, lng: loc.Longitude}, title: loc.Name})
         ];
