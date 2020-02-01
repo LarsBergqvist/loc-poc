@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using LocPoc.Contracts;
+using LocPoc.Api.DTOs;
+using System.Linq;
 
 namespace LocPoc.Api.Controllers
 {
@@ -17,22 +19,23 @@ namespace LocPoc.Api.Controllers
 
         // GET: api/Locations
         [HttpGet]
-        public IEnumerable<Location> Get()
+        public IEnumerable<LocationDto> Get()
         {
-            return _locationsRepository.GetAll();
+            return _locationsRepository.GetAll().Select(loc => loc.ToLocationDto());
         }
 
         // GET: api/Locations/5
         [HttpGet("{id}", Name = "Get")]
-        public string Get(int id)
+        public LocationDto Get(string id)
         {
-            return "value";
+            return _locationsRepository.Get(id).ToLocationDto();
         }
 
         // POST: api/Locations
         [HttpPost]
-        public IActionResult Post([FromBody] Location location)
+        public IActionResult Post([FromBody] LocationDto locationDto)
         {
+            var location = locationDto.ToLocation();
             var errorMessage = GetValidationErrorMessage(location);
             if (errorMessage.Length > 0)
                 return BadRequest(errorMessage);
@@ -44,8 +47,9 @@ namespace LocPoc.Api.Controllers
 
         // PUT: api/Locations/5
         [HttpPut("{id}")]
-        public IActionResult Put(string id, [FromBody] Location location)
+        public IActionResult Put(string id, [FromBody] LocationDto locationDto)
         {
+            var location = locationDto.ToLocation();
             var errorMessage = GetValidationErrorMessage(location);
             if (errorMessage.Length > 0)
                 return BadRequest(errorMessage);
