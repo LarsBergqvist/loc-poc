@@ -32,7 +32,7 @@ export class LocationsListComponent implements OnInit {
   }
 
   private async refreshList() {
-    this.locations = await this.locationsService.getLocations();
+    this.locations = await (await this.locationsService.getLocations()).sort( (a, b) => a.Name.localeCompare(b.Name));
   }
 
 }

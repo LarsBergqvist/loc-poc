@@ -4,8 +4,8 @@
       <tr>
           <th>Name</th>
           <th>Description</th>
-          <th>Longitude</th>
           <th>Latitude</th>
+          <th>Longitude</th>
       </tr>
   </ng-template>
   <ng-template pTemplate="body" let-location>
@@ -19,12 +19,12 @@
             {{location.Description}}
           </td>
           <td class="ui-column-title">
-            <span class="ui-column-title">Long.</span>
-            {{location.Longitude}}
+            <span class="ui-column-title">Lat.</span>
+            {{location.Latitude | number:'1.13'}}
           </td>
           <td class="ui-column-title">
-            <span class="ui-column-title">Lat.</span>
-            {{location.Latitude}}
+            <span class="ui-column-title">Long.</span>
+            {{location.Longitude | number:'1.13'}}
           </td>
       </tr>
   </ng-template>
