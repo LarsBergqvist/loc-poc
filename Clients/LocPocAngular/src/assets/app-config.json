@@ -3,5 +3,5 @@
   "apiPort": "5001",
   "useFakeData": true,
   "useMap": false,
-  "googleAPIKey": ""
+  "googleAPIKey": "YOUR-API-KEY"
 }

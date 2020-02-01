@@ -61,9 +61,9 @@ export class LocationDetailsComponent implements OnInit {
             .subscribe(async (message: AddNewLocationMessage) => {
                 if (message) {
                     this.createDefaultLocation();
-                    await this.setCurrentPosition();
                     this.editMode = LocationEditMode.AddNew;
                     this.isVisible = true;
+                    await this.setCurrentPosition();
                 }
             });
         messages.pipe(filter(message => message instanceof NewMarkerFromMapMessage))
