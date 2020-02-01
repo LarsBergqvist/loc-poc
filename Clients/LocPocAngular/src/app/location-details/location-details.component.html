@@ -7,7 +7,7 @@
   <div class="ui-g-12">
     <div *ngIf="isAddNewMode">
       <div class="ui-g-12">
-        Add a new Location
+        <div class="sidebar-title">Add a new location item</div>
       </div>
       <button
         pButton
@@ -20,7 +20,7 @@
     </div>
     <div *ngIf="!isAddNewMode">
       <div class="ui-g-12">
-        Update a Location
+        <div class="sidebar-title">Update location item</div>
       </div>
       <button
         pButton
@@ -74,7 +74,7 @@
           <label>Longitude</label>
           <input
             type="number"
-            step="0.000000000000001"
+            step="any"
             pInputText
             placeholder="Longitude"
             [(ngModel)]="location.Longitude"
@@ -92,7 +92,7 @@
           <label>Latitude</label>
           <input
             type="number"
-            step="0.000000000000001"
+            step="any"
             pInputText
             placeholder="Latitude"
             [(ngModel)]="location.Latitude"
