@@ -34,7 +34,10 @@ export class LocationsListComponent implements OnInit {
     }
 
     private async refreshList() {
-        this.locations = await (await this.locationsService.getLocations()).sort((a, b) => a.Name.localeCompare(b.Name));
+        this.locations = await this.locationsService.getLocations();
+        if (this.locations) {
+            this.locations.sort((a, b) => a.Name.localeCompare(b.Name));
+        }
     }
 
 }
