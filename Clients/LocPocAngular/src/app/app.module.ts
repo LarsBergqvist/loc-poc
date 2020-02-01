@@ -26,7 +26,7 @@ import { LocationsService } from './services/locations.service';
 import { LocationsServiceImpl } from './services/locations.service.impl';
 import { LocationsServiceMock } from './services/locations.service.mock';
 import { MapComponent } from './location-details/map.component';
-import { GoogleMapsService } from './services/googemaps.service';
+import { GoogleMapsService } from './services/googlemaps.service';
 import { HttpInterceptorService } from './services/http-interceptor.service';
 import { MessageBrokerService } from './services/message-broker.service';
 import { MessageService } from 'primeng/components/common/messageservice';
