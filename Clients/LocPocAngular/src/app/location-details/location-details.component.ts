@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject, ViewChild } from '@angular/core';
 import { MessageBrokerService } from '../services/message-broker.service';
-import { filter } from 'rxjs/operators';
+import { filter, takeUntil } from 'rxjs/operators';
 import { OpenLocationDetailsMessage } from '../messages/open-location-details.message';
 import { Location } from '../models/location';
 import { AddNewLocationMessage } from '../messages/add-new-location.message';
@@ -13,6 +13,7 @@ import { NewMarkerFromMapMessage } from '../messages/new-marker-from-map.message
 import { LoggingService } from '../services/logging-service';
 import { ErrorOccurredMessage } from '../messages/error-occurred.message';
 import { SuccessInfoMessage } from '../messages/success-info.message';
+import { Subject } from 'rxjs';
 
 enum LocationEditMode {
     AddNew = 0,
@@ -25,6 +26,7 @@ enum LocationEditMode {
     styleUrls: ['./location-details.component.scss']
 })
 export class LocationDetailsComponent implements OnInit {
+    private unsubsribe$ = new Subject();
     isVisible = false;
     location: Location;
     editMode: LocationEditMode;
@@ -49,7 +51,7 @@ export class LocationDetailsComponent implements OnInit {
 
     async ngOnInit() {
         const messages = this.messageBroker.getMessage();
-        messages.pipe(filter(message => message instanceof OpenLocationDetailsMessage))
+        messages.pipe(takeUntil(this.unsubsribe$), filter(message => message instanceof OpenLocationDetailsMessage))
             .subscribe(async (message: OpenLocationDetailsMessage) => {
                 if (message) {
                     this.location = clone(message.location);
@@ -57,16 +59,16 @@ export class LocationDetailsComponent implements OnInit {
                     this.isVisible = true;
                 }
             });
-        messages.pipe(filter(message => message instanceof AddNewLocationMessage))
-            .subscribe(async (message: AddNewLocationMessage) => {
+        messages.pipe(takeUntil(this.unsubsribe$), filter(message => message instanceof AddNewLocationMessage))
+            .subscribe((message: AddNewLocationMessage) => {
                 if (message) {
                     this.createDefaultLocation();
                     this.editMode = LocationEditMode.AddNew;
                     this.isVisible = true;
-                    await this.setCurrentPosition();
+                    this.setCurrentPosition();
                 }
             });
-        messages.pipe(filter(message => message instanceof NewMarkerFromMapMessage))
+        messages.pipe(takeUntil(this.unsubsribe$), filter(message => message instanceof NewMarkerFromMapMessage))
             .subscribe(async (message: NewMarkerFromMapMessage) => {
                 // Update the location with the position from the new marker
                 this.location = {
@@ -151,8 +153,8 @@ export class LocationDetailsComponent implements OnInit {
         };
     }
 
-    private async setCurrentPosition() {
-        navigator.geolocation.getCurrentPosition(async position => {
+    private setCurrentPosition() {
+        navigator.geolocation.getCurrentPosition(position => {
             this.location = {
                 Id: this.location.Id,
                 Name: this.location.Name,
@@ -160,7 +162,7 @@ export class LocationDetailsComponent implements OnInit {
                 Latitude: position.coords.latitude,
                 Longitude: position.coords.longitude
             };
-        }, async error => {
+        }, error => {
             this.logging.logError(error.message);
             this.messageBroker.sendMessage(new ErrorOccurredMessage(error.message));
         });
