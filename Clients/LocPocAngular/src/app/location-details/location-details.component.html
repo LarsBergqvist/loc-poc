@@ -14,7 +14,7 @@
         type="button"
         label="Save"
         icon="pi pi-save"
-        (click)="saveLocation($event)"
+        (click)="saveNewLocation($event)"
         [disabled]="!canSaveLocation"
       ></button>
     </div>
@@ -78,7 +78,7 @@
             pInputText
             placeholder="Latitude"
             [(ngModel)]="location.Latitude"
-            [number-range-validator]="latitudeRange"
+            [app-number-range-validator]="latitudeRange"
             #latitude="ngModel"
             (change)="onInputChanged($event)"
           />
@@ -96,7 +96,7 @@
             pInputText
             placeholder="Longitude"
             [(ngModel)]="location.Longitude"
-            [number-range-validator]="longitudeRange"
+            [app-number-range-validator]="longitudeRange"
             #longitude="ngModel"
             (change)="onInputChanged($event)"
           />

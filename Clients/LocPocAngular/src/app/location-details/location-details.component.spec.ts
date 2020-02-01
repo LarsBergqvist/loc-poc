@@ -12,42 +12,42 @@ import { NumberRangeValidator } from '../validators/number-range.validator';
 import { LoggingService } from '../services/logging-service';
 
 describe('LocationDetailsComponent', () => {
-  let component: LocationDetailsComponent;
-  let fixture: ComponentFixture<LocationDetailsComponent>;
-  let locationsService: any;
-  let appConfigService: any;
+    let component: LocationDetailsComponent;
+    let fixture: ComponentFixture<LocationDetailsComponent>;
+    let locationsService: any;
+    let appConfigService: any;
 
-  beforeEach(async(() => {
-    locationsService = {
-      getLocations: jasmine.createSpy('getLocations'),
-      saveNewLocation: jasmine.createSpy('saveNewLocation')
-    };
-    appConfigService = {
-      useMap: jasmine.createSpy('useMap')
-    };
+    beforeEach(async(() => {
+        locationsService = {
+            getLocations: jasmine.createSpy('getLocations'),
+            saveNewLocation: jasmine.createSpy('saveNewLocation')
+        };
+        appConfigService = {
+            useMap: jasmine.createSpy('useMap')
+        };
 
-    TestBed.configureTestingModule({
-      imports: [
-        InputTextModule, ButtonModule, SidebarModule, FormsModule, BrowserAnimationsModule,
-      ],
-      providers: [
-        { provide: 'LocationsService', useValue: locationsService },
-        { provide: AppConfigService, useValue: appConfigService },
-        { provide: LoggingService, useClass: LoggingService }
-      ],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA],
-      declarations: [ LocationDetailsComponent, NumberRangeValidator ]
-    })
-    .compileComponents();
-  }));
+        TestBed.configureTestingModule({
+            imports: [
+                InputTextModule, ButtonModule, SidebarModule, FormsModule, BrowserAnimationsModule,
+            ],
+            providers: [
+                { provide: 'LocationsService', useValue: locationsService },
+                { provide: AppConfigService, useValue: appConfigService },
+                { provide: LoggingService, useClass: LoggingService }
+            ],
+            schemas: [CUSTOM_ELEMENTS_SCHEMA],
+            declarations: [LocationDetailsComponent, NumberRangeValidator]
+        })
+            .compileComponents();
+    }));
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(LocationDetailsComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    beforeEach(() => {
+        fixture = TestBed.createComponent(LocationDetailsComponent);
+        component = fixture.componentInstance;
+        fixture.detectChanges();
+    });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+    it('should create', () => {
+        expect(component).toBeTruthy();
+    });
 });

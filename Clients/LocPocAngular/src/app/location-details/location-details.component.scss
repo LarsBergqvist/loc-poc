@@ -1,0 +1,17 @@
+/* Remove spinner for input control with numbers */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type=number] {
+  -moz-appearance:textfield;
+}
+
+.alert-error {
+  color: #b53337;
+}
+
+.sidebar-title {
+    font-size: 1.5em;
+}

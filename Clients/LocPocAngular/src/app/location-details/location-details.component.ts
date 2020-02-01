@@ -11,150 +11,159 @@ import { RefreshListMessage } from '../messages/refresh-list.message';
 import { NgModel } from '@angular/forms';
 import { NewMarkerFromMapMessage } from '../messages/new-marker-from-map.message';
 import { LoggingService } from '../services/logging-service';
+import { ErrorOccurredMessage } from '../messages/error-occurred.message';
+import { SuccessInfoMessage } from '../messages/success-info.message';
 
 enum LocationEditMode {
-  AddNew = 0,
-  Edit =  1
+    AddNew = 0,
+    Edit = 1
 }
 
 @Component({
-  selector: 'app-location-details',
-  templateUrl: './location-details.component.html'
+    selector: 'app-location-details',
+    templateUrl: './location-details.component.html',
+    styleUrls: ['./location-details.component.scss']
 })
 export class LocationDetailsComponent implements OnInit {
-  isVisible = false;
-  location: Location;
-  editMode: LocationEditMode;
-  longitudeRange = {
-    min: -180.0,
-    max: 180.0
-  };
-  latitudeRange = {
-    min: -90.0,
-    max: 90.0
-  };
-
-  @ViewChild('longitude', { static: false }) longitudeModel: NgModel;
-  @ViewChild('latitude', { static: false }) latitudeModel: NgModel;
-
-  constructor(private readonly messageBroker: MessageBrokerService,
-              private readonly appConfigService: AppConfigService,
-              @Inject('LocationsService') private readonly locationsService: LocationsService,
-              private readonly logging: LoggingService) {
-    this.createDefaultLocation();
-  }
-
-  async ngOnInit() {
-    const messages = this.messageBroker.getMessage();
-    messages.pipe(filter(message => message instanceof OpenLocationDetailsMessage))
-    .subscribe(async (message: OpenLocationDetailsMessage)  => {
-      if (message) {
-        this.location = clone(message.location);
-        this.editMode = LocationEditMode.Edit;
-        this.isVisible = true;
-      }
-    });
-    messages.pipe(filter(message => message instanceof AddNewLocationMessage))
-    .subscribe(async (message: AddNewLocationMessage)  => {
-      if (message) {
-        this.createDefaultLocation();
-        await this.setCurrentPosition();
-        this.editMode = LocationEditMode.AddNew;
-        this.isVisible = true;
-      }
-    });
-    messages.pipe(filter(message => message instanceof NewMarkerFromMapMessage))
-    .subscribe(async (message: NewMarkerFromMapMessage)  => {
-      // Update the location with the position from the new marker
-        this.location = {
-          Id: this.location.Id,
-          Name: this.location.Name,
-          Description: this.location.Description,
-          Latitude: message.latitude,
-          Longitude: message.longitude
-        };
-    });
-  }
-
-  onInputChanged($event) {
-    this.location =  clone(this.location);
-  }
-
-  get canSaveLocation(): boolean {
-    if (!this.location || !this.location.Name) {
-      return false;
-    }
-
-    if (this.location.Name.replace(/^[ \t\r\n]+/i, '').length <= 0) {
-      return false;
-    }
-
-    if (this.longitudeModel && this.longitudeModel.errors) {
-      return false;
-    }
-
-    if (this.latitudeModel && this.latitudeModel.errors) {
-      return false;
-    }
-
-    return true;
-  }
-
-  get isAddNewMode(): boolean {
-    return this.editMode === LocationEditMode.AddNew;
-  }
-
-  get useMap(): boolean {
-    return this.appConfigService.useMap;
-  }
-
-  saveLocation() {
-    this.locationsService.saveNewLocation(this.location).then(() => {
-      this.isVisible = false;
-      this.messageBroker.sendMessage(new RefreshListMessage());
-    }).catch((error) => {
-      this.logging.logError(error);
-    });
-  }
-
-  updateLocation() {
-    this.locationsService.updateLocation(this.location).then(() => {
-      this.isVisible = false;
-      this.messageBroker.sendMessage(new RefreshListMessage());
-    }).catch((error) => {
-      this.logging.logError(error);
-    });
-  }
-
-  deleteLocation() {
-    this.locationsService.deleteLocation(this.location.Id).then(() => {
-      this.isVisible = false;
-      this.messageBroker.sendMessage(new RefreshListMessage());
-    }).catch((error) => {
-      this.logging.logError(error);
-    });
-  }
-
-  private createDefaultLocation() {
-    this.location = {
-      Id: '',
-      Name: '',
-      Description: '',
-      Latitude: 0.0,
-      Longitude: 51.482578
+    isVisible = false;
+    location: Location;
+    editMode: LocationEditMode;
+    longitudeRange = {
+        min: -180.0,
+        max: 180.0
     };
-  }
+    latitudeRange = {
+        min: -90.0,
+        max: 90.0
+    };
 
-  private async setCurrentPosition() {
-    navigator.geolocation.getCurrentPosition(async position => {
-      this.location = {
-        Id: this.location.Id,
-        Name: this.location.Name,
-        Description: this.location.Description,
-        Latitude: position.coords.latitude,
-        Longitude: position.coords.longitude
-      };
-    });
-  }
+    @ViewChild('longitude', { static: false }) longitudeModel: NgModel;
+    @ViewChild('latitude', { static: false }) latitudeModel: NgModel;
+
+    constructor(private readonly messageBroker: MessageBrokerService,
+                private readonly appConfigService: AppConfigService,
+                @Inject('LocationsService') private readonly locationsService: LocationsService,
+                private readonly logging: LoggingService) {
+                this.createDefaultLocation();
+    }
+
+    async ngOnInit() {
+        const messages = this.messageBroker.getMessage();
+        messages.pipe(filter(message => message instanceof OpenLocationDetailsMessage))
+            .subscribe(async (message: OpenLocationDetailsMessage) => {
+                if (message) {
+                    this.location = clone(message.location);
+                    this.editMode = LocationEditMode.Edit;
+                    this.isVisible = true;
+                }
+            });
+        messages.pipe(filter(message => message instanceof AddNewLocationMessage))
+            .subscribe(async (message: AddNewLocationMessage) => {
+                if (message) {
+                    this.createDefaultLocation();
+                    await this.setCurrentPosition();
+                    this.editMode = LocationEditMode.AddNew;
+                    this.isVisible = true;
+                }
+            });
+        messages.pipe(filter(message => message instanceof NewMarkerFromMapMessage))
+            .subscribe(async (message: NewMarkerFromMapMessage) => {
+                // Update the location with the position from the new marker
+                this.location = {
+                    Id: this.location.Id,
+                    Name: this.location.Name,
+                    Description: this.location.Description,
+                    Latitude: message.latitude,
+                    Longitude: message.longitude
+                };
+            });
+    }
+
+    onInputChanged($event) {
+        this.location = clone(this.location);
+    }
+
+    get canSaveLocation(): boolean {
+        if (!this.location || !this.location.Name) {
+            return false;
+        }
+
+        if (this.location.Name.replace(/^[ \t\r\n]+/i, '').length <= 0) {
+            return false;
+        }
+
+        if (this.longitudeModel && this.longitudeModel.errors) {
+            return false;
+        }
+
+        if (this.latitudeModel && this.latitudeModel.errors) {
+            return false;
+        }
+
+        return true;
+    }
+
+    get isAddNewMode(): boolean {
+        return this.editMode === LocationEditMode.AddNew;
+    }
+
+    get useMap(): boolean {
+        return this.appConfigService.useMap;
+    }
+
+    saveNewLocation() {
+        this.locationsService.saveNewLocation(this.location).then(() => {
+            this.isVisible = false;
+            this.messageBroker.sendMessage(new SuccessInfoMessage('A new location item was created.'));
+            this.messageBroker.sendMessage(new RefreshListMessage());
+        }).catch((error) => {
+            this.logging.logError(error);
+        });
+    }
+
+    updateLocation() {
+        this.locationsService.updateLocation(this.location).then(() => {
+            this.isVisible = false;
+            this.messageBroker.sendMessage(new SuccessInfoMessage('The location item was updated.'));
+            this.messageBroker.sendMessage(new RefreshListMessage());
+        }).catch((error) => {
+            this.logging.logError(error);
+        });
+    }
+
+    deleteLocation() {
+        this.locationsService.deleteLocation(this.location.Id).then(() => {
+            this.isVisible = false;
+            this.messageBroker.sendMessage(new SuccessInfoMessage('A location item was deleted.'));
+            this.messageBroker.sendMessage(new RefreshListMessage());
+        }).catch((error) => {
+            this.logging.logError(error);
+        });
+    }
+
+    private createDefaultLocation() {
+        this.location = {
+            Id: '',
+            Name: '',
+            Description: '',
+            Latitude: 0.0,
+            Longitude: 51.482578
+        };
+    }
+
+    private async setCurrentPosition() {
+        navigator.geolocation.getCurrentPosition(async position => {
+            this.location = {
+                Id: this.location.Id,
+                Name: this.location.Name,
+                Description: this.location.Description,
+                Latitude: position.coords.latitude,
+                Longitude: position.coords.longitude
+            };
+        }, async error => {
+            this.logging.logError(error.message);
+            this.messageBroker.sendMessage(new ErrorOccurredMessage(error.message));
+        });
+    }
 
 }

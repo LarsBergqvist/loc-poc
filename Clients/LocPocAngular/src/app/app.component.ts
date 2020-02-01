@@ -3,6 +3,7 @@ import { MessageBrokerService } from './services/message-broker.service';
 import { filter } from 'rxjs/operators';
 import { LocationsService } from './services/locations.service';
 import { ErrorOccurredMessage } from './messages/error-occurred.message';
+import { SuccessInfoMessage } from './messages/success-info.message';
 import { MessageService } from 'primeng/components/common/messageservice';
 
 @Component({
@@ -24,5 +25,9 @@ export class AppComponent implements OnInit {
         this.primeNGmessageService.add({severity: 'error', summary: 'Error', detail: message.errorMessage});
     });
 
+    messages.pipe(filter(message => message instanceof SuccessInfoMessage))
+      .subscribe( (message: SuccessInfoMessage)  => {
+        this.primeNGmessageService.add({severity: 'success', summary: 'Success', detail: message.info});
+    });
   }
 }
