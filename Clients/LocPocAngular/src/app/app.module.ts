@@ -88,7 +88,7 @@ export function appConfigInit(configService: AppConfigService,
             provide: HTTP_INTERCEPTORS,
             useClass: HttpInterceptorService,
             multi: true,
-            deps: [MessageBrokerService]
+            deps: [MessageBrokerService, LoggingService]
         },
         {
             provide: 'LocationsService', useFactory: locationsServiceFactory(),
