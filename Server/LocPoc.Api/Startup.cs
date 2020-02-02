@@ -18,28 +18,24 @@ namespace LocPoc.Api
 
         public IConfiguration Configuration { get; }
 
+        readonly string AllowedOrigins = "_allowedOrigins";
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
 
-            if (UseFakeData())
-            {
-                // Fake in-memory collection
-                services.AddScoped<ILocationsRepository, LocPoc.Repository.InMemory.LocationsRepository>();
-            }
-            else
-            {
-                // Sqlite database
-                services.AddDbContext<LocPoc.Repository.Sqlite.SqliteContext>(options =>
-                    options.UseSqlite("Data Source=locpoc.db"));
-                services.AddScoped<ILocationsRepository, LocPoc.Repository.Sqlite.LocationsRepository>();
-
-            }
+            // Sqlite database
+            services.AddDbContext<LocPoc.Repository.Sqlite.SqliteContext>(options =>
+                options.UseSqlite("Data Source=locpoc.db"));
+            services.AddScoped<ILocationsRepository, LocPoc.Repository.Sqlite.LocationsRepository>();
 
             services.AddCors(options =>
             {
-                options.AddPolicy("Open", builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
+                options.AddPolicy(AllowedOrigins,
+                builder =>
+                {
+                    builder.WithOrigins("https://localhost:4300").AllowAnyHeader().AllowAnyMethod();
+                });
             });
 
             services.AddControllers().AddNewtonsoftJson(options =>
@@ -64,18 +60,12 @@ namespace LocPoc.Api
 
             app.UseAuthorization();
 
-            app.UseCors("Open");
+            app.UseCors(AllowedOrigins);
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
             });
         }
-
-        private bool UseFakeData()
-        {
-            return Configuration["UseFakeData"] == "True";
-        }
-
     }
 }

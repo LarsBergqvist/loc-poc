@@ -18,7 +18,6 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LocPoc.Contracts\LocPoc.Contracts.csproj" />
-    <ProjectReference Include="..\LocPoc.Repository.InMemory\LocPoc.Repository.InMemory.csproj" />
     <ProjectReference Include="..\LocPoc.Repository.Sqlite\LocPoc.Repository.Sqlite.csproj" />
   </ItemGroup>
   <ItemGroup>
