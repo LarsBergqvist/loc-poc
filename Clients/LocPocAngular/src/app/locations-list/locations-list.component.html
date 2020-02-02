@@ -1,3 +1,7 @@
+<div *ngIf="loading">
+    Loading...
+</div>
+
 <p-table *ngIf="(locations && locations.length > 0) else nodata" [value]="locations" [responsive]="true"
 >
   <ng-template pTemplate="header">
@@ -31,6 +35,8 @@
 </p-table>
 <ng-template #nodata>
   <h3>
-    No locations have been stored yet. Use the New button to create a new location item.
+    <div *ngIf="!loading">
+        No locations have been stored yet. Use the New button to create a new location item.        
+    </div>
   </h3>
 </ng-template>

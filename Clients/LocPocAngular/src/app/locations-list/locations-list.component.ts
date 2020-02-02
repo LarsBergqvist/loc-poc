@@ -16,6 +16,8 @@ export class LocationsListComponent implements OnInit {
     options: any;
     overlays: any;
     locations: Location[];
+    loading = false;
+
     constructor(private readonly messageService: MessageBrokerService,
                 @Inject('LocationsService') private readonly locationsService: LocationsService) { }
 
@@ -34,10 +36,12 @@ export class LocationsListComponent implements OnInit {
     }
 
     private async refreshList() {
+        this.loading = true;
         this.locations = await this.locationsService.getLocations();
         if (this.locations) {
             this.locations.sort((a, b) => a.Name.localeCompare(b.Name));
         }
+        this.loading = false;
     }
 
 }
