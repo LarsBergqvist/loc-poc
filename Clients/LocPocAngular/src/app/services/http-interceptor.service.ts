@@ -1,29 +1,17 @@
+import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import {
-    HttpInterceptor, HttpRequest,
-    HttpHandler, HttpEvent, HttpErrorResponse
-} from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { MessageBrokerService } from './message-broker.service';
 import { ErrorOccurredMessage } from '../messages/error-occurred.message';
+import { MessageBrokerService } from './message-broker.service';
+import { LoggingService } from './logging-service';
+
 @Injectable({
     providedIn: 'root'
 })
 export class HttpInterceptorService implements HttpInterceptor {
-    constructor(private readonly messageService: MessageBrokerService) { }
-    handleError(error: HttpErrorResponse, messageService: MessageBrokerService) {
-        if (error && (typeof error.error === 'string')) {
-            messageService.sendMessage(new ErrorOccurredMessage(error.error));
-        } else if (error) {
-            if (error.status === 0) {
-                messageService.sendMessage(new ErrorOccurredMessage('Connection error.'));
-            } else {
-                messageService.sendMessage(new ErrorOccurredMessage('An error has occurred.'));
-            }
-        }
-        return throwError(error);
-    }
+    constructor(private readonly messageService: MessageBrokerService,
+                private readonly logging: LoggingService) { }
 
     intercept(req: HttpRequest<any>, next: HttpHandler):
         Observable<HttpEvent<any>> {
@@ -31,6 +19,22 @@ export class HttpInterceptorService implements HttpInterceptor {
             .pipe(
                 catchError((error) => this.handleError(error, this.messageService))
             );
+    }
+
+    private handleError(error: HttpErrorResponse, messageService: MessageBrokerService) {
+        if (error && (typeof error.error === 'string')) {
+            this.logging.logError('err: ' + error.error);
+            messageService.sendMessage(new ErrorOccurredMessage(error.error));
+        } else if (error) {
+            if (error.status === 0) {
+                this.logging.logError('Connection error.');
+                messageService.sendMessage(new ErrorOccurredMessage('Connection error.'));
+            } else {
+                this.logging.logError('An error has occurred.');
+                messageService.sendMessage(new ErrorOccurredMessage('An error has occurred.'));
+            }
+        }
+        return throwError(error);
     }
 
 }
