@@ -143,6 +143,10 @@ export class LocationDetailsComponent implements OnInit {
         });
     }
 
+    close() {
+        this.isVisible = false;
+    }
+
     private createDefaultLocation() {
         this.location = {
             Id: '',

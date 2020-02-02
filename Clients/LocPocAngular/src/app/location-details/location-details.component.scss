@@ -15,3 +15,13 @@ input[type=number] {
 .sidebar-title {
     font-size: 1.5em;
 }
+
+.close-button {
+    position: absolute;
+    top: 5px;
+    right: 1.5em;
+    width: 10px;
+    height:  10px;
+    font-size: 2em;
+    cursor: pointer;
+}

@@ -1,23 +1,27 @@
-<p-sidebar [(visible)]="isVisible" position="right" styleClass="ui-sidebar-lg" blockScroll="false">
+<p-sidebar [(visible)]="isVisible" position="right" styleClass="ui-sidebar-lg" [blockScroll]="true" [showCloseIcon]="false">
     <p-scrollPanel [style]="{width: '100%', height: '100%'}">
-        <div class="ui-g-12">
+            <div (click)="close()" class="close-button">
+                <i class="pi pi-times"></i>
+            </div>
+
             <div *ngIf="isAddNewMode">
                 <div class="ui-g-12">
-                    <div class="sidebar-title">Add a new location item</div>
+                    <div class="sidebar-title">Add a new location item
+                        <button pButton type="button" label="Save" icon="pi pi-save" (click)="saveNewLocation($event)"
+                            [disabled]="!canSaveLocation"></button>        
+                    </div>
                 </div>
-                <button pButton type="button" label="Save" icon="pi pi-save" (click)="saveNewLocation($event)"
-                    [disabled]="!canSaveLocation"></button>
             </div>
             <div *ngIf="!isAddNewMode">
                 <div class="ui-g-12">
-                    <div class="sidebar-title">Update location item</div>
+                    <div class="sidebar-title">Update location item
+                        <button pButton type="button" label="Save" icon="pi pi-save" (click)="updateLocation($event)"
+                            [disabled]="!canSaveLocation" style="margin:5px;"></button>
+                        <button pButton type="button" label="Delete" icon="pi pi-trash" (click)="deleteLocation($event)"
+                            [disabled]="false"></button>    
+                    </div>
                 </div>
-                <button pButton type="button" label="Save" icon="pi pi-save" (click)="updateLocation($event)"
-                    [disabled]="!canSaveLocation" style="margin:5px;"></button>
-                <button pButton type="button" label="Delete" icon="pi pi-times" (click)="deleteLocation($event)"
-                    [disabled]="false"></button>
             </div>
-        </div>
 
         <div *ngIf="location">
             <div class="ui-fluid">
