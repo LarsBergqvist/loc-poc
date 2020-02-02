@@ -18,6 +18,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { MessagesModule } from 'primeng/messages';
 import { MessageModule } from 'primeng/message';
 import { ToastModule } from 'primeng/toast';
+import { ScrollPanelModule } from 'primeng/scrollpanel';
 
 import { AppBarComponent } from './app-bar/app-bar.component';
 import { LocationDetailsComponent } from './location-details/location-details.component';
@@ -53,7 +54,7 @@ export function appConfigInit(configService: AppConfigService,
             configService.load().then(() => {
                 if (configService.useMap) {
                     logging.logInfo('Use map');
-                    googleMapService.loadGoogleMapsApi(configService.googleAPIKey).then(() => {
+                    googleMapService.load(configService.googleAPIKey).then(() => {
                         resolve();
                     });
                 } else {
@@ -112,6 +113,7 @@ export function appConfigInit(configService: AppConfigService,
         MessagesModule,
         MessageModule,
         ToastModule,
+        ScrollPanelModule
     ],
     bootstrap: [AppComponent]
 })

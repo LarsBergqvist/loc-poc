@@ -36,5 +36,4 @@ export class HttpInterceptorService implements HttpInterceptor {
         }
         return throwError(error);
     }
-
 }

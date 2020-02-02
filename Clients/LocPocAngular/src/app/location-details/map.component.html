@@ -1,6 +1,4 @@
 <div *ngIf="useMap">
-  <p-gmap *ngIf="options.center" [options]="options" [overlays]="overlays" [style]="{'width':'100%','height':'320px'}"
-    (onMapReady)="onMapReady($event)"
-    (onMapClick)="handleMapClick($event)"
-  ></p-gmap>
+    <p-gmap *ngIf="options.center" [options]="options" [overlays]="overlays" [style]="{'width':'100%','height':'320px'}"
+        (onMapReady)="onMapReady($event)" (onMapClick)="handleMapClick($event)"></p-gmap>
 </div>
