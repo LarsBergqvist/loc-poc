@@ -18,16 +18,24 @@ namespace LocPoc.Api
 
         public IConfiguration Configuration { get; }
 
+
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            // Sqlite database
-            services.AddDbContext<LocPoc.Repository.Sqlite.SqliteContext>(options =>
-                options.UseSqlite("Data Source=locpoc.db"));
-            services.AddScoped<ILocationsRepository, LocPoc.Repository.Sqlite.LocationsRepository>();
 
-            // Fake in-memory collection
-            //              services.AddScoped<ILocationsRepository, LocPoc.Repository.InMemory.LocationsRepository>();
+            if (UseFakeData())
+            {
+                // Fake in-memory collection
+                services.AddScoped<ILocationsRepository, LocPoc.Repository.InMemory.LocationsRepository>();
+            }
+            else
+            {
+                // Sqlite database
+                services.AddDbContext<LocPoc.Repository.Sqlite.SqliteContext>(options =>
+                    options.UseSqlite("Data Source=locpoc.db"));
+                services.AddScoped<ILocationsRepository, LocPoc.Repository.Sqlite.LocationsRepository>();
+
+            }
 
             services.AddCors(options =>
             {
@@ -43,8 +51,7 @@ namespace LocPoc.Api
         {
             if (env.IsDevelopment())
             {
-//                app.UseExceptionHandler("/api/Locations");
-                                app.UseDeveloperExceptionPage();
+                app.UseDeveloperExceptionPage();
             }
             else
             {
@@ -64,5 +71,11 @@ namespace LocPoc.Api
                 endpoints.MapControllers();
             });
         }
+
+        private bool UseFakeData()
+        {
+            return Configuration["UseFakeData"] == "True";
+        }
+
     }
 }
