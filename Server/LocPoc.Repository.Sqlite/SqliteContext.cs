@@ -7,8 +7,8 @@ namespace LocPoc.Repository.Sqlite
     {
         public SqliteContext(DbContextOptions<SqliteContext> options) : base(options)
         {
-
         }
+
         public DbSet<Location> Locations { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)

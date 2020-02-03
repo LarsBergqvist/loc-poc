@@ -49,7 +49,7 @@ export function locationsServiceFactory() {
 export function appConfigInit(configService: AppConfigService,
                               googleMapService: GoogleMapsService, logging: LoggingService) {
     // Load the configuration and init google api if maps should be used
-    return (): Promise<any> => {
+    return () => {
         return new Promise((resolve) => {
             configService.load().then(() => {
                 if (configService.useMap) {
