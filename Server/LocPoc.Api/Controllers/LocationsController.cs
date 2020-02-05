@@ -26,9 +26,13 @@ namespace LocPoc.Api.Controllers
 
         // GET: api/Locations/5
         [HttpGet("{id}", Name = "Get")]
-        public LocationDto Get(string id)
+        public IActionResult Get(string id)
         {
-            return _locationsRepository.Get(id).ToLocationDto();
+            var existingLoc = _locationsRepository.Get(id);
+            if (existingLoc == null)
+                return BadRequest($"Location with id '{id}' does not exist.");
+
+            return new OkObjectResult(_locationsRepository.Get(id).ToLocationDto());
         }
 
         // POST: api/Locations
@@ -49,21 +53,34 @@ namespace LocPoc.Api.Controllers
         [HttpPut("{id}")]
         public IActionResult Put(string id, [FromBody] LocationDto locationDto)
         {
+            locationDto.Id = id;
             var location = locationDto.ToLocation();
             var errorMessage = GetValidationErrorMessage(location);
             if (errorMessage.Length > 0)
                 return BadRequest(errorMessage);
 
-            _locationsRepository.Update(location);
+            var existingLoc = _locationsRepository.Get(location.Id);
+            if (existingLoc == null)
+                return BadRequest($"Location with id '{location.Id}' does not exist.");
 
-            return NoContent();
+            var updatedLoc =  _locationsRepository.Update(location);
+
+            var updatedDto = updatedLoc.ToLocationDto();
+
+            return new OkObjectResult(locationDto);
         }
 
         // DELETE: api/Locations/5
         [HttpDelete("{id}")]
-        public void Delete(string id)
+        public IActionResult Delete(string id)
         {
+            var existingLoc = _locationsRepository.Get(id);
+            if (existingLoc == null)
+                return BadRequest($"Location with id '{id}' does not exist.");
+
             _locationsRepository.Delete(id);
+
+            return NoContent();
         }
 
         private string GetValidationErrorMessage(Location location)
