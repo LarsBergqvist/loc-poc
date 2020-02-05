@@ -16,9 +16,9 @@ namespace LocPoc.Api
             Configuration = configuration;
         }
 
-        public IConfiguration Configuration { get; }
+        private IConfiguration Configuration { get; }
 
-        readonly string AllowedOrigins = "_allowedOrigins";
+        private readonly string CorsPolicy = "appCorsPolicy";
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -31,10 +31,10 @@ namespace LocPoc.Api
 
             services.AddCors(options =>
             {
-                options.AddPolicy(AllowedOrigins,
+                options.AddPolicy(CorsPolicy,
                 builder =>
                 {
-                    builder.WithOrigins("https://localhost:4300").AllowAnyHeader().AllowAnyMethod();
+                    builder.WithOrigins(Configuration["AllowedOrigins"].Split(";")).AllowAnyHeader().AllowAnyMethod();
                 });
             });
 
@@ -60,7 +60,7 @@ namespace LocPoc.Api
 
             app.UseAuthorization();
 
-            app.UseCors(AllowedOrigins);
+            app.UseCors(CorsPolicy);
 
             app.UseEndpoints(endpoints =>
             {
