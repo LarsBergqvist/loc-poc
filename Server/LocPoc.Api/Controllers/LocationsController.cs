@@ -17,7 +17,10 @@ namespace LocPoc.Api.Controllers
             _locationsRepository = locationsRepository;
         }
 
-        // GET: api/Locations
+        /// <summary>
+        /// Get all location items
+        /// </summary>
+        /// <returns>A collection of location items</returns>
         [HttpGet]
         public IEnumerable<LocationDto> Get()
         {

@@ -6,6 +6,9 @@ using Microsoft.Extensions.Hosting;
 using LocPoc.Contracts;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json.Serialization;
+using System.Reflection;
+using System.IO;
+using System;
 
 namespace LocPoc.Api
 {
@@ -48,6 +51,9 @@ namespace LocPoc.Api
                     Title = "LocPoc API",
                     Version = "1"
                 });
+                var xmlCommentsFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlCommentsFullPath = Path.Combine(AppContext.BaseDirectory, xmlCommentsFile);
+                setupAction.IncludeXmlComments(xmlCommentsFullPath);
             });
         }
 
@@ -70,6 +76,7 @@ namespace LocPoc.Api
             app.UseSwaggerUI(setupAction =>
             {
                 setupAction.SwaggerEndpoint("/swagger/LocPocOpenApiSpecification/swagger.json", "LocPoc API");
+                setupAction.RoutePrefix = "";
             });
 
             app.UseRouting();
