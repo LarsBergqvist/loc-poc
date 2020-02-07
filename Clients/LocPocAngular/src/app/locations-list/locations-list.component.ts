@@ -39,7 +39,7 @@ export class LocationsListComponent implements OnInit {
         this.loading = true;
         this.locations = await this.locationsService.getLocations();
         if (this.locations) {
-            this.locations.sort((a, b) => a.Name.localeCompare(b.Name));
+            this.locations.sort((a, b) => a.name.localeCompare(b.name));
         }
         this.loading = false;
     }

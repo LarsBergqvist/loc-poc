@@ -5,7 +5,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using LocPoc.Contracts;
 using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json.Serialization;
 using System.Reflection;
 using System.IO;
 using System;
@@ -41,8 +40,7 @@ namespace LocPoc.Api
                 });
             });
 
-            services.AddControllers().AddNewtonsoftJson(options =>
-                   options.SerializerSettings.ContractResolver = new DefaultContractResolver());
+            services.AddControllers();
 
             services.AddSwaggerGen(setupAction =>
             {

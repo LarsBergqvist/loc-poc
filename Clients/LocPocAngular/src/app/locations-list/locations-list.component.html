@@ -16,19 +16,19 @@
       <tr (click)="onRowSelect(location)">
           <td class="ui-column-title">
             <span class="ui-column-title">Name</span>
-            {{location.Name}}
+            {{location.name}}
           </td>
           <td class="ui-column-title">
             <span class="ui-column-title">Desc.</span>
-            {{location.Description}}
+            {{location.description}}
           </td>
           <td class="ui-column-title">
             <span class="ui-column-title">Lat.</span>
-            {{location.Latitude | number:'1.13'}}
+            {{location.latitude | number:'1.13'}}
           </td>
           <td class="ui-column-title">
             <span class="ui-column-title">Long.</span>
-            {{location.Longitude | number:'1.13'}}
+            {{location.longitude | number:'1.13'}}
           </td>
       </tr>
   </ng-template>

@@ -22,12 +22,15 @@ namespace LocPoc.Api.Controllers
         /// </summary>
         /// <returns>A collection of location items</returns>
         [HttpGet]
-        public IEnumerable<LocationDto> Get()
+        public IEnumerable<DTOs.Location> Get()
         {
             return _locationsRepository.GetAll().Select(loc => loc.ToLocationDto());
         }
 
-        // GET: api/Locations/5
+        /// <summary>
+        /// Get a location item by id
+        /// </summary>
+        /// <returns>A location item</returns>
         [HttpGet("{id}", Name = "Get")]
         public IActionResult Get(string id)
         {
@@ -40,7 +43,7 @@ namespace LocPoc.Api.Controllers
 
         // POST: api/Locations
         [HttpPost]
-        public IActionResult Post([FromBody] LocationDto locationDto)
+        public IActionResult Post([FromBody] DTOs.Location locationDto)
         {
             var location = locationDto.ToLocation();
             var errorMessage = GetValidationErrorMessage(location);
@@ -54,7 +57,7 @@ namespace LocPoc.Api.Controllers
 
         // PUT: api/Locations/5
         [HttpPut("{id}")]
-        public IActionResult Put(string id, [FromBody] LocationDto locationDto)
+        public IActionResult Put(string id, [FromBody] DTOs.Location locationDto)
         {
             locationDto.Id = id;
             var location = locationDto.ToLocation();
@@ -86,7 +89,7 @@ namespace LocPoc.Api.Controllers
             return NoContent();
         }
 
-        private string GetValidationErrorMessage(Location location)
+        private string GetValidationErrorMessage(Contracts.Location location)
         {
             var errors = new List<string>();
 

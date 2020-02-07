@@ -72,11 +72,11 @@ export class LocationDetailsComponent implements OnInit {
             .subscribe(async (message: NewMarkerFromMapMessage) => {
                 // Update the location with the position from the new marker
                 this.location = {
-                    Id: this.location.Id,
-                    Name: this.location.Name,
-                    Description: this.location.Description,
-                    Latitude: message.latitude,
-                    Longitude: message.longitude
+                    id: this.location.id,
+                    name: this.location.name,
+                    description: this.location.description,
+                    latitude: message.latitude,
+                    longitude: message.longitude
                 };
             });
     }
@@ -86,11 +86,11 @@ export class LocationDetailsComponent implements OnInit {
     }
 
     get canSaveLocation(): boolean {
-        if (!this.location || !this.location.Name) {
+        if (!this.location || !this.location.name) {
             return false;
         }
 
-        if (this.location.Name.replace(/^[ \t\r\n]+/i, '').length <= 0) {
+        if (this.location.name.replace(/^[ \t\r\n]+/i, '').length <= 0) {
             return false;
         }
 
@@ -134,7 +134,7 @@ export class LocationDetailsComponent implements OnInit {
     }
 
     deleteLocation() {
-        this.locationsService.deleteLocation(this.location.Id).then(() => {
+        this.locationsService.deleteLocation(this.location.id).then(() => {
             this.isVisible = false;
             this.messageBroker.sendMessage(new SuccessInfoMessage('A location item was deleted.'));
             this.messageBroker.sendMessage(new RefreshListMessage());
@@ -149,22 +149,22 @@ export class LocationDetailsComponent implements OnInit {
 
     private createDefaultLocation() {
         this.location = {
-            Id: '',
-            Name: '',
-            Description: '',
-            Latitude: 0.0,
-            Longitude: 51.482578
+            id: '',
+            name: '',
+            description: '',
+            latitude: 0.0,
+            longitude: 51.482578
         };
     }
 
     private setCurrentPosition() {
         navigator.geolocation.getCurrentPosition(position => {
             this.location = {
-                Id: this.location.Id,
-                Name: this.location.Name,
-                Description: this.location.Description,
-                Latitude: position.coords.latitude,
-                Longitude: position.coords.longitude
+                id: this.location.id,
+                name: this.location.name,
+                description: this.location.description,
+                latitude: position.coords.latitude,
+                longitude: position.coords.longitude
             };
         }, error => {
             this.logging.logError(error.message);

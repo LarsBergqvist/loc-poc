@@ -21,7 +21,7 @@ export class LocationsServiceImpl implements LocationsService {
 
     async updateLocation(location: Location): Promise<Location> {
         const baseUrl = this.getBaseUrl();
-        return this.http.put<Location>(`${baseUrl}api/locations/${location.Id}`, location).toPromise();
+        return this.http.put<Location>(`${baseUrl}api/locations/${location.id}`, location).toPromise();
     }
 
     async deleteLocation(id: string): Promise<Location> {

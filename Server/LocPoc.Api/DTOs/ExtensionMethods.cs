@@ -1,12 +1,10 @@
-﻿using LocPoc.Contracts;
-
-namespace LocPoc.Api.DTOs
+﻿namespace LocPoc.Api.DTOs
 {
     public static class ExtensionMethods
     {
-        public static Location ToLocation(this LocationDto dto)
+        public static LocPoc.Contracts.Location ToLocation(this DTOs.Location  dto)
         {
-            return new Location()
+            return new LocPoc.Contracts.Location()
             {
                 Id = dto.Id,
                 Name = dto.Name,
@@ -16,9 +14,9 @@ namespace LocPoc.Api.DTOs
             };
         }
 
-        public static LocationDto ToLocationDto(this Location location)
+        public static DTOs.Location ToLocationDto(this LocPoc.Contracts.Location location)
         {
-            return new LocationDto()
+            return new DTOs.Location()
             {
                 Id = location.Id,
                 Name = location.Name,
