@@ -40,6 +40,15 @@ namespace LocPoc.Api
 
             services.AddControllers().AddNewtonsoftJson(options =>
                    options.SerializerSettings.ContractResolver = new DefaultContractResolver());
+
+            services.AddSwaggerGen(setupAction =>
+            {
+                setupAction.SwaggerDoc("LocPocOpenApiSpecification", new Microsoft.OpenApi.Models.OpenApiInfo()
+                {
+                    Title = "LocPoc API",
+                    Version = "1"
+                });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -55,6 +64,13 @@ namespace LocPoc.Api
             }
 
             app.UseHttpsRedirection();
+
+            app.UseSwagger();
+
+            app.UseSwaggerUI(setupAction =>
+            {
+                setupAction.SwaggerEndpoint("/swagger/LocPocOpenApiSpecification/swagger.json", "LocPoc API");
+            });
 
             app.UseRouting();
 
