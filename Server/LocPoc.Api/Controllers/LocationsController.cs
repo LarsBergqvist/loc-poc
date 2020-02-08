@@ -22,36 +22,39 @@ namespace LocPoc.Api.Controllers
         /// Get all location items
         /// </summary>
         /// <returns>A collection of location items</returns>
+        /// <response code="200">Returns all location items</response>
         [HttpGet]
-        public IEnumerable<DTOs.Location> Get()
+        public ActionResult<IEnumerable<DTOs.Location>> Get()
         {
-            return _locationsRepository.GetAll().Select(loc => loc.ToLocationDto());
+            return Ok(_locationsRepository.GetAll().Select(loc => loc.ToLocationDto()));
         }
 
         /// <summary>
         /// Get a location item by id
         /// </summary>
         /// <returns>A location item</returns>
+        /// <response code="200">Returns the requested location item</response>
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [HttpGet("{id}", Name = "Get")]
-        public IActionResult Get(string id)
+        public ActionResult<DTOs.Location> Get(string id)
         {
             var existingLoc = _locationsRepository.Get(id);
             if (existingLoc == null)
                 return NotFound();
 
-            return new OkObjectResult(_locationsRepository.Get(id).ToLocationDto());
+            return Ok(_locationsRepository.Get(id).ToLocationDto());
         }
 
         /// <summary>
         /// Stores a new location item
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The created location item</returns>
+        /// <response code="200">Returns the created location item</response>
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [HttpPost]
-        public IActionResult Post([FromBody] DTOs.Location locationDto)
+        public ActionResult<DTOs.Location> Post([FromBody] DTOs.Location locationDto)
         {
             var location = locationDto.ToLocation();
             var errorMessage = GetValidationErrorMessage(location);
@@ -66,12 +69,13 @@ namespace LocPoc.Api.Controllers
         /// <summary>
         /// Updates an existing location item
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The updated location item</returns>
+        /// <response code="200">Returns the updated location item</response>
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [HttpPut("{id}")]
-        public IActionResult Put(string id, [FromBody] DTOs.Location locationDto)
+        public ActionResult<DTOs.Location> Put(string id, [FromBody] DTOs.Location locationDto)
         {
             locationDto.Id = id;
             var location = locationDto.ToLocation();
@@ -85,7 +89,7 @@ namespace LocPoc.Api.Controllers
 
             var updatedLoc =  _locationsRepository.Update(location);
 
-            return new OkObjectResult(updatedLoc.ToLocationDto());
+            return Ok(updatedLoc.ToLocationDto());
         }
 
         /// <summary>
