@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using LocPoc.Contracts;
 using LocPoc.Api.DTOs;
 using System.Linq;
+using Microsoft.AspNetCore.Http;
 
 namespace LocPoc.Api.Controllers
 {
@@ -31,17 +32,24 @@ namespace LocPoc.Api.Controllers
         /// Get a location item by id
         /// </summary>
         /// <returns>A location item</returns>
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         [HttpGet("{id}", Name = "Get")]
         public IActionResult Get(string id)
         {
             var existingLoc = _locationsRepository.Get(id);
             if (existingLoc == null)
-                return BadRequest($"Location with id '{id}' does not exist.");
+                return NotFound();
 
             return new OkObjectResult(_locationsRepository.Get(id).ToLocationDto());
         }
 
-        // POST: api/Locations
+        /// <summary>
+        /// Stores a new location item
+        /// </summary>
+        /// <returns></returns>
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [HttpPost]
         public IActionResult Post([FromBody] DTOs.Location locationDto)
         {
@@ -52,10 +60,16 @@ namespace LocPoc.Api.Controllers
 
             var createdLoc = _locationsRepository.Add(location);
 
-            return Created("location", createdLoc);
+            return Created("location", createdLoc.ToLocationDto());
         }
 
-        // PUT: api/Locations/5
+        /// <summary>
+        /// Updates an existing location item
+        /// </summary>
+        /// <returns></returns>
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [HttpPut("{id}")]
         public IActionResult Put(string id, [FromBody] DTOs.Location locationDto)
         {
@@ -67,22 +81,25 @@ namespace LocPoc.Api.Controllers
 
             var existingLoc = _locationsRepository.Get(location.Id);
             if (existingLoc == null)
-                return BadRequest($"Location with id '{location.Id}' does not exist.");
+                return NotFound();
 
             var updatedLoc =  _locationsRepository.Update(location);
 
-            var updatedDto = updatedLoc.ToLocationDto();
-
-            return new OkObjectResult(locationDto);
+            return new OkObjectResult(updatedLoc.ToLocationDto());
         }
 
-        // DELETE: api/Locations/5
+        /// <summary>
+        /// Deletes a location item
+        /// </summary>
+        /// <returns></returns>
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         [HttpDelete("{id}")]
         public IActionResult Delete(string id)
         {
             var existingLoc = _locationsRepository.Get(id);
             if (existingLoc == null)
-                return BadRequest($"Location with id '{id}' does not exist.");
+                return NotFound();
 
             _locationsRepository.Delete(id);
 

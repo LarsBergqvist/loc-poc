@@ -47,7 +47,8 @@ namespace LocPoc.Api
                 setupAction.SwaggerDoc("LocPocOpenApiSpecification", new Microsoft.OpenApi.Models.OpenApiInfo()
                 {
                     Title = "LocPoc API",
-                    Version = "1"
+                    Version = "1",
+                    Description = "With this API you can store and fetch location items"
                 });
                 var xmlCommentsFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 var xmlCommentsFullPath = Path.Combine(AppContext.BaseDirectory, xmlCommentsFile);
