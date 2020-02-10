@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace LocPoc.Contracts
 {
@@ -6,7 +7,7 @@ namespace LocPoc.Contracts
     {
         IEnumerable<Location> GetAll();
         Location Get(string id);
-        Location Add(Location location);
+        Location Create(Location location);
         Location Update(Location location);
         void Delete(string id);
     }

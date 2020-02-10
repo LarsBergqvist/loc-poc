@@ -5,6 +5,7 @@ using LocPoc.Contracts;
 using LocPoc.Api.DTOs;
 using System.Linq;
 using Microsoft.AspNetCore.Http;
+using System.Threading.Tasks;
 
 namespace LocPoc.Api.Controllers
 {
@@ -12,8 +13,8 @@ namespace LocPoc.Api.Controllers
     [ApiController]
     public class LocationsController : ControllerBase
     {
-        ILocationsRepository _locationsRepository;
-        public LocationsController(ILocationsRepository locationsRepository)
+        ILocationsRepositoryAsync _locationsRepository;
+        public LocationsController(ILocationsRepositoryAsync locationsRepository)
         {
             _locationsRepository = locationsRepository ?? throw new ArgumentNullException(nameof(locationsRepository));
         }
@@ -24,9 +25,11 @@ namespace LocPoc.Api.Controllers
         /// <returns>A collection of location items</returns>
         /// <response code="200">Returns all location items</response>
         [HttpGet]
-        public ActionResult<IEnumerable<DTOs.Location>> Get()
+        public async Task<ActionResult<IEnumerable<DTOs.Location>>> Get()
         {
-            return Ok(_locationsRepository.GetAll().Select(loc => loc.ToLocationDto()));
+            var locations = await _locationsRepository.GetAllAsync();
+            var locationDTOs = locations.Select(loc => loc.ToLocationDto());
+            return Ok(locationDTOs);
         }
 
         /// <summary>
@@ -37,13 +40,13 @@ namespace LocPoc.Api.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [HttpGet("{id}", Name = "Get")]
-        public ActionResult<DTOs.Location> Get(string id)
+        public async Task<ActionResult<DTOs.Location>> Get(string id)
         {
-            var existingLoc = _locationsRepository.Get(id);
+            var existingLoc = await _locationsRepository.GetAsync(id);
             if (existingLoc == null)
                 return NotFound();
 
-            return Ok(_locationsRepository.Get(id).ToLocationDto());
+            return existingLoc.ToLocationDto();
         }
 
         /// <summary>
@@ -54,14 +57,14 @@ namespace LocPoc.Api.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [HttpPost]
-        public ActionResult<DTOs.Location> Post([FromBody] DTOs.Location locationDto)
+        public async Task<ActionResult<DTOs.Location>> Create([FromBody] DTOs.Location locationDto)
         {
             var location = locationDto.ToLocation();
             var errorMessage = GetValidationErrorMessage(location);
             if (errorMessage.Length > 0)
                 return BadRequest(errorMessage);
 
-            var createdLoc = _locationsRepository.Add(location);
+            var createdLoc = await _locationsRepository.CreateAsync(location);
 
             return Created("location", createdLoc.ToLocationDto());
         }
@@ -75,7 +78,7 @@ namespace LocPoc.Api.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [HttpPut("{id}")]
-        public ActionResult<DTOs.Location> Put(string id, [FromBody] DTOs.Location locationDto)
+        public async Task<ActionResult<DTOs.Location>> Update(string id, [FromBody] DTOs.Location locationDto)
         {
             locationDto.Id = id;
             var location = locationDto.ToLocation();
@@ -83,11 +86,11 @@ namespace LocPoc.Api.Controllers
             if (errorMessage.Length > 0)
                 return BadRequest(errorMessage);
 
-            var existingLoc = _locationsRepository.Get(location.Id);
+            var existingLoc = await _locationsRepository.GetAsync(location.Id);
             if (existingLoc == null)
                 return NotFound();
 
-            var updatedLoc =  _locationsRepository.Update(location);
+            var updatedLoc =  await _locationsRepository.UpdateAsync(location);
 
             return Ok(updatedLoc.ToLocationDto());
         }
@@ -99,13 +102,13 @@ namespace LocPoc.Api.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [HttpDelete("{id}")]
-        public IActionResult Delete(string id)
+        public async Task<IActionResult> Delete(string id)
         {
-            var existingLoc = _locationsRepository.Get(id);
+            var existingLoc = await _locationsRepository.GetAsync(id);
             if (existingLoc == null)
                 return NotFound();
 
-            _locationsRepository.Delete(id);
+            await _locationsRepository.DeleteAsync(id);
 
             return NoContent();
         }

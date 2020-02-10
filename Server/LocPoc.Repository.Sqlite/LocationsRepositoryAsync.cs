@@ -1,38 +1,42 @@
 ﻿using LocPoc.Contracts;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace LocPoc.Repository.Sqlite
 {
-    public class LocationsRepository : ILocationsRepository
+    public class LocationsRepositoryAsync : ILocationsRepositoryAsync
     {
         private readonly SqliteContext _context;
 
-        public LocationsRepository(SqliteContext context)
+        public LocationsRepositoryAsync(SqliteContext context)
         {
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
-        public IEnumerable<Location> GetAll()
+        public async Task<IEnumerable<Location>> GetAllAsync()
         {
-            return _context.Locations;
+            return await _context.Locations.ToListAsync();
         }
 
-        public Location Get(string id)
+        public async Task<Location> GetAsync(string id)
         {
-            var loc = _context.Locations.Find(id);
+            var locations = await _context.Locations.ToListAsync();
+            var loc = locations.Find(l => l.Id == id);
             return loc;
         }
 
-        public Location Create(Location location)
+
+        public async Task<Location> CreateAsync(Location location)
         {
             location.Id = Guid.NewGuid().ToString();
             _context.Locations.Add(location);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             return location;
         }
 
-        public Location Update(Location location)
+        public async Task<Location> UpdateAsync(Location location)
         {
             var loc = _context.Locations.Find(location.Id);
             if (loc != null)
@@ -42,18 +46,19 @@ namespace LocPoc.Repository.Sqlite
                 loc.Latitude = location.Latitude;
                 loc.Longitude = location.Longitude;
             }
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             return loc;
         }
 
-        public void Delete(string id)
+        public async Task DeleteAsync(string id)
         {
             var loc = _context.Locations.Find(id);
             if (loc != null)
             {
                 _context.Locations.Remove(loc);
             }
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
+
     }
 }

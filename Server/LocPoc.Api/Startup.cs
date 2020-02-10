@@ -29,7 +29,7 @@ namespace LocPoc.Api
             // Sqlite database
             services.AddDbContext<LocPoc.Repository.Sqlite.SqliteContext>(options =>
                 options.UseSqlite("Data Source=locpoc.db"));
-            services.AddScoped<ILocationsRepository, LocPoc.Repository.Sqlite.LocationsRepository>();
+            services.AddScoped<ILocationsRepositoryAsync, LocPoc.Repository.Sqlite.LocationsRepositoryAsync>();
 
             services.AddCors(options =>
             {
