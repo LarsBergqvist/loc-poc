@@ -22,23 +22,22 @@ namespace LocPoc.Repository.Sqlite
 
         public async Task<Location> GetAsync(string id)
         {
-            var locations = await _context.Locations.ToListAsync();
-            var loc = locations.Find(l => l.Id == id);
-            return loc;
+            var location = await _context.Locations.FindAsync(id);
+            return location;
         }
 
 
         public async Task<Location> CreateAsync(Location location)
         {
             location.Id = Guid.NewGuid().ToString();
-            _context.Locations.Add(location);
+            await _context.Locations.AddAsync(location);
             await _context.SaveChangesAsync();
             return location;
         }
 
         public async Task<Location> UpdateAsync(Location location)
         {
-            var loc = _context.Locations.Find(location.Id);
+            var loc = await _context.Locations.FindAsync(location.Id);
             if (loc != null)
             {
                 loc.Name = location.Name;
@@ -52,7 +51,7 @@ namespace LocPoc.Repository.Sqlite
 
         public async Task DeleteAsync(string id)
         {
-            var loc = _context.Locations.Find(id);
+            var loc = await _context.Locations.FindAsync(id);
             if (loc != null)
             {
                 _context.Locations.Remove(loc);
