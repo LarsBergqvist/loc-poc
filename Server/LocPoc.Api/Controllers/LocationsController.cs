@@ -20,7 +20,7 @@ namespace LocPoc.Api.Controllers
         }
 
         /// <summary>
-        /// Get all location items
+        /// Gets all location items
         /// </summary>
         /// <returns>A collection of location items</returns>
         /// <response code="200">Returns all location items</response>
@@ -33,7 +33,7 @@ namespace LocPoc.Api.Controllers
         }
 
         /// <summary>
-        /// Get a location item by id
+        /// Gets a location item by id
         /// </summary>
         /// <returns>A location item</returns>
         /// <response code="200">Returns the requested location item</response>
@@ -50,7 +50,7 @@ namespace LocPoc.Api.Controllers
         }
 
         /// <summary>
-        /// Stores a new location item
+        /// Creates a new location item
         /// </summary>
         /// <returns>The created location item</returns>
         /// <response code="200">Returns the created location item</response>
@@ -60,9 +60,6 @@ namespace LocPoc.Api.Controllers
         public async Task<ActionResult<DTOs.Location>> Create([FromBody] DTOs.Location locationDto)
         {
             var location = locationDto.ToLocation();
-            var errorMessage = GetValidationErrorMessage(location);
-            if (errorMessage.Length > 0)
-                return BadRequest(errorMessage);
 
             var createdLoc = await _locationsRepository.CreateAsync(location);
 
@@ -82,9 +79,6 @@ namespace LocPoc.Api.Controllers
         {
             locationDto.Id = id;
             var location = locationDto.ToLocation();
-            var errorMessage = GetValidationErrorMessage(location);
-            if (errorMessage.Length > 0)
-                return BadRequest(errorMessage);
 
             var existingLoc = await _locationsRepository.GetAsync(location.Id);
             if (existingLoc == null)
@@ -111,43 +105,6 @@ namespace LocPoc.Api.Controllers
             await _locationsRepository.DeleteAsync(id);
 
             return NoContent();
-        }
-
-        private string GetValidationErrorMessage(Contracts.Location location)
-        {
-            var errors = new List<string>();
-
-            if (location == null)
-            {
-                errors.Add("Location can not be null");
-                return errors.ToString();
-            }
-
-            if (String.IsNullOrWhiteSpace(location.Name))
-            {
-                errors.Add("Name must be specified");
-            }
-
-            if (location.Latitude > 90 || location.Latitude < -90)
-            {
-                errors.Add("Latitude must be a degree in the range from -90 to 90");
-            }
-
-            if (location.Longitude > 180 || location.Longitude < -180)
-            {
-                errors.Add("Longitude must be a degree in the range from -180 to 180");
-            }
-
-            var errorMessage = new System.Text.StringBuilder();
-            for (int i=0; i < errors.Count; i++)
-            {
-                if (i == 0)
-                    errorMessage.Append(errors[i]);
-                else
-                    errorMessage.AppendFormat($", {errors[i]}");
-            }
-
-            return errorMessage.ToString();
         }
     }
 }
