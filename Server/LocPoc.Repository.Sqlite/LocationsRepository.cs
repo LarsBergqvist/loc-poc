@@ -1,4 +1,5 @@
 ﻿using LocPoc.Contracts;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 
@@ -10,7 +11,8 @@ namespace LocPoc.Repository.Sqlite
 
         public LocationsRepository(SqliteContext context)
         {
-            _context = context;
+            _context = context ?? throw new ArgumentNullException(nameof(context));
+            _context.Database.Migrate();
         }
 
         public Location Add(Location location)

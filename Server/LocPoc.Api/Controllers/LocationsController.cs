@@ -15,7 +15,7 @@ namespace LocPoc.Api.Controllers
         ILocationsRepository _locationsRepository;
         public LocationsController(ILocationsRepository locationsRepository)
         {
-            _locationsRepository = locationsRepository;
+            _locationsRepository = locationsRepository ?? throw new ArgumentNullException(nameof(locationsRepository));
         }
 
         /// <summary>
