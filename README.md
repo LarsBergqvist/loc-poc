@@ -1,5 +1,5 @@
 # Locations In Your Pocket
-A tutorial on how to create a geolocation application with Angular, .NET Core and Google Maps
+A programming exercise on how to create a geolocation application with Angular, .NET Core and Google Maps
 
 ![image](https://larsbergqvist.files.wordpress.com/2020/02/locpoc_main.png)
 
