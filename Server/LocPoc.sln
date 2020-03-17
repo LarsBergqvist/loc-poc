@@ -8,6 +8,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LocPoc.Contracts", "LocPoc.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LocPoc.Repository.Sqlite", "LocPoc.Repository.Sqlite\LocPoc.Repository.Sqlite.csproj", "{731A797A-1B50-4565-A46C-9955AEAFCE40}"
 EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{40B6F9FE-A961-46CB-BC73-4E724533AC1B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -26,6 +28,10 @@ Global
 		{731A797A-1B50-4565-A46C-9955AEAFCE40}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{731A797A-1B50-4565-A46C-9955AEAFCE40}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{731A797A-1B50-4565-A46C-9955AEAFCE40}.Release|Any CPU.Build.0 = Release|Any CPU
+		{40B6F9FE-A961-46CB-BC73-4E724533AC1B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{40B6F9FE-A961-46CB-BC73-4E724533AC1B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{40B6F9FE-A961-46CB-BC73-4E724533AC1B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{40B6F9FE-A961-46CB-BC73-4E724533AC1B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

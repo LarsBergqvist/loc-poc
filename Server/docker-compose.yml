@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  locpoc.api:
+    image: ${DOCKER_REGISTRY-}locpoc
+    build:
+      context: .
+      dockerfile: LocPoc.Api/Dockerfile
