@@ -7,7 +7,7 @@
             <div *ngIf="isAddNewMode">
                 <div class="ui-g-12">
                     <div class="sidebar-title">Add a new location item
-                        <button pButton type="button" label="Save" icon="pi pi-save" (click)="saveNewLocation($event)"
+                        <button pButton type="button" label="Save" icon="pi pi-save" (click)="saveNewLocation()"
                             [disabled]="!canSaveLocation"></button>        
                     </div>
                 </div>
@@ -15,9 +15,9 @@
             <div *ngIf="!isAddNewMode">
                 <div class="ui-g-12">
                     <div class="sidebar-title">Update location item
-                        <button pButton type="button" label="Save" icon="pi pi-save" (click)="updateLocation($event)"
+                        <button pButton type="button" label="Save" icon="pi pi-save" (click)="updateLocation()"
                             [disabled]="!canSaveLocation" style="margin:5px;"></button>
-                        <button pButton type="button" label="Delete" icon="pi pi-trash" (click)="deleteLocation($event)"
+                        <button pButton type="button" label="Delete" icon="pi pi-trash" (click)="deleteLocation()"
                             [disabled]="false"></button>    
                     </div>
                 </div>

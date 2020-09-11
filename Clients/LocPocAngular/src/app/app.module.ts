@@ -30,7 +30,7 @@ import { MapComponent } from './location-details/map.component';
 import { GoogleMapsService } from './services/googlemaps.service';
 import { HttpInterceptorService } from './services/http-interceptor.service';
 import { MessageBrokerService } from './services/message-broker.service';
-import { MessageService } from 'primeng/components/common/messageservice';
+import { MessageService } from 'primeng/api';
 import { NumberRangeValidator } from './validators/number-range.validator';
 import { LoggingService } from './services/logging-service';
 
