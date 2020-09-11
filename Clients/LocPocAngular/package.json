@@ -11,12 +11,13 @@
     "test_watch": "ng test --watch true",
     "test_watch_full_chrome": "ng test --watch true --browsers=Chrome",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "postinstall": "ngcc"
   },
   "private": true,
   "dependencies": {
     "@angular/animations": "^10.1.1",
-    "@angular/cdk": "^8.2.3",
+    "@angular/cdk": "^10.2.0",
     "@angular/common": "~10.1.1",
     "@angular/compiler": "~10.1.1",
     "@angular/core": "~10.1.1",
@@ -27,7 +28,7 @@
     "clone": "^2.1.2",
     "load-google-maps-api": "^2.0.1",
     "primeicons": "^2.0.0",
-    "primeng": "^10.0.0",
+    "primeng": "^9.1.3",
     "rxjs": "~6.6.3",
     "tslib": "^2.0.0",
     "uuid": "^3.4.0",
@@ -41,7 +42,6 @@
     "@types/jasmine": "~3.3.8",
     "@types/jasminewd2": "~2.0.3",
     "@types/node": "^12.11.1",
-    "codelyzer": "^5.1.2",
     "jasmine-core": "~3.5.0",
     "jasmine-spec-reporter": "~5.0.0",
     "karma": "~5.0.0",
