@@ -39,8 +39,8 @@ export class LocationDetailsComponent implements OnInit {
         max: 90.0
     };
 
-    @ViewChild('longitude', { static: false }) longitudeModel: NgModel;
-    @ViewChild('latitude', { static: false }) latitudeModel: NgModel;
+    @ViewChild('longitude') longitudeModel: NgModel;
+    @ViewChild('latitude') latitudeModel: NgModel;
 
     constructor(private readonly messageBroker: MessageBrokerService,
                 private readonly appConfigService: AppConfigService,
