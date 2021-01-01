@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { LocationsListComponent } from './locations-list.component';
 import { TableModule } from 'primeng/table';
@@ -8,7 +8,7 @@ describe('LocationsListComponent', () => {
   let fixture: ComponentFixture<LocationsListComponent>;
   let locationsService: any;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     locationsService = {
       getLocations: jasmine.createSpy('getLocations'),
       saveNewLocation: jasmine.createSpy('saveNewLocation')

@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { LocationDetailsComponent } from './location-details.component';
 import { InputTextModule } from 'primeng/inputtext';
@@ -17,7 +17,7 @@ describe('LocationDetailsComponent', () => {
     let locationsService: any;
     let appConfigService: any;
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         locationsService = {
             getLocations: jasmine.createSpy('getLocations'),
             saveNewLocation: jasmine.createSpy('saveNewLocation')

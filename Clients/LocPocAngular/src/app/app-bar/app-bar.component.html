@@ -1,10 +1,13 @@
-<p-toolbar id="locpoc-toolbar">
-  <div class="ui-toolbar-group-left">
-      <button pButton type="button" label="New" icon="pi pi-plus" (click)="addNewLocation()"></button>
-  </div>
-  <div class="app-title">
-      Locations In Your Pocket
-  </div>
-  <div class="ui-toolbar-group-right">
-  </div>
-</p-toolbar>
+<div class="header">
+    <div class="app-title">
+        Locations In Your Pocket
+    </div>
+    <p-toolbar id="locpoc-toolbar">
+        <div class="p-toolbar-group-left">
+            <button pButton type="button" label="New" class="addnew-button" icon="pi pi-plus"
+                (click)="addNewLocation()"></button>
+        </div>
+        <div class="p-toolbar-group-right">
+        </div>
+    </p-toolbar>
+</div>
