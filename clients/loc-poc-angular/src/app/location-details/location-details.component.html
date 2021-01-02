@@ -20,15 +20,13 @@
         </div>
         <div *ngIf="!isAddNewMode">
             <div class="p-grid p-jc-end">
-                <div class="p-col-4"></div>
-
-                <div class="p-col-4">
-                    <button class="action-button" pButton type="button" label="Save" icon="pi pi-save"
-                        (click)="updateLocation()" [disabled]="!canSaveLocation" style="margin-right:5px;"></button>
-                </div>
-                <div class="p-col-4">
-                    <button class="action-button" pButton type="button" label="Delete" icon="pi pi-trash"
-                        (click)="deleteLocation()" [disabled]="false"></button>
+                <div class="p-col-12">
+                    <span>
+                        <button class="action-button" pButton type="button" label="Save" icon="pi pi-save"
+                            (click)="updateLocation()" [disabled]="!canSaveLocation" style="margin-right:5px;"></button>
+                        <button class="action-button" pButton type="button" label="Delete" icon="pi pi-trash"
+                            (click)="deleteLocation()" [disabled]="false"></button>
+                    </span>
                 </div>
             </div>
         </div>
