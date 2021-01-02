@@ -1,8 +1,19 @@
 # Locations In Your Pocket
 
+[![Build Status](https://travis-ci.org/LarsBergqvist/loc-poc.svg?branch=master)](https://travis-ci.org/LarsBergqvist/loc-poc)
+
 A programming exercise on how to create a geolocation application with Angular, .NET Core and Google Maps
 
+# Demo
+
+https://larsbergqvist.github.io/loc-poc/  
+(Only front-end application. Stores data in the browser's local storage)
+
 ![image](https://larsbergqvist.files.wordpress.com/2020/02/locpoc_main.png)
+
+# Blog post with walkthrough of the project
+
+https://thingsmatic.com/2020/01/26/geolocation-with-angular-and-net-core-part-1/
 
 # The Angular client
 
