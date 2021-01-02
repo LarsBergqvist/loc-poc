@@ -1,4 +1,4 @@
-<p-sidebar [(visible)]="isVisible" position="right" styleClass="ui-sidebar-lg" [blockScroll]="true"
+<p-sidebar [(visible)]="isVisible" position="right" styleClass="p-sidebar-lg" [blockScroll]="true"
     [showCloseIcon]="false">
     <p-scrollPanel [style]="{width: '100%', height: '100%'}">
 
@@ -10,54 +10,61 @@
         </div>
 
         <div *ngIf="isAddNewMode">
-            <div class="p-grid">
-                <div class="p-col-12">
-                    <button pButton type="button" label="Save" icon="pi pi-save" (click)="saveNewLocation()"
-                        [disabled]="!canSaveLocation"></button>
+            <div class="p-grid p-jc-end">
+                <div class="p-col-8"></div>
+                <div class="p-col-4">
+                    <button class="action-button" pButton type="button" label="Save" icon="pi pi-save"
+                        (click)="saveNewLocation()" [disabled]="!canSaveLocation"></button>
                 </div>
             </div>
         </div>
         <div *ngIf="!isAddNewMode">
-            <div class="p-grid">
-                <div class="p-col-6">
-                    <button pButton type="button" label="Save" icon="pi pi-save" (click)="updateLocation()"
-                        [disabled]="!canSaveLocation" style="margin-right:5px;"></button>
+            <div class="p-grid p-jc-end">
+                <div class="p-col-4"></div>
+
+                <div class="p-col-4">
+                    <button class="action-button" pButton type="button" label="Save" icon="pi pi-save"
+                        (click)="updateLocation()" [disabled]="!canSaveLocation" style="margin-right:5px;"></button>
                 </div>
-                <div class="p-col-6">
-                    <button pButton type="button" label="Delete" icon="pi pi-trash" (click)="deleteLocation()"
-                        [disabled]="false"></button>
+                <div class="p-col-4">
+                    <button class="action-button" pButton type="button" label="Delete" icon="pi pi-trash"
+                        (click)="deleteLocation()" [disabled]="false"></button>
                 </div>
             </div>
         </div>
 
         <hr>
         <div *ngIf="location">
-            <div class="p-col-12">
-                <div>Name</div>
-                <input type="text" pInputText placeholder="Name of location" [(ngModel)]="location.name"
-                    (change)="onInputChanged($event)" />
-            </div>
-            <div class="p-col-12">
-                <div>Description</div>
-                <input type="text" pInputText placeholder="Description of location"
-                    [(ngModel)]="location.description" />
-            </div>
-            <div class="p-col-12">
-                <div>Latitude</div>
-                <input type="number" step="any" pInputText placeholder="Latitude" [(ngModel)]="location.latitude"
-                    [app-number-range-validator]="latitudeRange" #latitude="ngModel"
-                    (change)="onInputChanged($event)" />
-                <div *ngIf="latitude.dirty && latitude.errors" class="alert-error">
-                    Latitude is not within the valid range (-90, 90)
+            <div class="p-grid">
+                <div class="p-col-12 p-md-6">
+                    <div>Name</div>
+                    <input type="text" pInputText placeholder="Name of location" [(ngModel)]="location.name"
+                        (change)="onInputChanged($event)" />
+                </div>
+                <div class="p-col-12 p-md-6">
+                    <div>Description</div>
+                    <input type="text" pInputText placeholder="Description of location"
+                        [(ngModel)]="location.description" />
                 </div>
             </div>
-            <div class="p-col-12">
-                <div>Longitude</div>
-                <input type="number" step="any" pInputText placeholder="Longitude" [(ngModel)]="location.longitude"
-                    [app-number-range-validator]="longitudeRange" #longitude="ngModel"
-                    (change)="onInputChanged($event)" />
-                <div *ngIf="longitude.dirty && longitude.errors" class="alert-error">
-                    Longitude is not within the valid range (-180, 180)
+            <div class="p-grid">
+                <div class="p-col-12 p-md-6">
+                    <div>Latitude</div>
+                    <input type="number" step="any" pInputText placeholder="Latitude" [(ngModel)]="location.latitude"
+                        [app-number-range-validator]="latitudeRange" #latitude="ngModel"
+                        (change)="onInputChanged($event)" />
+                    <div *ngIf="latitude.dirty && latitude.errors" class="alert-error">
+                        Latitude is not within the valid range (-90, 90)
+                    </div>
+                </div>
+                <div class="p-col-12 p-md-6">
+                    <div>Longitude</div>
+                    <input type="number" step="any" pInputText placeholder="Longitude" [(ngModel)]="location.longitude"
+                        [app-number-range-validator]="longitudeRange" #longitude="ngModel"
+                        (change)="onInputChanged($event)" />
+                    <div *ngIf="longitude.dirty && longitude.errors" class="alert-error">
+                        Longitude is not within the valid range (-180, 180)
+                    </div>
                 </div>
             </div>
         </div>
