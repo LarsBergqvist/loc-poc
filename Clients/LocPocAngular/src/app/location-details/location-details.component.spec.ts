@@ -17,29 +17,28 @@ describe('LocationDetailsComponent', () => {
     let locationsService: any;
     let appConfigService: any;
 
-    beforeEach(waitForAsync(() => {
-        locationsService = {
-            getLocations: jasmine.createSpy('getLocations'),
-            saveNewLocation: jasmine.createSpy('saveNewLocation')
-        };
-        appConfigService = {
-            useMap: jasmine.createSpy('useMap')
-        };
+    beforeEach(
+        waitForAsync(() => {
+            locationsService = {
+                getLocations: jasmine.createSpy('getLocations'),
+                saveNewLocation: jasmine.createSpy('saveNewLocation')
+            };
+            appConfigService = {
+                useMap: jasmine.createSpy('useMap')
+            };
 
-        TestBed.configureTestingModule({
-            imports: [
-                InputTextModule, ButtonModule, SidebarModule, FormsModule, BrowserAnimationsModule,
-            ],
-            providers: [
-                { provide: 'LocationsService', useValue: locationsService },
-                { provide: AppConfigService, useValue: appConfigService },
-                { provide: LoggingService, useClass: LoggingService }
-            ],
-            schemas: [CUSTOM_ELEMENTS_SCHEMA],
-            declarations: [LocationDetailsComponent, NumberRangeValidator]
+            TestBed.configureTestingModule({
+                imports: [InputTextModule, ButtonModule, SidebarModule, FormsModule, BrowserAnimationsModule],
+                providers: [
+                    { provide: 'LocationsService', useValue: locationsService },
+                    { provide: AppConfigService, useValue: appConfigService },
+                    { provide: LoggingService, useClass: LoggingService }
+                ],
+                schemas: [CUSTOM_ELEMENTS_SCHEMA],
+                declarations: [LocationDetailsComponent, NumberRangeValidator]
+            }).compileComponents();
         })
-            .compileComponents();
-    }));
+    );
 
     beforeEach(() => {
         fixture = TestBed.createComponent(LocationDetailsComponent);

@@ -2,8 +2,11 @@ import { Injectable } from '@angular/core';
 import { Location } from '../models/location';
 import { v4 as guidgenerator } from 'uuid';
 import { LocationsService } from './locations.service';
+import { LocalStorageService } from './local-storage.service';
 @Injectable()
 export class LocationsServiceMock implements LocationsService {
+    private storage_key = 'LocationsService';
+
     fakeData = [
         {
             id: '485DCD53-90F2-441A-A8BE-8CCBF5B736AE',
@@ -21,7 +24,7 @@ export class LocationsServiceMock implements LocationsService {
         },
         {
             id: '87640EA1-ECE1-4260-A708-26ABC4F849B6',
-            name: 'Cheop\'s pyramid',
+            name: "Cheop's pyramid",
             description: 'Hello Egypt',
             latitude: 29.978842,
             longitude: 31.134358
@@ -50,7 +53,7 @@ export class LocationsServiceMock implements LocationsService {
         {
             id: '3316CE8C-01E3-4AA0-92D9-E1A2202D2C96',
             name: 'Sydney Opera House',
-            description: 'G\'day!',
+            description: "G'day!",
             latitude: -33.8567844,
             longitude: 151.2152967
         },
@@ -76,30 +79,35 @@ export class LocationsServiceMock implements LocationsService {
             longitude: 23.7257492
         }
     ];
-    constructor() {
-    }
+    constructor(private readonly storageService: LocalStorageService) {}
 
     async getLocations(): Promise<Location[]> {
-        return this.fakeData;
+        let result = this.storageService.get(this.storage_key);
+        if (!result) {
+            result = this.fakeData;
+        }
+        return result;
     }
 
     async saveNewLocation(location: Location): Promise<Location> {
         location.id = guidgenerator;
         this.fakeData.push(location);
+        this.storageService.set(this.storage_key, this.fakeData);
         return location;
     }
 
     async updateLocation(location: Location): Promise<Location> {
-        const current = this.fakeData.find(l => l.id === location.id);
+        const current = this.fakeData.find((l) => l.id === location.id);
         current.name = location.name;
         current.description = location.description;
         current.latitude = location.latitude;
         current.longitude = location.longitude;
+        this.storageService.set(this.storage_key, this.fakeData);
         return current;
     }
 
     async deleteLocation(id: string): Promise<Location> {
-        this.fakeData = this.fakeData.filter(l => l.id !== id);
+        this.fakeData = this.fakeData.filter((l) => l.id !== id);
         return;
     }
 }

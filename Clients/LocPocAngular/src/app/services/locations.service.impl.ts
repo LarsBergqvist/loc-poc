@@ -6,8 +6,7 @@ import { LocationsService } from './locations.service';
 
 @Injectable()
 export class LocationsServiceImpl implements LocationsService {
-    constructor(private readonly http: HttpClient, private readonly configService: AppConfigService) {
-    }
+    constructor(private readonly http: HttpClient, private readonly configService: AppConfigService) {}
 
     async getLocations(): Promise<Location[]> {
         const baseUrl = this.getBaseUrl();

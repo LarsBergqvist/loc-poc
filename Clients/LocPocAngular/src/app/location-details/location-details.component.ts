@@ -42,16 +42,22 @@ export class LocationDetailsComponent implements OnInit {
     @ViewChild('longitude') longitudeModel: NgModel;
     @ViewChild('latitude') latitudeModel: NgModel;
 
-    constructor(private readonly messageBroker: MessageBrokerService,
-                private readonly appConfigService: AppConfigService,
-                @Inject('LocationsService') private readonly locationsService: LocationsService,
-                private readonly logging: LoggingService) {
-                this.createDefaultLocation();
+    constructor(
+        private readonly messageBroker: MessageBrokerService,
+        private readonly appConfigService: AppConfigService,
+        @Inject('LocationsService') private readonly locationsService: LocationsService,
+        private readonly logging: LoggingService
+    ) {
+        this.createDefaultLocation();
     }
 
     async ngOnInit() {
         const messages = this.messageBroker.getMessage();
-        messages.pipe(takeUntil(this.unsubsribe$), filter(message => message instanceof OpenLocationDetailsMessage))
+        messages
+            .pipe(
+                takeUntil(this.unsubsribe$),
+                filter((message) => message instanceof OpenLocationDetailsMessage)
+            )
             .subscribe(async (message: OpenLocationDetailsMessage) => {
                 if (message) {
                     this.location = clone(message.location);
@@ -59,7 +65,11 @@ export class LocationDetailsComponent implements OnInit {
                     this.isVisible = true;
                 }
             });
-        messages.pipe(takeUntil(this.unsubsribe$), filter(message => message instanceof AddNewLocationMessage))
+        messages
+            .pipe(
+                takeUntil(this.unsubsribe$),
+                filter((message) => message instanceof AddNewLocationMessage)
+            )
             .subscribe((message: AddNewLocationMessage) => {
                 if (message) {
                     this.createDefaultLocation();
@@ -68,7 +78,11 @@ export class LocationDetailsComponent implements OnInit {
                     this.setCurrentPosition();
                 }
             });
-        messages.pipe(takeUntil(this.unsubsribe$), filter(message => message instanceof NewMarkerFromMapMessage))
+        messages
+            .pipe(
+                takeUntil(this.unsubsribe$),
+                filter((message) => message instanceof NewMarkerFromMapMessage)
+            )
             .subscribe(async (message: NewMarkerFromMapMessage) => {
                 // Update the location with the position from the new marker
                 this.location = {
@@ -114,33 +128,42 @@ export class LocationDetailsComponent implements OnInit {
     }
 
     saveNewLocation() {
-        this.locationsService.saveNewLocation(this.location).then(() => {
-            this.isVisible = false;
-            this.messageBroker.sendMessage(new SuccessInfoMessage('A new location item was created.'));
-            this.messageBroker.sendMessage(new RefreshListMessage());
-        }).catch((error) => {
-            this.logging.logError(error);
-        });
+        this.locationsService
+            .saveNewLocation(this.location)
+            .then(() => {
+                this.isVisible = false;
+                this.messageBroker.sendMessage(new SuccessInfoMessage('A new location item was created.'));
+                this.messageBroker.sendMessage(new RefreshListMessage());
+            })
+            .catch((error) => {
+                this.logging.logError(error);
+            });
     }
 
     updateLocation() {
-        this.locationsService.updateLocation(this.location).then(() => {
-            this.isVisible = false;
-            this.messageBroker.sendMessage(new SuccessInfoMessage('The location item was updated.'));
-            this.messageBroker.sendMessage(new RefreshListMessage());
-        }).catch((error) => {
-            this.logging.logError(error);
-        });
+        this.locationsService
+            .updateLocation(this.location)
+            .then(() => {
+                this.isVisible = false;
+                this.messageBroker.sendMessage(new SuccessInfoMessage('The location item was updated.'));
+                this.messageBroker.sendMessage(new RefreshListMessage());
+            })
+            .catch((error) => {
+                this.logging.logError(error);
+            });
     }
 
     deleteLocation() {
-        this.locationsService.deleteLocation(this.location.id).then(() => {
-            this.isVisible = false;
-            this.messageBroker.sendMessage(new SuccessInfoMessage('A location item was deleted.'));
-            this.messageBroker.sendMessage(new RefreshListMessage());
-        }).catch((error) => {
-            this.logging.logError(error);
-        });
+        this.locationsService
+            .deleteLocation(this.location.id)
+            .then(() => {
+                this.isVisible = false;
+                this.messageBroker.sendMessage(new SuccessInfoMessage('A location item was deleted.'));
+                this.messageBroker.sendMessage(new RefreshListMessage());
+            })
+            .catch((error) => {
+                this.logging.logError(error);
+            });
     }
 
     close() {
@@ -158,18 +181,20 @@ export class LocationDetailsComponent implements OnInit {
     }
 
     private setCurrentPosition() {
-        navigator.geolocation.getCurrentPosition(position => {
-            this.location = {
-                id: this.location.id,
-                name: this.location.name,
-                description: this.location.description,
-                latitude: position.coords.latitude,
-                longitude: position.coords.longitude
-            };
-        }, error => {
-            this.logging.logError(error.message);
-            this.messageBroker.sendMessage(new ErrorOccurredMessage(error.message));
-        });
+        navigator.geolocation.getCurrentPosition(
+            (position) => {
+                this.location = {
+                    id: this.location.id,
+                    name: this.location.name,
+                    description: this.location.description,
+                    latitude: position.coords.latitude,
+                    longitude: position.coords.longitude
+                };
+            },
+            (error) => {
+                this.logging.logError(error.message);
+                this.messageBroker.sendMessage(new ErrorOccurredMessage(error.message));
+            }
+        );
     }
-
 }

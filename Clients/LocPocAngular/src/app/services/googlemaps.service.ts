@@ -3,7 +3,7 @@ import * as loadGoogleMapsApi from 'load-google-maps-api';
 
 @Injectable()
 class GoogleMapsService {
-    constructor() { }
+    constructor() {}
     load(googleAPIKey: string): any {
         return loadGoogleMapsApi({ key: googleAPIKey });
     }

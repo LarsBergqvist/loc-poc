@@ -8,8 +8,7 @@ import { AddNewLocationMessage } from '../messages/add-new-location.message';
     styleUrls: ['./app-bar.component.scss']
 })
 export class AppBarComponent {
-
-    constructor(private readonly messageService: MessageBrokerService) { }
+    constructor(private readonly messageService: MessageBrokerService) {}
 
     addNewLocation() {
         this.messageService.sendMessage(new AddNewLocationMessage());

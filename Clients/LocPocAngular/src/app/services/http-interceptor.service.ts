@@ -10,19 +10,14 @@ import { LoggingService } from './logging-service';
     providedIn: 'root'
 })
 export class HttpInterceptorService implements HttpInterceptor {
-    constructor(private readonly messageService: MessageBrokerService,
-                private readonly logging: LoggingService) { }
+    constructor(private readonly messageService: MessageBrokerService, private readonly logging: LoggingService) {}
 
-    intercept(req: HttpRequest<any>, next: HttpHandler):
-        Observable<HttpEvent<any>> {
-        return next.handle(req)
-            .pipe(
-                catchError((error) => this.handleError(error, this.messageService))
-            );
+    intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+        return next.handle(req).pipe(catchError((error) => this.handleError(error, this.messageService)));
     }
 
     private handleError(error: HttpErrorResponse, messageService: MessageBrokerService) {
-        if (error && (typeof error.error === 'string')) {
+        if (error && typeof error.error === 'string') {
             this.logging.logError('err: ' + error.error);
             messageService.sendMessage(new ErrorOccurredMessage(error.error));
         } else if (error) {

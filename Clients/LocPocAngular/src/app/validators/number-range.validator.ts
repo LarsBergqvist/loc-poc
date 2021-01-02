@@ -1,7 +1,6 @@
 import { Directive, Input } from '@angular/core';
 import { AbstractControl, NG_VALIDATORS, ValidationErrors, Validator } from '@angular/forms';
 
-
 export interface NumberRange {
     min: number;
     max: number;

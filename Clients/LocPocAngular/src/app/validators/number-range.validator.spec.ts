@@ -4,9 +4,9 @@ import { AbstractControl } from '@angular/forms';
 describe('NumberRangeValidator', () => {
     let validator: NumberRangeValidator;
 
-    beforeEach((() => {
+    beforeEach(() => {
         validator = new NumberRangeValidator();
-    }));
+    });
 
     it('should detect incorrect range when value is a number', () => {
         const range: NumberRange = {

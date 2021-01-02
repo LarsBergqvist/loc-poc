@@ -18,13 +18,19 @@ export class LocationsListComponent implements OnInit {
     locations: Location[];
     loading = false;
 
-    constructor(private readonly messageService: MessageBrokerService,
-                @Inject('LocationsService') private readonly locationsService: LocationsService) { }
+    constructor(
+        private readonly messageService: MessageBrokerService,
+        @Inject('LocationsService') private readonly locationsService: LocationsService
+    ) {}
 
     async ngOnInit() {
         const messages = this.messageService.getMessage();
-        messages.pipe(takeUntil(this.unsubsribe$), filter(message => message instanceof RefreshListMessage))
-            .subscribe(async message => {
+        messages
+            .pipe(
+                takeUntil(this.unsubsribe$),
+                filter((message) => message instanceof RefreshListMessage)
+            )
+            .subscribe(async (message) => {
                 await this.refreshList();
             });
 
@@ -43,5 +49,4 @@ export class LocationsListComponent implements OnInit {
         }
         this.loading = false;
     }
-
 }

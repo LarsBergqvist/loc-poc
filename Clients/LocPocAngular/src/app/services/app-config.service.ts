@@ -8,15 +8,15 @@ export class AppConfigService {
     readonly configFile = 'assets/app-config.json';
     config: AppConfig;
 
-    constructor(private readonly http: HttpClient, private readonly logging: LoggingService) {
-    }
+    constructor(private readonly http: HttpClient, private readonly logging: LoggingService) {}
 
     async load(): Promise<any> {
         const configPath = this.configFile;
         return new Promise<any>((resolve) => {
-            this.http.get<AppConfig>(configPath)
+            this.http
+                .get<AppConfig>(configPath)
                 .toPromise()
-                .then(res => {
+                .then((res) => {
                     this.logging.logInfo('loaded app-config.json');
                     this.config = res;
                     resolve();

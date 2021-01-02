@@ -7,15 +7,14 @@ describe('AppBarComponent', () => {
     let component: AppBarComponent;
     let fixture: ComponentFixture<AppBarComponent>;
 
-    beforeEach(waitForAsync(() => {
-        TestBed.configureTestingModule({
-            imports: [
-                ToolbarModule
-            ],
-            declarations: [AppBarComponent]
+    beforeEach(
+        waitForAsync(() => {
+            TestBed.configureTestingModule({
+                imports: [ToolbarModule],
+                declarations: [AppBarComponent]
+            }).compileComponents();
         })
-            .compileComponents();
-    }));
+    );
 
     beforeEach(() => {
         fixture = TestBed.createComponent(AppBarComponent);

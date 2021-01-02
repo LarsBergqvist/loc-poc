@@ -15,19 +15,29 @@ import { Subject } from 'rxjs';
 export class AppComponent implements OnInit {
     private unsubsribe$ = new Subject();
 
-    constructor(private readonly messageService: MessageBrokerService,
-                @Inject('LocationsService') private readonly locationsService: LocationsService,
-                private readonly primeNGmessageService: MessageService) {}
+    constructor(
+        private readonly messageService: MessageBrokerService,
+        @Inject('LocationsService') private readonly locationsService: LocationsService,
+        private readonly primeNGmessageService: MessageService
+    ) {}
 
     ngOnInit(): void {
         const messages = this.messageService.getMessage();
 
-        messages.pipe(takeUntil(this.unsubsribe$), filter(message => message instanceof ErrorOccurredMessage))
+        messages
+            .pipe(
+                takeUntil(this.unsubsribe$),
+                filter((message) => message instanceof ErrorOccurredMessage)
+            )
             .subscribe((message: ErrorOccurredMessage) => {
                 this.primeNGmessageService.add({ severity: 'error', summary: 'Error', detail: message.errorMessage });
             });
 
-        messages.pipe(takeUntil(this.unsubsribe$), filter(message => message instanceof SuccessInfoMessage))
+        messages
+            .pipe(
+                takeUntil(this.unsubsribe$),
+                filter((message) => message instanceof SuccessInfoMessage)
+            )
             .subscribe((message: SuccessInfoMessage) => {
                 this.primeNGmessageService.add({ severity: 'success', summary: 'Success', detail: message.info });
             });

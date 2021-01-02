@@ -2,8 +2,7 @@ import { Injectable } from '@angular/core';
 
 @Injectable()
 export class LoggingService {
-
-    constructor() { }
+    constructor() {}
 
     logInfo(message: string) {
         // tslint:disable-next-line:no-console

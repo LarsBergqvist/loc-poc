@@ -23,15 +23,11 @@ export class MapComponent implements OnInit {
             // Work with the google map object directly as modifying gmap's options
             // will not update the map
             this.map.setCenter({ lat: loc.latitude, lng: loc.longitude });
-            this.overlays = [
-                new google.maps.Marker({ position: { lat: loc.latitude, lng: loc.longitude }, title: loc.name })
-            ];
+            this.overlays = [new google.maps.Marker({ position: { lat: loc.latitude, lng: loc.longitude }, title: loc.name })];
         }
     }
 
-    constructor(private readonly appConfigService: AppConfigService,
-                private readonly messageBroker: MessageBrokerService) {
-    }
+    constructor(private readonly appConfigService: AppConfigService, private readonly messageBroker: MessageBrokerService) {}
 
     onMapReady(event: any) {
         if (event.map) {

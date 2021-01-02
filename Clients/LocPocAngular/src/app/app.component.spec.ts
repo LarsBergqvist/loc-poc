@@ -8,28 +8,26 @@ describe('AppComponent', () => {
     let locationsService: any;
     let primeNGmessageService: any;
 
-    beforeEach(waitForAsync(() => {
-        locationsService = {
-            getLocations: jasmine.createSpy('getLocations'),
-            saveNewLocation: jasmine.createSpy('saveNewLocation')
-        };
-        primeNGmessageService = {
-            add: jasmine.createSpy('add')
-        };
-        TestBed.configureTestingModule({
-            imports: [
-                RouterTestingModule
-            ],
-            declarations: [
-                AppComponent
-            ],
-            providers: [
-                { provide: 'LocationsService', useValue: locationsService },
-                { provide: MessageService, useValue: primeNGmessageService }
-            ],
-            schemas: [CUSTOM_ELEMENTS_SCHEMA]
-        }).compileComponents();
-    }));
+    beforeEach(
+        waitForAsync(() => {
+            locationsService = {
+                getLocations: jasmine.createSpy('getLocations'),
+                saveNewLocation: jasmine.createSpy('saveNewLocation')
+            };
+            primeNGmessageService = {
+                add: jasmine.createSpy('add')
+            };
+            TestBed.configureTestingModule({
+                imports: [RouterTestingModule],
+                declarations: [AppComponent],
+                providers: [
+                    { provide: 'LocationsService', useValue: locationsService },
+                    { provide: MessageService, useValue: primeNGmessageService }
+                ],
+                schemas: [CUSTOM_ELEMENTS_SCHEMA]
+            }).compileComponents();
+        })
+    );
 
     it('should create the app', () => {
         const fixture = TestBed.createComponent(AppComponent);

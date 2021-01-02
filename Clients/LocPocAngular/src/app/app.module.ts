@@ -33,12 +33,13 @@ import { MessageBrokerService } from './services/message-broker.service';
 import { MessageService } from 'primeng/api';
 import { NumberRangeValidator } from './validators/number-range.validator';
 import { LoggingService } from './services/logging-service';
+import { LocalStorageService } from './services/local-storage.service';
 
 export function locationsServiceFactory() {
     return (http: HttpClient, configService: AppConfigService, logging: LoggingService): LocationsService => {
         if (configService.useFakeData) {
             logging.logInfo('use mock service');
-            return new LocationsServiceMock();
+            return new LocationsServiceMock(new LocalStorageService());
         } else {
             logging.logInfo('use real service');
             return new LocationsServiceImpl(http, configService);
@@ -46,11 +47,10 @@ export function locationsServiceFactory() {
     };
 }
 
-export function appConfigInit(configService: AppConfigService,
-                              googleMapService: GoogleMapsService, logging: LoggingService) {
+export function appConfigInit(configService: AppConfigService, googleMapService: GoogleMapsService, logging: LoggingService) {
     // Load the configuration and init google api if maps should be used
     return () => {
-        return new Promise((resolve) => {
+        return new Promise<void>((resolve) => {
             configService.load().then(() => {
                 if (configService.useMap) {
                     logging.logInfo('Use map');
@@ -67,14 +67,7 @@ export function appConfigInit(configService: AppConfigService,
 }
 
 @NgModule({
-    declarations: [
-        AppComponent,
-        LocationsListComponent,
-        AppBarComponent,
-        LocationDetailsComponent,
-        MapComponent,
-        NumberRangeValidator
-    ],
+    declarations: [AppComponent, LocationsListComponent, AppBarComponent, LocationDetailsComponent, MapComponent, NumberRangeValidator],
     providers: [
         AppConfigService,
         GoogleMapsService,
@@ -92,7 +85,8 @@ export function appConfigInit(configService: AppConfigService,
             deps: [MessageBrokerService, LoggingService]
         },
         {
-            provide: 'LocationsService', useFactory: locationsServiceFactory(),
+            provide: 'LocationsService',
+            useFactory: locationsServiceFactory(),
             deps: [HttpClient, AppConfigService, LoggingService]
         },
         MessageService
@@ -117,4 +111,4 @@ export function appConfigInit(configService: AppConfigService,
     ],
     bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}
