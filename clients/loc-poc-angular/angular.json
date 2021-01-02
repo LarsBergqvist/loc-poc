@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "LocPocAngular": {
+    "loc-poc-angular": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/LocPocAngular",
+            "outputPath": "dist/oc-poc-angular",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -65,18 +65,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "LocPocAngular:build"
+            "browserTarget": "loc-poc-angular:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "LocPocAngular:build:production"
+              "browserTarget": "loc-poc-angular:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "LocPocAngular:build"
+            "browserTarget": "loc-poc-angular:build"
           }
         },
         "test": {
@@ -113,15 +113,15 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "LocPocAngular:serve"
+            "devServerTarget": "loc-poc-angular:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "LocPocAngular:serve:production"
+              "devServerTarget": "loc-poc-angular:serve:production"
             }
           }
         }
       }
     }},
-  "defaultProject": "LocPocAngular"
+  "defaultProject": "loc-poc-angular"
 }

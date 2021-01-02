@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { Location } from '../models/location';
 import { LocationsService } from './locations.service';
 import { LocalStorageService } from './local-storage.service';
-import * as uuid from 'uuid-random';
 
 @Injectable()
 export class LocationsServiceMock implements LocationsService {
@@ -96,7 +95,8 @@ export class LocationsServiceMock implements LocationsService {
     }
 
     async saveNewLocation(location: Location): Promise<Location> {
-        location.id = uuid();
+        location.id = this.newGuid();
+        console.log(location.id);
         this.fakeData.push(location);
         this.storageService.set(this.storage_key, this.fakeData);
         return location;
@@ -116,5 +116,13 @@ export class LocationsServiceMock implements LocationsService {
         this.fakeData = this.fakeData.filter((l) => l.id !== id);
         this.storageService.set(this.storage_key, this.fakeData);
         return;
+    }
+
+    private newGuid() {
+        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+            const r = (Math.random() * 16) | 0,
+                v = c === 'x' ? r : (r & 0x3) | 0x8;
+            return v.toString(16);
+        });
     }
 }

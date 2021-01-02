@@ -7,10 +7,10 @@ node_js:
 
 cache:
   directories:
-    - ./Clients/LocPocAngular/node_modules
+    - ./clients/loc-poc-angular/node_modules
 
 before_install:
-  - cd Clients/LocPocAngular
+  - cd clients/loc-poc-angular
 
 install:
   - yarn install
@@ -19,12 +19,12 @@ script:
   - yarn build
 
 before_deploy:
-  - yarn run build --prod --base-href /LocPocAngular/
+  - yarn run build --prod --base-href /loc-poc-angular/
 
 deploy:
   provider: pages
   skip_cleanup: true
   github_token: $GITHUB_TOKEN
-  local_dir: dist/sr-app
+  local_dir: dist/loc-poc-angular
   on:
     branch: master
