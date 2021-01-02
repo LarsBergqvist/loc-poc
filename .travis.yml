@@ -16,12 +16,12 @@ install:
   - yarn install
 
 before_deploy:
-  - yarn run build --prod --base-href /loc-poc-angular/
+  - yarn run build --prod --base-href /loc-poc/
 
 deploy:
   provider: pages
   skip_cleanup: true
   github_token: $GITHUB_TOKEN
-  local_dir: $TRAVIS_BUILD_DIR/clients/loc-poc-angular/dist/loc-poc-angular
+  local_dir: $TRAVIS_BUILD_DIR/clients/loc-poc-angular/dist/loc-poc
   on:
     branch: master
