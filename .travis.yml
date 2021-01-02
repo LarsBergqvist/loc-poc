@@ -17,11 +17,12 @@ install:
 
 before_deploy:
   - yarn run build --prod --base-href /loc-poc-angular/
+  - cd clients/loc-poc-angular
 
 deploy:
   provider: pages
   skip_cleanup: true
   github_token: $GITHUB_TOKEN
-  local_dir: clients/loc-poc-angular/dist/loc-poc-angular
+  local_dir: dist/loc-poc-angular
   on:
     branch: master
