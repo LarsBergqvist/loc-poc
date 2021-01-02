@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Location } from '../models/location';
-import { v4 as guidgenerator } from 'uuid';
 import { LocationsService } from './locations.service';
 import { LocalStorageService } from './local-storage.service';
+import * as uuid from 'uuid-random';
+
 @Injectable()
 export class LocationsServiceMock implements LocationsService {
     private storage_key = 'LocationsService';
@@ -79,7 +80,12 @@ export class LocationsServiceMock implements LocationsService {
             longitude: 23.7257492
         }
     ];
-    constructor(private readonly storageService: LocalStorageService) {}
+
+    constructor(private readonly storageService: LocalStorageService) {
+        if (!this.storageService.get(this.storage_key)) {
+            this.storageService.set(this.storage_key, this.fakeData);
+        }
+    }
 
     async getLocations(): Promise<Location[]> {
         let result = this.storageService.get(this.storage_key);
@@ -90,7 +96,7 @@ export class LocationsServiceMock implements LocationsService {
     }
 
     async saveNewLocation(location: Location): Promise<Location> {
-        location.id = guidgenerator;
+        location.id = uuid();
         this.fakeData.push(location);
         this.storageService.set(this.storage_key, this.fakeData);
         return location;
@@ -108,6 +114,7 @@ export class LocationsServiceMock implements LocationsService {
 
     async deleteLocation(id: string): Promise<Location> {
         this.fakeData = this.fakeData.filter((l) => l.id !== id);
+        this.storageService.set(this.storage_key, this.fakeData);
         return;
     }
 }
