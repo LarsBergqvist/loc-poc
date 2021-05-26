@@ -1,6 +1,6 @@
 # Locations In Your Pocket
 
-[![Build Status](https://travis-ci.org/LarsBergqvist/loc-poc.svg?branch=master)](https://travis-ci.org/LarsBergqvist/loc-poc)
+[![Build Status](https://travis-ci.com/LarsBergqvist/loc-poc.svg?branch=master)](https://travis-ci.com/LarsBergqvist/loc-poc)
 
 A programming exercise on how to create a geolocation application with Angular, .NET Core and Google Maps
 
