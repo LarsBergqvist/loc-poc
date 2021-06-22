@@ -9,14 +9,15 @@ jobs:
       - name: Setup node
         uses: actions/setup-node@v2
         with:
-          node-version: '14'
+          node-version: "14"
+      - run: cd clients/loc-poc-angular
       - run: yarn install
       - run: sudo apt-get install xvfb
       - run: xvfb-run --auto-servernum yarn test
       - name: Publish Test Report
         uses: mikepenz/action-junit-report@v2
         with:
-          report_paths: '**/TESTS-*.xml'
+          report_paths: "**/TESTS-*.xml"
       - run: yarn build-gh-pages
       - run: cp 404header.html dist/loc-poc/404.html
       - run: cat dist/loc-poc/index.html >> dist/loc-poc/404.html
