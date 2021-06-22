@@ -19,7 +19,7 @@ export class AppConfigService {
                 .then((res) => {
                     this.logging.logInfo('loaded app-config.json');
                     this.config = res;
-                    resolve();
+                    resolve({});
                 });
         });
     }

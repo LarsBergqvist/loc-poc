@@ -11,7 +11,6 @@
         "test_watch": "ng test --watch true",
         "test_watch_full_chrome": "ng test --watch true --browsers=Chrome",
         "lint": "ng lint",
-        "e2e": "ng e2e",
         "postinstall": "ngcc"
     },
     "private": true,
@@ -49,8 +48,6 @@
         "karma-coverage-istanbul-reporter": "~3.0.2",
         "karma-jasmine": "~4.0.0",
         "karma-jasmine-html-reporter": "^1.5.0",
-        "protractor": "~7.0.0",
-        "ts-node": "~7.0.0",
         "tslint": "~6.1.0",
         "typescript": "~4.2.4"
     }
