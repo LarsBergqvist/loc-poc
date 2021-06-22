@@ -3,6 +3,10 @@ on: [push]
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+        working-directory: clients/loc-poc-angular
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -10,7 +14,6 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: "14"
-      - run: cd clients/loc-poc-angular
       - run: yarn install
       - run: sudo apt-get install xvfb
       - run: xvfb-run --auto-servernum yarn test
