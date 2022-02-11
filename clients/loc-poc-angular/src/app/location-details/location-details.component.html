@@ -13,8 +13,8 @@
             <div class="p-grid p-jc-end">
                 <div class="p-col-8"></div>
                 <div class="p-col-4">
-                    <button class="action-button" pButton type="button" label="Save" icon="pi pi-save"
-                        (click)="saveNewLocation()" [disabled]="!canSaveLocation"></button>
+                    <button pButton type="button" label="Save" icon="pi pi-save" (click)="saveNewLocation()"
+                        [disabled]="!canSaveLocation"></button>
                 </div>
             </div>
         </div>
@@ -22,10 +22,10 @@
             <div class="p-grid p-jc-end">
                 <div class="p-col-12">
                     <span>
-                        <button class="action-button" pButton type="button" label="Save" icon="pi pi-save"
-                            (click)="updateLocation()" [disabled]="!canSaveLocation" style="margin-right:5px;"></button>
-                        <button class="action-button" pButton type="button" label="Delete" icon="pi pi-trash"
-                            (click)="deleteLocation()" [disabled]="false"></button>
+                        <button pButton type="button" label="Save" icon="pi pi-save" (click)="updateLocation()"
+                            [disabled]="!canSaveLocation" style="margin-right:5px;"></button>
+                        <button pButton type="button" label="Delete" icon="pi pi-trash" (click)="deleteLocation()"
+                            [disabled]="false"></button>
                     </span>
                 </div>
             </div>
