@@ -29,7 +29,7 @@
         "load-google-maps-api": "^2.0.1",
         "primeflex": "^3.1.2",
         "primeicons": "^5.0.0",
-        "primeng": "^13.0.0",
+        "primeng": "^13.2.0",
         "rxjs": "~7.5.2",
         "tslib": "^2.0.0",
         "zone.js": "~0.11.4"
