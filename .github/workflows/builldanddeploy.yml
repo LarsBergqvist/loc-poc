@@ -9,11 +9,11 @@ jobs:
         working-directory: clients/loc-poc-angular
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Setup node
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
-          node-version: "14"
+          node-version: 16
       - run: yarn install
       - run: sudo apt-get install xvfb
       - run: xvfb-run --auto-servernum yarn test
@@ -25,7 +25,7 @@ jobs:
       - run: cp 404header.html dist/loc-poc/404.html
       - run: cat dist/loc-poc/index.html >> dist/loc-poc/404.html
       - name: Deploy
-        uses: JamesIves/github-pages-deploy-action@4.1.4
+        uses: JamesIves/github-pages-deploy-action@v4.4.1
         with:
           branch: gh-pages # The branch the action should deploy to.
           folder: clients/loc-poc-angular/dist/loc-poc # The folder the action should deploy.
